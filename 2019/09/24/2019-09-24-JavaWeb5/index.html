@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaWeb,Servlet," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="创建DrawImage Servlet一、创建DrawImage Servlet用来生成验证码图片 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+<meta name="keywords" content="JavaWeb,Servlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaWeb5">
+<meta property="og:url" content="https:&#x2F;&#x2F;gsynf.github.io&#x2F;2019&#x2F;09&#x2F;24&#x2F;2019-09-24-JavaWeb5&#x2F;index.html">
+<meta property="og:site_name" content="Gsynf | My Blog">
+<meta property="og:description" content="创建DrawImage Servlet一、创建DrawImage Servlet用来生成验证码图片 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-23T01:07:53.593Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gsynf.github.io/2019/09/24/2019-09-24-JavaWeb5/"/>
+
+
+
+
+
+  <title>JavaWeb5 | Gsynf | My Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/Gsynf" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gsynf | My Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">曾梦想仗剑天涯，后来学习忙没去</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gsynf.github.io/2019/09/24/2019-09-24-JavaWeb5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gsynf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gsynf | My Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaWeb5</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T00:00:00+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="创建DrawImage-Servlet"><a href="#创建DrawImage-Servlet" class="headerlink" title="创建DrawImage Servlet"></a>创建DrawImage Servlet</h1><h1 id="一、创建DrawImage-Servlet"><a href="#一、创建DrawImage-Servlet" class="headerlink" title="一、创建DrawImage Servlet"></a>一、创建DrawImage Servlet</h1><p>用来生成验证码图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line">  1 package gacl.response.study;</span><br><span class="line">  2 import java.awt.Color;</span><br><span class="line">  3 import java.awt.Font;</span><br><span class="line">  4 import java.awt.Graphics;</span><br><span class="line">  5 import java.awt.Graphics2D;</span><br><span class="line">  6 import java.awt.image.BufferedImage;</span><br><span class="line">  7 import java.io.IOException;</span><br><span class="line">  8 import java.util.Random;</span><br><span class="line">  9 import javax.imageio.ImageIO;</span><br><span class="line"> 10 import javax.servlet.ServletException;</span><br><span class="line"> 11 import javax.servlet.http.HttpServlet;</span><br><span class="line"> 12 import javax.servlet.http.HttpServletRequest;</span><br><span class="line"> 13 import javax.servlet.http.HttpServletResponse;</span><br><span class="line"> 14 /**</span><br><span class="line"> 15  * 生成随机图片，用来作为验证码</span><br><span class="line"> 16  */</span><br><span class="line"> 17 public class DrawImage extends HttpServlet &#123;</span><br><span class="line"> 18     private static final long serialVersionUID = 3038623696184546092L;</span><br><span class="line"> 19     </span><br><span class="line"> 20     public static final int WIDTH = 120;//生成的图片的宽度</span><br><span class="line"> 21     public static final int HEIGHT = 30;//生成的图片的高度</span><br><span class="line"> 22 </span><br><span class="line"> 23     public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line"> 24             throws ServletException, IOException &#123;</span><br><span class="line"> 25         this.doPost(request, response);</span><br><span class="line"> 26     &#125;</span><br><span class="line"> 27 </span><br><span class="line"> 28     public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line"> 29             throws ServletException, IOException &#123;</span><br><span class="line"> 30         String createTypeFlag = request.getParameter(&quot;createTypeFlag&quot;);//接收客户端传递的createTypeFlag标识</span><br><span class="line"> 31         //1.在内存中创建一张图片</span><br><span class="line"> 32         BufferedImage bi = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);</span><br><span class="line"> 33         //2.得到图片</span><br><span class="line"> 34         Graphics g = bi.getGraphics();</span><br><span class="line"> 35         //3.设置图片的背影色</span><br><span class="line"> 36         setBackGround(g);</span><br><span class="line"> 37         //4.设置图片的边框</span><br><span class="line"> 38         setBorder(g);</span><br><span class="line"> 39         //5.在图片上画干扰线</span><br><span class="line"> 40         drawRandomLine(g);</span><br><span class="line"> 41         //6.写在图片上随机数</span><br><span class="line"> 42         //String random = drawRandomNum((Graphics2D) g,&quot;ch&quot;);//生成中文验证码图片</span><br><span class="line"> 43         //String random = drawRandomNum((Graphics2D) g,&quot;nl&quot;);//生成数字和字母组合的验证码图片</span><br><span class="line"> 44         //String random = drawRandomNum((Graphics2D) g,&quot;n&quot;);//生成纯数字的验证码图片</span><br><span class="line"> 45         //String random = drawRandomNum((Graphics2D) g,&quot;l&quot;);//生成纯字母的验证码图片</span><br><span class="line"> 46         String random = drawRandomNum((Graphics2D) g,createTypeFlag);//根据客户端传递的createTypeFlag标识生成验证码图片</span><br><span class="line"> 47         //7.将随机数存在session中</span><br><span class="line"> 48         request.getSession().setAttribute(&quot;checkcode&quot;, random);</span><br><span class="line"> 49         //8.设置响应头通知浏览器以图片的形式打开</span><br><span class="line"> 50         response.setContentType(&quot;image/jpeg&quot;);//等同于response.setHeader(&quot;Content-Type&quot;, &quot;image/jpeg&quot;);</span><br><span class="line"> 51         //9.设置响应头控制浏览器不要缓存</span><br><span class="line"> 52         response.setDateHeader(&quot;expries&quot;, -1);</span><br><span class="line"> 53         response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);</span><br><span class="line"> 54         response.setHeader(&quot;Pragma&quot;, &quot;no-cache&quot;);</span><br><span class="line"> 55         //10.将图片写给浏览器</span><br><span class="line"> 56         ImageIO.write(bi, &quot;jpg&quot;, response.getOutputStream());</span><br><span class="line"> 57     &#125;</span><br><span class="line"> 58 </span><br><span class="line"> 59     /**</span><br><span class="line"> 60      * 设置图片的背景色</span><br><span class="line"> 61      * @param g</span><br><span class="line"> 62      */</span><br><span class="line"> 63     private void setBackGround(Graphics g) &#123;</span><br><span class="line"> 64         // 设置颜色</span><br><span class="line"> 65         g.setColor(Color.WHITE);</span><br><span class="line"> 66         // 填充区域</span><br><span class="line"> 67         g.fillRect(0, 0, WIDTH, HEIGHT);</span><br><span class="line"> 68     &#125;</span><br><span class="line"> 69 </span><br><span class="line"> 70     /**</span><br><span class="line"> 71      * 设置图片的边框</span><br><span class="line"> 72      * @param g</span><br><span class="line"> 73      */</span><br><span class="line"> 74     private void setBorder(Graphics g) &#123;</span><br><span class="line"> 75         // 设置边框颜色</span><br><span class="line"> 76         g.setColor(Color.BLUE);</span><br><span class="line"> 77         // 边框区域</span><br><span class="line"> 78         g.drawRect(1, 1, WIDTH - 2, HEIGHT - 2);</span><br><span class="line"> 79     &#125;</span><br><span class="line"> 80 </span><br><span class="line"> 81     /**</span><br><span class="line"> 82      * 在图片上画随机线条</span><br><span class="line"> 83      * @param g</span><br><span class="line"> 84      */</span><br><span class="line"> 85     private void drawRandomLine(Graphics g) &#123;</span><br><span class="line"> 86         // 设置颜色</span><br><span class="line"> 87         g.setColor(Color.GREEN);</span><br><span class="line"> 88         // 设置线条个数并画线</span><br><span class="line"> 89         for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"> 90             int x1 = new Random().nextInt(WIDTH);</span><br><span class="line"> 91             int y1 = new Random().nextInt(HEIGHT);</span><br><span class="line"> 92             int x2 = new Random().nextInt(WIDTH);</span><br><span class="line"> 93             int y2 = new Random().nextInt(HEIGHT);</span><br><span class="line"> 94             g.drawLine(x1, y1, x2, y2);</span><br><span class="line"> 95         &#125;</span><br><span class="line"> 96     &#125;</span><br><span class="line"> 97 </span><br><span class="line"> 98     /**</span><br><span class="line"> 99      * 画随机字符</span><br><span class="line">100      * @param g</span><br><span class="line">101      * @param createTypeFlag</span><br><span class="line">102      * @return</span><br><span class="line">103      * String... createTypeFlag是可变参数，</span><br><span class="line">104      * Java1.5增加了新特性：可变参数：适用于参数个数不确定，类型确定的情况，java把可变参数当做数组处理。注意：可变参数必须位于最后一项</span><br><span class="line">105      */</span><br><span class="line">106     private String drawRandomNum(Graphics2D g,String... createTypeFlag) &#123;</span><br><span class="line">107         // 设置颜色</span><br><span class="line">108         g.setColor(Color.RED);</span><br><span class="line">109         // 设置字体</span><br><span class="line">110         g.setFont(new Font(&quot;宋体&quot;, Font.BOLD, 20));</span><br><span class="line">111         //常用的中国汉字</span><br><span class="line">112         String baseChineseChar = &quot;\u7684\u4e00\u4e86\u662f\u6211\u4e0d\u5728\u4eba\u4eec\u6709\u6765\u4ed6\u8fd9\u4e0a\u7740\u4e2a\u5730\u5230\u5927\u91cc\u8bf4\u5c31\u53bb\u5b50\u5f97\u4e5f\u548c\u90a3\u8981\u4e0b\u770b\u5929\u65f6\u8fc7\u51fa\u5c0f\u4e48\u8d77\u4f60\u90fd\u628a\u597d\u8fd8\u591a\u6ca1\u4e3a\u53c8\u53ef\u5bb6\u5b66\u53ea\u4ee5\u4e3b\u4f1a\u6837\u5e74\u60f3\u751f\u540c\u8001\u4e2d\u5341\u4ece\u81ea\u9762\u524d\u5934\u9053\u5b83\u540e\u7136\u8d70\u5f88\u50cf\u89c1\u4e24\u7528\u5979\u56fd\u52a8\u8fdb\u6210\u56de\u4ec0\u8fb9\u4f5c\u5bf9\u5f00\u800c\u5df1\u4e9b\u73b0\u5c71\u6c11\u5019\u7ecf\u53d1\u5de5\u5411\u4e8b\u547d\u7ed9\u957f\u6c34\u51e0\u4e49\u4e09\u58f0\u4e8e\u9ad8\u624b\u77e5\u7406\u773c\u5fd7\u70b9\u5fc3\u6218\u4e8c\u95ee\u4f46\u8eab\u65b9\u5b9e\u5403\u505a\u53eb\u5f53\u4f4f\u542c\u9769\u6253\u5462\u771f\u5168\u624d\u56db\u5df2\u6240\u654c\u4e4b\u6700\u5149\u4ea7\u60c5\u8def\u5206\u603b\u6761\u767d\u8bdd\u4e1c\u5e2d\u6b21\u4eb2\u5982\u88ab\u82b1\u53e3\u653e\u513f\u5e38\u6c14\u4e94\u7b2c\u4f7f\u5199\u519b\u5427\u6587\u8fd0\u518d\u679c\u600e\u5b9a\u8bb8\u5feb\u660e\u884c\u56e0\u522b\u98de\u5916\u6811\u7269\u6d3b\u90e8\u95e8\u65e0\u5f80\u8239\u671b\u65b0\u5e26\u961f\u5148\u529b\u5b8c\u5374\u7ad9\u4ee3\u5458\u673a\u66f4\u4e5d\u60a8\u6bcf\u98ce\u7ea7\u8ddf\u7b11\u554a\u5b69\u4e07\u5c11\u76f4\u610f\u591c\u6bd4\u9636\u8fde\u8f66\u91cd\u4fbf\u6597\u9a6c\u54ea\u5316\u592a\u6307\u53d8\u793e\u4f3c\u58eb\u8005\u5e72\u77f3\u6ee1\u65e5\u51b3\u767e\u539f\u62ff\u7fa4\u7a76\u5404\u516d\u672c\u601d\u89e3\u7acb\u6cb3\u6751\u516b\u96be\u65e9\u8bba\u5417\u6839\u5171\u8ba9\u76f8\u7814\u4eca\u5176\u4e66\u5750\u63a5\u5e94\u5173\u4fe1\u89c9\u6b65\u53cd\u5904\u8bb0\u5c06\u5343\u627e\u4e89\u9886\u6216\u5e08\u7ed3\u5757\u8dd1\u8c01\u8349\u8d8a\u5b57\u52a0\u811a\u7d27\u7231\u7b49\u4e60\u9635\u6015\u6708\u9752\u534a\u706b\u6cd5\u9898\u5efa\u8d76\u4f4d\u5531\u6d77\u4e03\u5973\u4efb\u4ef6\u611f\u51c6\u5f20\u56e2\u5c4b\u79bb\u8272\u8138\u7247\u79d1\u5012\u775b\u5229\u4e16\u521a\u4e14\u7531\u9001\u5207\u661f\u5bfc\u665a\u8868\u591f\u6574\u8ba4\u54cd\u96ea\u6d41\u672a\u573a\u8be5\u5e76\u5e95\u6df1\u523b\u5e73\u4f1f\u5fd9\u63d0\u786e\u8fd1\u4eae\u8f7b\u8bb2\u519c\u53e4\u9ed1\u544a\u754c\u62c9\u540d\u5440\u571f\u6e05\u9633\u7167\u529e\u53f2\u6539\u5386\u8f6c\u753b\u9020\u5634\u6b64\u6cbb\u5317\u5fc5\u670d\u96e8\u7a7f\u5185\u8bc6\u9a8c\u4f20\u4e1a\u83dc\u722c\u7761\u5174\u5f62\u91cf\u54b1\u89c2\u82e6\u4f53\u4f17\u901a\u51b2\u5408\u7834\u53cb\u5ea6\u672f\u996d\u516c\u65c1\u623f\u6781\u5357\u67aa\u8bfb\u6c99\u5c81\u7ebf\u91ce\u575a\u7a7a\u6536\u7b97\u81f3\u653f\u57ce\u52b3\u843d\u94b1\u7279\u56f4\u5f1f\u80dc\u6559\u70ed\u5c55\u5305\u6b4c\u7c7b\u6e10\u5f3a\u6570\u4e61\u547c\u6027\u97f3\u7b54\u54e5\u9645\u65e7\u795e\u5ea7\u7ae0\u5e2e\u5566\u53d7\u7cfb\u4ee4\u8df3\u975e\u4f55\u725b\u53d6\u5165\u5cb8\u6562\u6389\u5ffd\u79cd\u88c5\u9876\u6025\u6797\u505c\u606f\u53e5\u533a\u8863\u822c\u62a5\u53f6\u538b\u6162\u53d4\u80cc\u7ec6&quot;;</span><br><span class="line">113         //数字和字母的组合</span><br><span class="line">114         String baseNumLetter = &quot;0123456789ABCDEFGHJKLMNOPQRSTUVWXYZ&quot;;</span><br><span class="line">115         //纯数字</span><br><span class="line">116         String baseNum = &quot;0123456789&quot;;</span><br><span class="line">117         //纯字母</span><br><span class="line">118         String baseLetter = &quot;ABCDEFGHJKLMNOPQRSTUVWXYZ&quot;;</span><br><span class="line">119         //createTypeFlag[0]==null表示没有传递参数</span><br><span class="line">120         if (createTypeFlag.length &gt; 0 &amp;&amp; null != createTypeFlag[0]) &#123;</span><br><span class="line">121             if (createTypeFlag[0].equals(&quot;ch&quot;)) &#123;</span><br><span class="line">122                 // 截取汉字</span><br><span class="line">123                 return createRandomChar(g, baseChineseChar);</span><br><span class="line">124             &#125;else if (createTypeFlag[0].equals(&quot;nl&quot;)) &#123;</span><br><span class="line">125                 // 截取数字和字母的组合</span><br><span class="line">126                 return createRandomChar(g, baseNumLetter);</span><br><span class="line">127             &#125;else if (createTypeFlag[0].equals(&quot;n&quot;)) &#123;</span><br><span class="line">128                 // 截取数字</span><br><span class="line">129                 return createRandomChar(g, baseNum);</span><br><span class="line">130             &#125;else if (createTypeFlag[0].equals(&quot;l&quot;)) &#123;</span><br><span class="line">131                 // 截取字母</span><br><span class="line">132                 return createRandomChar(g, baseLetter);</span><br><span class="line">133             &#125;</span><br><span class="line">134         &#125;else &#123;</span><br><span class="line">135             // 默认截取数字和字母的组合</span><br><span class="line">136             return createRandomChar(g, baseNumLetter);</span><br><span class="line">137         &#125;</span><br><span class="line">138         </span><br><span class="line">139         return &quot;&quot;;</span><br><span class="line">140     &#125;</span><br><span class="line">141 </span><br><span class="line">142     /**</span><br><span class="line">143      * 创建随机字符</span><br><span class="line">144      * @param g</span><br><span class="line">145      * @param baseChar</span><br><span class="line">146      * @return 随机字符</span><br><span class="line">147      */</span><br><span class="line">148     private String createRandomChar(Graphics2D g,String baseChar) &#123;</span><br><span class="line">149         StringBuffer sb = new StringBuffer();</span><br><span class="line">150         int x = 5;</span><br><span class="line">151         String ch =&quot;&quot;;</span><br><span class="line">152         // 控制字数</span><br><span class="line">153         for (int i = 0; i &lt; 4; i++) &#123;</span><br><span class="line">154             // 设置字体旋转角度</span><br><span class="line">155             int degree = new Random().nextInt() % 30;</span><br><span class="line">156             ch = baseChar.charAt(new Random().nextInt(baseChar.length())) + &quot;&quot;;</span><br><span class="line">157             sb.append(ch);</span><br><span class="line">158             // 正向角度</span><br><span class="line">159             g.rotate(degree * Math.PI / 180, x, 20);</span><br><span class="line">160             g.drawString(ch, x, 20);</span><br><span class="line">161             // 反向角度</span><br><span class="line">162             g.rotate(-degree * Math.PI / 180, x, 20);</span><br><span class="line">163             x += 30;</span><br><span class="line">164         &#125;</span><br><span class="line">165         return sb.toString();</span><br><span class="line">166     &#125;</span><br><span class="line">167 &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、在Form表单中使用验证码图片"><a href="#二、在Form表单中使用验证码图片" class="headerlink" title="二、在Form表单中使用验证码图片"></a>二、在Form表单中使用验证码图片</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> 1 &lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line"> 2 &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;</span><br><span class="line"> 3 &lt;html&gt;</span><br><span class="line"> 4   &lt;head&gt;</span><br><span class="line"> 5     &lt;title&gt;在Form表单中使用验证码&lt;/title&gt;</span><br><span class="line"> 6     &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"> 7     //刷新验证码</span><br><span class="line"> 8     function changeImg()&#123;</span><br><span class="line"> 9         document.getElementById(&quot;validateCodeImg&quot;).src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage?&quot;+Math.random();</span><br><span class="line">10     &#125;</span><br><span class="line">11     &lt;/script&gt;</span><br><span class="line">12   &lt;/head&gt;</span><br><span class="line">13   </span><br><span class="line">14   &lt;body&gt;</span><br><span class="line">15         &lt;form action=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/CheckServlet&quot; method=&quot;post&quot;&gt;</span><br><span class="line">16             验证码：&lt;input type=&quot;text&quot; name=&quot;validateCode&quot;/&gt;</span><br><span class="line">17             &lt;img alt=&quot;验证码看不清，换一张&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage&quot; id=&quot;validateCodeImg&quot; onclick=&quot;changeImg()&quot;&gt;</span><br><span class="line">18             &lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;changeImg()&quot;&gt;看不清，换一张&lt;/a&gt;</span><br><span class="line">19             &lt;br/&gt;</span><br><span class="line">20             &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">21         &lt;/form&gt;</span><br><span class="line">22   &lt;/body&gt;</span><br><span class="line">23 &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DrawImage Servlet除了可以生成的字母和数字的组合的验证码图片之外，还可以生成汉字，纯数字，纯字母的验证码图片，只需要向DrawImage Servlet传递约定好的生成标识符参数即可，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> 1 &lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line"> 2 &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;</span><br><span class="line"> 3 &lt;html&gt;</span><br><span class="line"> 4   &lt;head&gt;</span><br><span class="line"> 5     &lt;title&gt;在Form表单中使用验证码&lt;/title&gt;</span><br><span class="line"> 6     &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"> 7     //刷新验证码</span><br><span class="line"> 8     function changeImg(obj,createTypeFlag)&#123;</span><br><span class="line"> 9         document.getElementById(obj.id).src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage?createTypeFlag=&quot;+createTypeFlag+&quot;&amp;&quot;+Math.random();</span><br><span class="line">10     &#125;</span><br><span class="line">11     &lt;/script&gt;</span><br><span class="line">12   &lt;/head&gt;</span><br><span class="line">13   </span><br><span class="line">14   &lt;body&gt;</span><br><span class="line">15         &lt;form action=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/CheckServlet&quot; method=&quot;post&quot;&gt;</span><br><span class="line">16             数字字母混合验证码：&lt;input type=&quot;text&quot; name=&quot;validateCode&quot;/&gt;</span><br><span class="line">17             &lt;img alt=&quot;验证码看不清，换一张&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage&quot; id=&quot;validateCodeImg1&quot; onclick=&quot;changeImg(this,&apos;nl&apos;)&quot;&gt;</span><br><span class="line">18             &lt;br/&gt;</span><br><span class="line">19             中文验证码：&lt;input type=&quot;text&quot; name=&quot;validateCode&quot;/&gt;</span><br><span class="line">20             &lt;img alt=&quot;验证码看不清，换一张&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage?createTypeFlag=ch&quot; id=&quot;validateCodeImg2&quot; onclick=&quot;changeImg(this,&apos;ch&apos;)&quot;&gt;</span><br><span class="line">21             &lt;br/&gt;</span><br><span class="line">22             英文验证码：&lt;input type=&quot;text&quot; name=&quot;validateCode&quot;/&gt;</span><br><span class="line">23             &lt;img alt=&quot;验证码看不清，换一张&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage?createTypeFlag=l&quot; id=&quot;validateCodeImg3&quot; onclick=&quot;changeImg(this,&apos;l&apos;)&quot;&gt;</span><br><span class="line">24             &lt;br/&gt;</span><br><span class="line">25             数字验证码：&lt;input type=&quot;text&quot; name=&quot;validateCode&quot;/&gt;</span><br><span class="line">26             &lt;img alt=&quot;验证码看不清，换一张&quot; src=&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DrawImage?createTypeFlag=n&quot; id=&quot;validateCodeImg4&quot; onclick=&quot;changeImg(this,&apos;n&apos;)&quot;&gt;</span><br><span class="line">27             &lt;br/&gt;</span><br><span class="line">28             &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">29         &lt;/form&gt;</span><br><span class="line">30   &lt;/body&gt;</span><br><span class="line">31 &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、服务器端对form表单提交上来的验证码处理"><a href="#三、服务器端对form表单提交上来的验证码处理" class="headerlink" title="三、服务器端对form表单提交上来的验证码处理"></a><strong>三、服务器端对form表单提交上来的验证码处理</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> 1 package gacl.response.study;</span><br><span class="line"> 2 import java.io.IOException;</span><br><span class="line"> 3 import javax.servlet.ServletException;</span><br><span class="line"> 4 import javax.servlet.http.HttpServlet;</span><br><span class="line"> 5 import javax.servlet.http.HttpServletRequest;</span><br><span class="line"> 6 import javax.servlet.http.HttpServletResponse;</span><br><span class="line"> 7 /**</span><br><span class="line"> 8  * @author gacl</span><br><span class="line"> 9  * 服务器端接收到验证码后的处理</span><br><span class="line">10  */</span><br><span class="line">11 public class CheckServlet extends HttpServlet &#123;</span><br><span class="line">12     public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">13             throws ServletException, IOException &#123;</span><br><span class="line">14         String clientCheckcode = request.getParameter(&quot;validateCode&quot;);//接收客户端浏览器提交上来的验证码</span><br><span class="line">15         String serverCheckcode = (String) request.getSession().getAttribute(&quot;checkcode&quot;);//从服务器端的session中取出验证码</span><br><span class="line">16         if (clientCheckcode != null &amp;&amp; serverCheckcode != null &amp;&amp; clientCheckcode.equals(serverCheckcode)) &#123;//将客户端验证码和服务器端验证比较，如果相等，则表示验证通过</span><br><span class="line">17             System.out.println(&quot;验证码验证通过！&quot;);</span><br><span class="line">18         &#125;else &#123;</span><br><span class="line">19             System.out.println(&quot;验证码验证失败！&quot;);</span><br><span class="line">20         &#125;</span><br><span class="line">21     &#125;</span><br><span class="line">22 </span><br><span class="line">23     public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">24             throws ServletException, IOException &#123;</span><br><span class="line">25         doGet(request, response);</span><br><span class="line">26     &#125;</span><br><span class="line">27 </span><br><span class="line">28 &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          
+            <a href="/tags/Servlet/" rel="tag"># Servlet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/23/2019-09-23-JavaWeb4/" rel="next" title="JavaWeb4">
+                <i class="fa fa-chevron-left"></i> JavaWeb4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/26/2019-09-26-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/" rel="prev" title="Vue系列笔记1">
+                Vue系列笔记1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="Gsynf" />
+          <p class="site-author-name" itemprop="name">Gsynf</p>
+           
+              <p class="site-description motion-element" itemprop="description">顺风不浪，逆风不怂！形而上学，不行退学！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Gsynf" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:hupengfei@nssc.ac.cn" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建DrawImage-Servlet"><span class="nav-number">1.</span> <span class="nav-text">创建DrawImage Servlet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、创建DrawImage-Servlet"><span class="nav-number">2.</span> <span class="nav-text">一、创建DrawImage Servlet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、在Form表单中使用验证码图片"><span class="nav-number">3.</span> <span class="nav-text">二、在Form表单中使用验证码图片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、服务器端对form表单提交上来的验证码处理"><span class="nav-number">4.</span> <span class="nav-text">三、服务器端对form表单提交上来的验证码处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gsynf</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
