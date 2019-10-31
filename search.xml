@@ -3,7 +3,7 @@
   <entry>
     <title>综述：基于图的方法提取生物医学关系</title>
     <url>/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/</url>
-    <content><![CDATA[<h1 id="综述：基于图的方法提取生物医学关系"><a href="#综述：基于图的方法提取生物医学关系" class="headerlink" title="综述：基于图的方法提取生物医学关系"></a>综述：基于图的方法提取生物医学关系</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
 <p>2、关系提取和事件提取所用到的方法通常是一样的；</p>
 <p>3、基于图的方法将生物医学概念转换为节点，将语法/语义链接转换为边 ；</p>
 <p>4、生物医学领域一些知识库（有专家标注）：KEGG，STRING ，InterPro， InterDom，偏向临床的有PharmGKB， VARIMED， ClinVar；</p>
@@ -38,7 +38,7 @@
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用的综述主要讨论基于图的算法，而笔者更着重于机器学习的算法，所以这篇博客对文章中的方法不做过多的描述，更多着眼于生物医学关系提取的一些自然语言处理方法和一些公开的数据集。</p>
 ]]></content>
       <categories>
-        <category>Testing</category>
+        <category>文献阅读</category>
       </categories>
       <tags>
         <tag>NLP</tag>
