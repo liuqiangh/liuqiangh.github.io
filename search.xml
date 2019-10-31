@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>综述：基于图的方法提取生物医学关系</title>
+    <url>/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/</url>
+    <content><![CDATA[<h1 id="综述：基于图的方法提取生物医学关系"><a href="#综述：基于图的方法提取生物医学关系" class="headerlink" title="综述：基于图的方法提取生物医学关系"></a>综述：基于图的方法提取生物医学关系</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
+<p>2、关系提取和事件提取所用到的方法通常是一样的；</p>
+<p>3、基于图的方法将生物医学概念转换为节点，将语法/语义链接转换为边 ；</p>
+<p>4、生物医学领域一些知识库（有专家标注）：KEGG，STRING ，InterPro， InterDom，偏向临床的有PharmGKB， VARIMED， ClinVar；</p>
+<h2 id="生物医学关系提取的应用"><a href="#生物医学关系提取的应用" class="headerlink" title="生物医学关系提取的应用"></a>生物医学关系提取的应用</h2><p>生物分子信息提取,  临床试验筛选 ,  药物基因组学 ,  诊断分类 , 药物不良反应 ， 药物之间相互作用 </p>
+<p><img src="https://i.loli.net/2019/10/31/RMQgpCir5cPlK7e.png" alt=""></p>
+<h3 id="生物分子信息提取（Biomolecular-information-extraction）"><a href="#生物分子信息提取（Biomolecular-information-extraction）" class="headerlink" title="生物分子信息提取（Biomolecular information extraction）"></a>生物分子信息提取（Biomolecular information extraction）</h3><p> 挖掘蛋白质-蛋白质相互作用(protein protein interaction, PPIs)、基因表型关联、基因本体论和通路信息 ， 涉及的方法中有许多采用NLP方法从文献中提取已知的疾病基因关系，然后用于预测新的疾病基因关系 。</p>
+<h3 id="临床试验筛选（Clinical-trial-screening）"><a href="#临床试验筛选（Clinical-trial-screening）" class="headerlink" title="临床试验筛选（Clinical trial screening）"></a>临床试验筛选（Clinical trial screening）</h3><p> 临床试验在很大程度上以合格标准为特征，其中一些可以通过相关性来获得 （如no [diagnosis] for [rheumatoid arthritis] for at least [6 months]）， NLP支持已被证明在自动检测资格标准中的命名实体方面很有用，并进一步在提取命名实体之间的关系以描述资格标准方面很有用 。</p>
+<h3 id="药物基因组学（Pharmacogenomics）"><a href="#药物基因组学（Pharmacogenomics）" class="headerlink" title="药物基因组学（Pharmacogenomics）"></a><strong>药物基因组学</strong>（Pharmacogenomics）</h3><p> 药物基因组学的目的是通过研究药物反应表型和患者遗传变异之间的关系来了解不同患者对药物的反应。  这些知识中的大部分可以从科学文献中挖掘出来，并整理到数据库中，以便发现新的关系。其中一个数据库是药物基因学研究网络和知识库 （PharmGKB ）， 最近的方法已经扩展到使用语义和句法分析以及统计机器学习工具来从科学文献和临床记录中挖掘有针对性的药物基因组学关系 。</p>
+<h3 id="诊断分类（Diagnosis-categorization"><a href="#诊断分类（Diagnosis-categorization" class="headerlink" title="诊断分类（Diagnosis categorization)"></a>诊断分类（Diagnosis categorization)</h3><p>目前存在的已所开发的系统可以从电子病历(Electronic Medical Records, EMRs)中自动对诊断进行编码和分类。最近的工作证明了语义关系提取的成功，并将这些关系作为诊断分类的附加特征。</p>
+<h3 id="药物不良反应和药物之间相互作用-（ADR-and-DDI）"><a href="#药物不良反应和药物之间相互作用-（ADR-and-DDI）" class="headerlink" title="药物不良反应和药物之间相互作用 （ADR and DDI）"></a>药物不良反应和药物之间相互作用 （ADR and DDI）</h3><p> ADR指的是服用药物造成的意外伤害。DDI是指一种药物同时影响另一种药物的活性。ADR是发病和死亡的重要原因，DDIs可能导致药物疗效降低或药物过量。检测潜在的ADR和DDIs可以指导药物的开发过程。越来越多的方法使用NLP从科学文献和临床记录中挖掘信息。这些系统经常探索药物、基因和通路之间的关系，发现文本中陈述的ADRs和DDIs。近年来的大量研究也探索了社交网络中用户生成的内容，以检测ADR。</p>
+<h2 id="生物医学关系提取的通用方法"><a href="#生物医学关系提取的通用方法" class="headerlink" title="生物医学关系提取的通用方法"></a>生物医学关系提取的通用方法</h2><p><img src="https://i.loli.net/2019/10/31/lkqw72j9xMSheKm.png" alt=""></p>
+<p>Section recognition：段落识别，区分不同段落标题下的文本，比如“主诉”，既往病史。</p>
+<p>Sentence breaking： 断句，自动决定一个段落中句子的开头和结尾。 </p>
+<p>Typographical/morphological analysis：提取大小写以及字母数字的字符的特征。</p>
+<p>Stemming：词干提取，将单词还原为词根形式，如将performed变为perform。</p>
+<p>POS tagging： 为句子中的每个单词指定词性标记 。</p>
+<p>Parsing： 为一个句子分配句法结构，通常利用Stanford Parser获取constituency or dependency structure（两种语言结构）</p>
+<p>typographical analysis，stemming，POS tagging和parsing的结果可以为共指关系和概念的识别提供特征。其中共指关系指的是 自动识别表示同一个实体的名词短语或代词，并将他们归类， 例如：新闻报道中的<strong>巴拉克－奥巴马</strong>这个实体，有的时候是<strong>美国总统</strong>，有的时候是<strong>奥巴马</strong>, 而有的时候是<strong>第44任美国总统</strong>，甚至有的时候是一个简单的代词<strong>他</strong>。当这些名词短语或代词出现在一起时，我们根据我们已有的知识或者是上下文信息都清楚地知道它们指代的是同一个实体。</p>
+<p>graph mining在整个流程中扮演着一个中心概念的角色，它可以为连接局部特征（如tokens和词类标记）的方法提供一个收敛点，同时它的每一个分叉点代表着一个整合特征（如关系特征）被建立起来，最后它也是连接句法和语法特征的桥梁。</p>
+<h2 id="生物医学关系提取的图表示和图算法"><a href="#生物医学关系提取的图表示和图算法" class="headerlink" title="生物医学关系提取的图表示和图算法"></a>生物医学关系提取的图表示和图算法</h2><p>算法主要分为几类：</p>
+<p>1、识别概念对之间的最短路径（或其变体），可以用标准算法(如Dijkstra算法)来执行；</p>
+<p>2、 创建关联图，然后尝试对其应用定制的标签 ；</p>
+<p>3、 使用子图匹配来比较基于节点距离和边缘距离的子图之间的相似性; </p>
+<p>4、 进行频繁子图或子树模式挖掘，直接提取候选关系 </p>
+<p>5、 将图结构集成到解析器的学习目标中，直接解析句子中关系的图表示 </p>
+<h2 id="生物医学关系提取的信息来源"><a href="#生物医学关系提取的信息来源" class="headerlink" title="生物医学关系提取的信息来源"></a>生物医学关系提取的信息来源</h2><h3 id="科学文献"><a href="#科学文献" class="headerlink" title="科学文献"></a>科学文献</h3><p>著名的community challenges：BioNLP shared tasks（事件的提取）、BioCreative shared tasks（蛋白质之间关系的提取）、DDIExtraction challenges 2011 and 2013（药物之间关系的提取）</p>
+<p><img src="https://i.loli.net/2019/10/31/VrTi9tMSYhKac2D.png" alt=""></p>
+<h3 id="临床叙事文本"><a href="#临床叙事文本" class="headerlink" title="临床叙事文本"></a>临床叙事文本</h3><p>挑战：</p>
+<p>i2b2/VA-2010 challenge(i2b2—Informatics for Integrating Biology to the Bedside,VA—Veterans Association)：此挑战基于EMR文本数据，包括概念提取、assertion classification和关系分类</p>
+<p>SemEval 2015 Task 14：disorder identification（无序识别） and disorder slot filling tasks（与BioNLP的事件提取很像，但是在临床的子领域）</p>
+<h3 id="关系提取的共享资源"><a href="#关系提取的共享资源" class="headerlink" title="关系提取的共享资源"></a>关系提取的共享资源</h3><p><img src="https://i.loli.net/2019/10/31/aXhb1ulQW2JUGcm.png" alt=""></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用的综述主要讨论基于图的算法，而笔者更着重于机器学习的算法，所以这篇博客对文章中的方法不做过多的描述，更多着眼于生物医学关系提取的一些自然语言处理方法和一些公开的数据集。</p>
+]]></content>
+      <categories>
+        <category>Testing</category>
+      </categories>
+      <tags>
+        <tag>NLP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2019/10/24/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -17,6 +61,9 @@
 
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+      <categories>
+        <category>Testing</category>
+      </categories>
       <tags>
         <tag>标签</tag>
       </tags>
