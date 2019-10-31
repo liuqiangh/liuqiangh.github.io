@@ -36,6 +36,8 @@
 <p>SemEval 2015 Task 14：disorder identification（无序识别） and disorder slot filling tasks（与BioNLP的事件提取很像，但是在临床的子领域）</p>
 <h3 id="关系提取的共享资源"><a href="#关系提取的共享资源" class="headerlink" title="关系提取的共享资源"></a>关系提取的共享资源</h3><p><img src="https://i.loli.net/2019/10/31/aXhb1ulQW2JUGcm.png" alt=""></p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用的综述主要讨论基于图的算法，而笔者更着重于机器学习的算法，所以这篇博客对文章中的方法不做过多的描述，更多着眼于生物医学关系提取的一些自然语言处理方法和一些公开的数据集。</p>
+<p>参考文献</p>
+<p>[1] Luo Y , Özlem Uzuner, Szolovits P . Bridging semantics and syntax with graph algorithms-state-of-the-art of extracting biomedical relations[J]. Briefings in Bioinformatics, 2016, 18(1):160. </p>
 ]]></content>
       <categories>
         <category>文献阅读</category>
