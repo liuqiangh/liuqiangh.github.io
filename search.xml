@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>EliIE:一个符合临床试验合格标准的开源信息提取系统</title>
+    <url>/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h3 id="临床试验合格标准和规范化"><a href="#临床试验合格标准和规范化" class="headerlink" title="临床试验合格标准和规范化"></a>临床试验合格标准和规范化</h3><p>目前的一些规范化的工作需要耗费许多人力去设定句法规则以及符合要求的语法概念，而且这些工作的结果很多缺乏语义互操作性。</p>
+<p>OMOP CDM具有语义互操作性， 它通过使用通用信息模型和相关临床实体(如条件、观察和药物)的多个标准术语对数据进行标准化，从而支持不同的观察数据库之间的互操作性。但目前将EHR数据转为标准化的OMOP数据仍需手动操作，无法对大规模的数据快速操作。</p>
+<p>这篇文章构建了一个系统，该系统能够让计算机自动地庞大的EHR数据进行标准化处理，且使得各个观察性数据库彼此之间可相互操作。</p>
+<h3 id="生物医学信息提取的自然语言处理方法"><a href="#生物医学信息提取的自然语言处理方法" class="headerlink" title="生物医学信息提取的自然语言处理方法"></a>生物医学信息提取的自然语言处理方法</h3><p>Biomedical information extraction（Biomedical IE）主要包括三个子课题：（1）命名实体识别(NER)；（2）名字实体之间提取二元关系，如症状和治疗的关系、蛋白质间的相互关系；（3）事件抽取，即在提取的概念中找到复杂的关系，比如基因调控关系。</p>
+<p>Biomedical IE的方法大概有以下五种：基于规则的方法、基于知识的方法、基于统计学的方法、基于学习的方法以及混合的方法。CRFs和SVMs均属于基于学习的方法。i2b2（一个挑战中的数据集）上NER最好的结果是F1 score 0.85，关系提取最好的结果是0.74。</p>
+<p>词嵌入和深度学习技术在生物医学信息提取提取上也有很大的发展，但这些方法，包括上述所提到i的，都只被用于文献文本和EHRs中的临床notes，而没有被用于临床研究的EC自由文本中（<strong>到底有什么区别，目前还不是很懂？？</strong>）</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="数据集和标注"><a href="#数据集和标注" class="headerlink" title="数据集和标注"></a>数据集和标注</h3><p>从Clinical-Trials.gov上选择230例阿尔兹海默症的临床试验，提取其中的“eligibility criteria”部分的文本信息，进行标注，文本大小从100个words到超过1000个words不等。一个临床医生和两个学生对文本进行实体和属性的标注，并规定标注的指南。</p>
+<p>实体类型：condition,observation, drug/substance, and procedure or device，每个实体包含四类属性：modifiers/qualifiers,temporal constraints, measurements, and anatomic location。实体和属性之前也有关系，但是是单向的，如“modified by,” “has value”。所有的标注工作在一个软件（Brat）上进行，最终有8008个实体，3550个属性和3529个关系，下图为软件上的标注示例。</p>
+<p><img src="https://i.loli.net/2019/11/01/AE7xcDIZadSzuH9.png" alt=""></p>
+<h2 id="ElilE的系统结构"><a href="#ElilE的系统结构" class="headerlink" title="ElilE的系统结构"></a>ElilE的系统结构</h2><p><img src="https://i.loli.net/2019/11/01/pEyxG6v4kAeht1a.png" alt=""></p>
+<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p>EC文本中过滤掉一些在EHR筛选中用不到的规则，如知情同意书和患者意愿书。</p>
+<h3 id="Phase-1-CRF进行序列标注"><a href="#Phase-1-CRF进行序列标注" class="headerlink" title="Phase 1: CRF进行序列标注"></a>Phase 1: CRF进行序列标注</h3><p>实体和属性的标注一起进行，包括7个类别（4类实体和3类属性），使用BIO标签进行标注，如下所示。</p>
+<p><img src="https://i.loli.net/2019/11/01/lHou7IiGqe3M649.png" alt=""></p>
+<h3 id="Phase-2-否定检测"><a href="#Phase-2-否定检测" class="headerlink" title="Phase 2: 否定检测"></a>Phase 2: 否定检测</h3><p> 否定检测对于判断一个标准是用于包含还是用于排除非常重要。 该篇文章采用NegEx算法，在标注集中每个语句都被打上了肯定或者否定的标签。</p>
+<h3 id="Phase-3-关系提取"><a href="#Phase-3-关系提取" class="headerlink" title="Phase 3: 关系提取"></a>Phase 3: 关系提取</h3><p>在识别出的术语中进行关系提取（实体和属性之间的关系），采用基于径向基函数的SVM算法。</p>
+<p>下图为序列标注时用到的特征和关系提取时的标注准则。</p>
+<p><img src="https://i.loli.net/2019/11/01/zK3hvAUp7TcrMCx.png" alt=""></p>
+<h3 id="Phase-4-概念标准化和输出结构化"><a href="#Phase-4-概念标准化和输出结构化" class="headerlink" title="Phase 4: 概念标准化和输出结构化"></a>Phase 4: 概念标准化和输出结构化</h3><p>参照OMOP CDM</p>
+<h2 id="评价准则"><a href="#评价准则" class="headerlink" title="评价准则"></a>评价准则</h2><p>亘古不变的precision、recall和F1 score。即对每个任务进行评价，又对整体的端到端的结果进行评价。</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>数据集的一些描述性统计结果如下。</p>
+<p><img src="https://raw.githubusercontent.com/liuqiangh/picGo/master/img/20191101155747.png" alt=""></p>
+<p>通过实验，确定训练集的大小</p>
+<p><img src="https://i.loli.net/2019/11/01/XZlFuHtLQxWjyN9.png" alt=""></p>
+<p>实体和属性的识别结果如下，总计了许多方法，包括CRF的选取的不同特征，其他文献中的方法等等。</p>
+<p><img src="https://i.loli.net/2019/11/01/RJfaHimtWMdQZsz.png" alt=""></p>
+<p>关系提取的结果表现如下。</p>
+<p><img src="https://i.loli.net/2019/11/01/fqOBPCvWjIRc4GD.png" alt=""></p>
+<p>整个系统的评价结果如下。</p>
+<p><img src="https://i.loli.net/2019/11/01/q9pDYmRvS81deOW.png" alt=""></p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>1、文章讨论了该系统的五个优势，笔者认为五个中最重要的一个就是该系统可实现多个任务，是一个综合性的生物医学信息提取系统，而目前很多基于机器学习的方法都只能实现一个任务。</p>
+<p>（但这篇文章因为有多个子任务，所以对每个子任务讨论研究得都不够透彻，基本上用的是一些传统的方法，细节度不够。）</p>
+<p>2、对文本进行标注时指南不够细致，对概念的颗粒度没有明确要求。</p>
+<p>3、泛化性能差，可能对其他领域的疾病不适用。</p>
+<p>4、实体和实体之间（而不是属性）没有提取到关系。</p>
+]]></content>
+      <categories>
+        <category>文献阅读</category>
+      </categories>
+      <tags>
+        <tag>Biomedical information extraction</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>综述：基于图的方法提取生物医学关系</title>
     <url>/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
@@ -43,7 +88,7 @@
         <category>文献阅读</category>
       </categories>
       <tags>
-        <tag>NLP</tag>
+        <tag>Biomedical information extraction</tag>
       </tags>
   </entry>
   <entry>
