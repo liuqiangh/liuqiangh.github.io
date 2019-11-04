@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, liuqiangh" />
+  <meta name="keywords" content="vue," />
 
 
 
@@ -94,14 +94,23 @@
 
 
 
-<meta name="description" content="顺风不浪，逆风不怂！形而上学，不行退学！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="liuqiangh | My Blog">
-<meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;index.html">
+<meta name="description" content="学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。   同一个项目中可能有多个js，这样就存在全局变量重名的问题，虽然通过函数闭包可以解决，但是又导致了不同js之间代码不可复用，所以就有了模块化的概念； 常用的模块化规范：CommonJS、AMD、CMD、ES6的Modules; CommonJS导出写法：  1234567&#x2F;">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue系列笔记3">
+<meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;2019&#x2F;10&#x2F;10&#x2F;2019-10-10-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B03&#x2F;index.html">
 <meta property="og:site_name" content="liuqiangh | My Blog">
-<meta property="og:description" content="顺风不浪，逆风不怂！形而上学，不行退学！">
+<meta property="og:description" content="学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。   同一个项目中可能有多个js，这样就存在全局变量重名的问题，虽然通过函数闭包可以解决，但是又导致了不同js之间代码不可复用，所以就有了模块化的概念； 常用的模块化规范：CommonJS、AMD、CMD、ES6的Modules; CommonJS导出写法：  1234567&#x2F;">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;11&#x2F;I7D6mBGlnfUhOxj.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;12&#x2F;eTxIybH9tGXiCz4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;12&#x2F;diyYvSRof14FgCI.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;13&#x2F;qBbNAZ9kwSX5oml.png">
+<meta property="og:image" content="c:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570934287208.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;13&#x2F;5MzCDKqNBlLSZiG.png">
+<meta property="og:updated_time" content="2019-10-23T14:03:06.019Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2019&#x2F;10&#x2F;11&#x2F;I7D6mBGlnfUhOxj.png">
 
 
 
@@ -130,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="https://liuqiangh.github.io/"/>
+  <link rel="canonical" href="https://liuqiangh.github.io/2019/10/10/2019-10-10-Vue系列笔记3/"/>
 
 
 
 
 
-  <title>liuqiangh | My Blog</title>
+  <title>Vue系列笔记3 | liuqiangh | My Blog</title>
   
 
 
@@ -161,9 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
     <a href="https://github.com/liuqiangh" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -291,9 +298,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -306,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/">
+    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/10/10/2019-10-10-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="liuqiangh">
@@ -323,9 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/" itemprop="url">EliIE:一个符合临床试验合格标准的开源信息提取系统</a></h1>
+          <h1 class="post-title" itemprop="name headline">Vue系列笔记3</h1>
         
 
         <div class="post-meta">
@@ -337,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T19:46:40+08:00">
-                2019-11-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T00:00:00+08:00">
+                2019-10-10
               </time>
             
 
@@ -348,39 +353,22 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">文献阅读</span>
-                  </a>
-                </span>
 
-                
-                
-              
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
             </span>
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
             <div class="post-wordcount">
               
                 
@@ -391,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  2k
                 </span>
               
 
@@ -407,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  4
+                  7
                 </span>
               
             </div>
@@ -428,19 +416,221 @@
       
 
       
-        
-          
-          引言临床试验合格标准和规范化目前的一些规范化的工作需要耗费许多人力去设定句法规则以及符合要求的语法概念，而且这些工作的结果很多缺乏语义互操作性。
-OMOP CDM具有语义互操作性， 它通过使用通用信息模型和相关临床实体(如条件、观察和药物)的多个标准术语对数据进行标准化，从而支持不同的观察数据库之间
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>同一个项目中可能有多个js，这样就存在全局变量重名的问题，虽然通过函数闭包可以解决，但是又导致了不同js之间代码不可复用，所以就有了模块化的概念；</li>
+<li>常用的模块化规范：CommonJS、AMD、CMD、ES6的Modules;</li>
+<li>CommonJS导出写法：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//aaa.js</span><br><span class="line">modules.exports = &#123;</span><br><span class="line">	//要导出的部分</span><br><span class="line">	flag,</span><br><span class="line">	sum,</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CommonJS导入写法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var/let &#123;flag,sum&#125; = require(&apos;./aaa.js&apos;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>ES6的modules：首先在html代码中要引入js文件，并且类型设置为module，然后在要导出的js文件中使用export指令导出模块对外提供的接口，在要引入的js文件中通过import命令来加载。</li>
+<li>遇到本地Ajax跨域报错Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https.原因在于使用了File协议，应该使用它提示的http, data, chrome, chrome-extension, https这些协议。使用webstorm或是visual studio这种重量级的IDE，应该不会遇到这种问题，这类IDE都内置了HTTP服务器。针对VSCode，可以安装<strong>Live Server</strong>插件，这个插件功能十分强大，不止可以解决ajax不支持file协议的问题，还可以实现在编辑器里保存修改后，页面自动刷新的功能。</li>
+<li>什么是webpack，从本质上讲，webpack是一个现代的JavaScript应用的静态模块打包工具，分两点来讲，就是模块和打包。webpack其中一个核心就是让我们可以进行模块化开发，并且帮助我们处理模块间的依赖关系；打包就是将webpack中的各种资源模块进行打包合并成一个或多个包，并且在打包过程中，还可以对资源进行处理，例如压缩图片，ES5转成ES6等；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/11/I7D6mBGlnfUhOxj.png" alt=""></p>
+<ol start="7">
+<li><p>grunt/gulp的核心是Task，更加强调的是前端流程的自动化，模块化不是它的核心；webpack更加强调模块化的开发管理，而grunt/gulp的文件压缩合并、预处理、转换等功能只是它附带的功能；</p>
+</li>
+<li><p>webpack为了正常运行，必须依赖node环境，node环境为了可以正常执行很多代码，其中必须包含各种依赖的包，为了便于安装管理这些包，需要npm（node package manager）工具。</p>
+</li>
+<li><p>全局安装webpack</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack@3.6.0 -g</span><br></pre></td></tr></table></figure>
+
+<p>但是一般情况下，每个项目都要局部安装自己所对应需要的webpack</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack@3.6.0 --save-dev</span><br><span class="line">//--save-dev安装的是开发时依赖，而不是运行时依赖，这个安装完成后在package.json可以看出来</span><br><span class="line">//–save 将依赖包名称添加到 package.json 文件的 dependencies 键下</span><br><span class="line">//–save-dev 则添加到 package.json 文件的 devDependencies 键下</span><br></pre></td></tr></table></figure>
+
+<p>然后需要在npm init创建的package.json中加入，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这样，在终端输入npm run dev即可，而且优先使用本地webpack而非全局。</p>
+</li>
+<li><p>loader是webpack中一个非常核心的概念，webpack可以处理JS代码和相互之间的依赖，但在开发中，不仅仅有基础的JS代码，还有CSS、图片加载、将高级的ES6转化为ES5等，此时就需要给webpack扩展对应的loader：</p>
+</li>
+</ol>
+<ul>
+<li>通过npm安装所需要的loader</li>
+<li>在webpack.config.js中的modules关键字中进行配置</li>
+<li>具体安装什么loader可以在webpack官方文档进行查询</li>
+</ul>
+<ol start="11">
+<li><p>plugin时webpack中另一个重要的核心，webpack中的插件，就是对webpack现有功能的各种扩展，比如打包优化，文件压缩等，loader主要用于转换某些类型的模块，它是一个转换器，plugin是插件，它是对webpack本身的扩展，是一个扩展器。</p>
+</li>
+<li><p>webpack配置文件的分离，再weback.config.js中，许多配置只是在开发中用到，在实际发布时并不需要，所以最好将这些配置抽离出来，便于后期管理：</p>
+</li>
+</ol>
+<ul>
+<li>创建base.config,js/dev.config.js/prod.config.js，将weback.config.js中内容进行分离，npm install webpack-merge –save-dev安装js合并工具，接下来</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//dev.config.js</span><br><span class="line">const WebpackMerge = require(&apos;webpack-merge&apos;)</span><br><span class="line">const baseConfig = require(&apos;./base.config&apos;)</span><br><span class="line"></span><br><span class="line">module.exports = WebpackMerge(baseConfig,&#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">      contentBase: &apos;./dist&apos;,</span><br><span class="line">      inline: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在package.json中指定一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack --config ./build/prod.config.js&quot;,</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ol start="13">
+<li><p>使用vue开发大型项目，需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等，为了提高效率，通常会用到一些脚手架工具来帮助完成，CLI是Command-Line Interface，翻译为命令行界面，俗称脚手架。使用vue-cli可以快速搭建Vue开发环境以及对应的webpack配置。</p>
+</li>
+<li><p>e2e–&gt;e to e –&gt;end to end</p>
+</li>
+<li><p>Vue CLI2新建项目</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack my-project</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/10/12/eTxIybH9tGXiCz4.png" alt=""></p>
+<ol start="16">
+<li><p>脚手架安装了ESlint如何关闭：config==&gt;index==&gt;useEslint改为false，重新编译一下项目;</p>
+</li>
+<li><p>Vue程序运行过程</p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/12/diyYvSRof14FgCI.png" alt=""></p>
+<ol start="18">
+<li><ul>
+<li><p>runtime-compiler—&gt;代码中可以有template</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// template -&gt; ast -&gt; render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: &apos;&lt;App/&gt;&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* runtime-only---&gt;代码中不可以有任何的template，性能更好，代码量更少，少6KB。
+
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+​    </code></pre><ol start="19">
+<li>npm run build/dev具体执行示意</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/13/qBbNAZ9kwSX5oml.png" alt=""></p>
+<p><img src="C:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570934287208.png" alt="1570934287208"></p>
+<ol start="20">
+<li>Vue CLI3 创建项目</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create my-vue-project</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/10/13/5MzCDKqNBlLSZiG.png" alt=""></p>
+<ol start="21">
+<li><p>Vue CLI3管理配置文件及其他可以通过vue ui命令启动GUI界面进行可视化管理；</p>
+<p>Vue CLI3的配置文件其实并不是没有，而是“隐藏”起来了，在node_modules-&gt;@vue-&gt;cli-service;</p>
+<p>若要修改，可在工程目录下创建vue.config.js：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会自动将手动的配置和默认的配置进行合并。</p>
+</li>
+<li><p>前端渲染和后端渲染/前端路由和后端路由：</p>
+</li>
+</ol>
+<ul>
+<li>早期，服务器收到URL通过正则进行匹配，交给Controller进行处理，利用JSP等技术，直接生产渲染好对应的HTML页面，不仅有html、css，还有获取数据的java代码，返回给客户端进行展示，这就是后端渲染，在后端处理URL和页面之间的映射关系，即后端路由；</li>
+<li>随着Ajax出现，有了前后端分离的开发模式，客户端通过URL发起请求，去静态资源服务器请求资源，请求回的资源包括html+css+js，前两者浏览器进行渲染，js浏览器执行，执行到API接口时，再去请求提供API接口的服务器，请求回之后由其他js代码进行处理，这就是前端渲染；</li>
+<li>再发展就是单页面富应用阶段，最主要的特点就是在前后端分离的基础上加了一层前端路由，整个网站只有一个html页面，浏览器向静态资源网站请求时将所有资源全部请求下来，前端路由监听浏览器，当URL改变，就将请求的全部资源进行抽离但不进行页面整体刷新也就是不再进行新的请求，显示该显示的部分，也就是一个网页，这种一个URL和一个网页的映射就是前端路由；</li>
+</ul>
+<ol start="23">
+<li>如何改变URL而页面不刷新呢？有两种方法，一种为利用URL的hash，另一种为html5的history模式。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//Console</span><br><span class="line">&gt;location.hash = &apos;foo&apos;</span><br><span class="line">&gt;history.pushState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;) //这个push有点类似于入栈，history.back()或者history.go(-1)或者history.forward()或者浏览器返回类似于出栈</span><br><span class="line">&gt;history.replaceState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;)//很明显，相比于上，这个直接是代替</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+
       
     </div>
     
@@ -455,375 +645,40 @@ OMOP CDM具有语义互操作性， 它通过使用通用信息模型和相关�
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liuqiangh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuqiangh | My Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/" itemprop="url">综述：基于图的方法提取生物医学关系</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T16:47:43+08:00">
-                2019-10-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">文献阅读</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/vue/" rel="tag"># vue</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  1.6k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          引言1、关系提取比命名实体识别要困难很多，accuracy不高；
-2、关系提取和事件提取所用到的方法通常是一样的；
-3、基于图的方法将生物医学概念转换为节点，将语法/语义链接转换为边 ；
-4、生物医学领域一些知识库（有专家标注）：KEGG，STRING ，InterPro， InterDom，偏向临
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/08/2019-10-08-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/" rel="next" title="Vue系列笔记2">
+                <i class="fa fa-chevron-left"></i> Vue系列笔记2
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/10/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liuqiangh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuqiangh | My Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/24/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T15:22:30+08:00">
-                2019-10-24
-              </time>
+              <a href="/2019/10/14/2019-10-14-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B04/" rel="prev" title="Vue系列笔记4">
+                Vue系列笔记4 <i class="fa fa-chevron-right"></i>
+              </a>
             
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  73
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/24/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -833,331 +688,11 @@ OMOP CDM具有语义互操作性， 它通过使用通用信息模型和相关�
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/10/18/2019-10-18-vscode%E4%BD%BF%E7%94%A8editorconfig/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liuqiangh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuqiangh | My Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/18/2019-10-18-vscode%E4%BD%BF%E7%94%A8editorconfig/" itemprop="url">vscode使用editorconfig</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-18T00:00:00+08:00">
-                2019-10-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  359
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-           EditorConfig  是一个名称为.editorconfig的自定义文件。 文件中的设置用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE 。 该文件用来定义项目的编码规范，编辑器的行为会与.editorconfig 文
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/18/2019-10-18-vscode%E4%BD%BF%E7%94%A8editorconfig/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liuqiangh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuqiangh | My Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/" itemprop="url">Vue系列笔记5</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T00:00:00+08:00">
-                2019-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  1.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。
-
-
-Vuex是一个专为Vue.js专用程序开发的状态管理模式。其实，可以简单的将其看作把需要多个组件共享的变量全部存储到一个对象里面，然后，将这个对象放在顶层的Vue实例中，让
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
-  </nav>
 
 
           </div>
@@ -1165,6 +700,10 @@ Vuex是一个专为Vue.js专用程序开发的状态管理模式。其实，可�
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -1407,10 +946,10 @@ Vuex是一个专为Vue.js专用程序开发的状态管理模式。其实，可�
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 

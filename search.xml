@@ -115,4 +115,743 @@
         <tag>标签</tag>
       </tags>
   </entry>
+  <entry>
+    <title>vscode使用editorconfig</title>
+    <url>/2019/10/18/2019-10-18-vscode%E4%BD%BF%E7%94%A8editorconfig/</url>
+    <content><![CDATA[<p> EditorConfig  是一个名称为.editorconfig的自定义文件。 文件中的设置用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE 。 该文件用来定义项目的编码规范，编辑器的行为会与.editorconfig 文件中定义的一致，并且其优先级比编辑器自身的设置要高，这在多人合作开发项目时十分有用而且必要 。 有些编辑器默认支持editorConfig，如webstorm；而有些编辑器则需要安装editorConfig插件，如ATOM、Sublime、VS Code等 。</p>
+<h1 id="配置-editorconfig"><a href="#配置-editorconfig" class="headerlink" title="配置.editorconfig"></a>配置.editorconfig</h1><p>参考，本人vuex项目的配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// .editorconfig </span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line">[*]</span><br><span class="line">charset = utf-8</span><br><span class="line">indent_style = space</span><br><span class="line">indent_size = 2</span><br><span class="line">end_of_line = lf</span><br><span class="line">insert_final_newline = true</span><br><span class="line">trim_trailing_whitespace = true</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装-EditorConfig扩展"><a href="#安装-EditorConfig扩展" class="headerlink" title="安装 EditorConfig扩展"></a>安装 EditorConfig扩展</h1><p> 在vscode里面安装EditorConfig 插件：</p>
+<p><img src="https://i.loli.net/2019/10/18/wByVis1cjQWFHxd.png" alt=""></p>
+<p> EditorConfig扩展的作用是读取第一步创建的editorconfig文件中定义的规则，并覆盖user/workspace settings中的对应配置 。</p>
+<h1 id="全局安装或局部安装"><a href="#全局安装或局部安装" class="headerlink" title="全局安装或局部安装"></a>全局安装或局部安装</h1><p>editorconfig依赖包(npm install -g editorconfig | npm install -D editorconfig)<br>安装editorconfig依赖包主要是因为EditorConfig依赖于editorconfig包，不安装的可能会导致EditorConfig无法正常解析我们在第一步定义的editorconfig文件使用</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>打开需要格式化的文件并手动格式化代码（shift+alt+f）</p>
+<p>（安装完毕一般自动就进行使用）</p>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>EditorConfig</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue系列笔记5</title>
+    <url>/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/</url>
+    <content><![CDATA[<blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>Vuex是一个专为Vue.js专用程序开发的状态管理模式。其实，可以简单的将其看作把需要多个组件共享的变量全部存储到一个对象里面，然后，将这个对象放在顶层的Vue实例中，让其他组件可以使用。而且最重要的是，这个对象是响应式的；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/16/s5lRSpZxtOwaGLy.png" alt=""></p>
+<ol start="2">
+<li>一般什么状态需要多个组件之间共享呢？例如用户的登录状态、用户名称、头像，例如商品的收藏、购物车中商品等；</li>
+<li>简单使用</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/store/index.js</span></span><br><span class="line"><span class="comment">// 1.安装插件</span></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.创建对象</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        counter: <span class="number">100</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        <span class="comment">// 方法</span></span><br><span class="line">        increament(state) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.counter++</span><br><span class="line">          &#125;,</span><br><span class="line">          decreament(state) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.counter--</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    getters: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    modules: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.导出store对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// APP.js</span></span><br><span class="line">……</span><br><span class="line">  methods: &#123;</span><br><span class="line">    addition() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$store.commit(<span class="string">'increament'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    subtraction() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$store.commit(<span class="string">'decreament'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+<p>Vuex的store状态的更新唯一方式：提交mutation，mutation中回调函数的第一个参数就是state，传递的参数可以在state后边，被称作载荷(Payload)。</p>
+<ol start="4">
+<li>Vuex五大核心：state、mutations、actions、getters、modules：其中state就是存储管理变量、mutations类似methods，其中定义一些方法，对状态变量进行操作，但是只能是同步、actions针对异步操作、getters类似于computed，对状态变量进行一些计算或者筛选、modules主要是对state进行分流，随着要管理的变量增加，state会越来越臃肿，但是Vuex要求单一状态树(单一数据源)，所以就可以利用modules进行分模块，每个模块里又可以定义上述state、mutations等；</li>
+<li>ES6新语法，对象的解构：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">	name: <span class="string">'gsynf'</span>,</span><br><span class="line">	age: <span class="number">18</span>,</span><br><span class="line">	height: <span class="number">1.88</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const name = obj.name;</span></span><br><span class="line"><span class="comment">// const age = obj.age;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;name, age&#125; = obj</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Vue中发送网络请求有很多方式：<ul>
+<li>传统的Ajax是基于XMLHttpRequest（XHR）；</li>
+<li>比传统的Ajax更好用的jQuery-Ajax;</li>
+<li>官方在Vue1.x时期，推出了Vue-resource；</li>
+<li>在宣布Vue-resource不再维护时，推荐了axios；</li>
+</ul>
+</li>
+<li>使用JSONP最主要的原因是为了解决跨域访问的问题；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/17/hoG4mk1qQUCLbf6.png" alt=""></p>
+<ol start="8">
+<li>axios功能特点：</li>
+</ol>
+<ul>
+<li>在浏览器中发送XMLHttpRequests请求；</li>
+<li>在node.js中发送http请求；</li>
+<li>支持Promise API；</li>
+<li>拦截请求和响应；</li>
+<li>转换请求和响应数据；</li>
+</ul>
+<ol start="9">
+<li>axios最基本的使用：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// 1.基本使用</span><br><span class="line">// axios(config)</span><br><span class="line">axios(&#123;</span><br><span class="line">  url: &apos;httpbin.org/&apos;</span><br><span class="line">  // 默认就是get</span><br><span class="line">  method: &apos;GET&apos;</span><br><span class="line">&#125;).then(res =&gt; &#123;</span><br><span class="line">  console.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// axios.get(&apos;httpbin.org/&apos;).then(res =&gt; &#123;</span><br><span class="line">//   console.log(res);</span><br><span class="line">// &#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>发送并发请求可以使用axios.all([])，传入的参数和返回的结果都是一个数组。传入参数的数组内每个对象就是上述每个单一的axios请求。</li>
+<li>axios常见配置选项：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">请求地址</span><br><span class="line">url: &apos;/user&apos;,</span><br><span class="line"></span><br><span class="line">请求类型</span><br><span class="line">method: &apos;get&apos;,</span><br><span class="line"></span><br><span class="line">请根路径</span><br><span class="line">baseURL: &apos;http://www.mt.com/api&apos;,</span><br><span class="line"></span><br><span class="line">请求前的数据处理</span><br><span class="line">transformRequest:[function(data)&#123;&#125;],</span><br><span class="line"></span><br><span class="line">请求后的数据处理</span><br><span class="line">transformResponse: [function(data)&#123;&#125;],</span><br><span class="line"></span><br><span class="line">自定义的请求头</span><br><span class="line">headers:&#123;&apos;x-Requested-With&apos;:&apos;XMLHttpRequest&apos;&#125;,</span><br><span class="line"></span><br><span class="line">URL查询对象</span><br><span class="line">params:&#123; id: 12 &#125;,</span><br><span class="line"></span><br><span class="line">查询对象序列化函数</span><br><span class="line">paramsSerializer: function(params)&#123; &#125;</span><br><span class="line"></span><br><span class="line">request body</span><br><span class="line">data: &#123; key: &apos;aa&apos;&#125;,</span><br><span class="line"></span><br><span class="line">超时设置s</span><br><span class="line">timeout: 1000,</span><br><span class="line"></span><br><span class="line">跨域是否带Token</span><br><span class="line">withCredentials: false,</span><br><span class="line"></span><br><span class="line">自定义请求处理</span><br><span class="line">adapter: function(resolve, reject, config)&#123;&#125;,</span><br><span class="line"></span><br><span class="line">身份验证信息</span><br><span class="line">auth: &#123; uname: &apos;&apos;, pwd: &apos;12&apos;&#125;,</span><br><span class="line"></span><br><span class="line">响应的数据格式 json / blob /document /arraybuffer / text / stream</span><br><span class="line">responseType: &apos;json&apos;,</span><br></pre></td></tr></table></figure>
+
+<ol start="12">
+<li>意识：凡是对第三方框架，都不要在每一个组件内都加入依赖，这样一旦第三方框架停止维护，整个项目的维护将是一个巨大的工程，一般都要将对第三方框架进行一个封装。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// network/request.js</span><br><span class="line">export function request(config) &#123;</span><br><span class="line">    // 1. 创建axios实例</span><br><span class="line">    const instance = axios.create(&#123;</span><br><span class="line">        baseURL: &apos;http://123.207.32.32:8000/api/v1&apos;,</span><br><span class="line">        timeout: 5000</span><br><span class="line">    &#125;)</span><br><span class="line">    // 2.发送真正的网络请求</span><br><span class="line">    return instance(config)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">request(&#123;</span><br><span class="line">  url: &apos;/home/multidata&apos;,</span><br><span class="line">&#125;).then(res =&gt; &#123;</span><br><span class="line">  console.log(res);</span><br><span class="line">  </span><br><span class="line">&#125;).catch(err =&gt; &#123;</span><br><span class="line">  console.log(err);</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="13">
+<li>axios提供了拦截器，用于在发送每次请求或者得到响应后，进行对应的处理；</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//1 请求拦截</span><br><span class="line">instance.interceptors.request.use(config =&gt; &#123;</span><br><span class="line">    console.log(config);</span><br><span class="line">    // 1.比如config中的一些信息不符合服务器的要求</span><br><span class="line">    // 2.比如每次发送网络请求时，在界面显示一个请求图标</span><br><span class="line">    // 3.某些网络请求，例如登录（token），必须携带一些特殊的信息</span><br><span class="line">    return config</span><br><span class="line">&#125;, err =&gt; &#123;</span><br><span class="line">    console.log(err);   </span><br><span class="line">&#125;);</span><br><span class="line">// 2 响应拦截</span><br><span class="line">instance.interceptors.response.use(res =&gt; &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">    return res.data</span><br><span class="line">&#125;, err =&gt; &#123;</span><br><span class="line">    console.log(err);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于npm audit fix</title>
+    <url>/2019/10/16/2019-10-16-%E5%85%B3%E4%BA%8Enpm%20audit%20fix/</url>
+    <content><![CDATA[<p> 其实之前也遇到过，一直没注意，今天安装vuex，<code>npm install vuex --save</code>出现如下提醒 </p>
+<p><img src="https://i.loli.net/2019/10/16/SJFRPQtyCkHgx4D.png" alt=""></p>
+<p> 执行 <code>npm audit fix</code>  </p>
+<p><img src="https://i.loli.net/2019/10/16/YkSTBdZgepCRDIW.png" alt=""></p>
+<p>出于好奇，从npm官网上查阅了对于<strong>npm audit fix</strong>的相关介绍。 npm@6 的一大更新是新增了 <code>npm audit</code> 命令 ,  <code>npm aduit</code> 主要动作就是在 <code>npm install</code> 完成之后把需要检查的包的信息发送给一个官方接口, 再根据返回信息生成一个包含包名称、漏洞严重性、简介, 路径等的报告。 该命令会在项目中更新或者下载新的依赖包之后会自动运行，如果你在项目中使用了具有已知安全问题的依赖，就收到官方的警告通知。 </p>
+<p> ps. 一般不要直接运行 <code>--force</code> ，对于没能自动修复的问题，说明肯定出现了 <code>SEMVER WARNING</code> 之类的警告，这意味着推荐的修复版本存在让代码出问题的可能，主要发生在依赖包更改了 API 或者升级了大版本的情况下（semantic version major change）。这时候就需要格外的小心甚至需要改动一些自己的代码了。 </p>
+<p>其他一些具体命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 扫描项目漏洞把不安全的依赖项自动更新到兼容性版本</span><br><span class="line">npm audit fix</span><br><span class="line"></span><br><span class="line"># 在不修改 node_modules 的情况下执行 audit fix，仍然会更改 pkglock</span><br><span class="line">npm audit fix --package-lock-only</span><br><span class="line"></span><br><span class="line"># 跳过更新 devDependencies</span><br><span class="line">npm audit fix --only=prod</span><br><span class="line"></span><br><span class="line"># 强制执行 audit fix 安装最新的依赖项（toplevel）</span><br><span class="line">npm audit fix --force</span><br><span class="line"></span><br><span class="line"># 单纯的获取 audit fix 会做的事，并以 json 格式输出。</span><br><span class="line">npm audit fix --dry-run --json</span><br><span class="line"></span><br><span class="line"># 获取详情</span><br><span class="line">npm audit</span><br><span class="line"></span><br><span class="line"># 以 JSON 格式打印报告</span><br><span class="line">npm audit --json</span><br></pre></td></tr></table></figure>
+
+<p>至于如何关闭安全检查，可以采用以下方式：</p>
+<ul>
+<li>安装单个包关闭安全审查: <code>npm install example-package-name --no-audit</code></li>
+<li>安装所有包关闭安全审查 - 运行 <code>npm set audit false</code> - 手动将 <code>~/.npmrc</code> 配置文件中的 <code>audit</code> 修改为 <code>false</code></li>
+</ul>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>npm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue系列笔记4</title>
+    <url>/2019/10/14/2019-10-14-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B04/</url>
+    <content><![CDATA[<blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>前端渲染和后端渲染/前端路由和后端路由：</li>
+</ol>
+<ul>
+<li>早期，服务器收到URL通过正则进行匹配，交给Controller进行处理，利用JSP等技术，直接生产渲染好对应的HTML页面，不仅有html、css，还有获取数据的java代码，返回给客户端进行展示，这就是后端渲染，在后端处理URL和页面之间的映射关系，即后端路由；</li>
+<li>随着Ajax出现，有了前后端分离的开发模式，客户端通过URL发起请求，去静态资源服务器请求资源，请求回的资源包括html+css+js，前两者浏览器进行渲染，js浏览器执行，执行到API接口时，再去请求提供API接口的服务器，请求回之后由其他js代码进行处理，这就是前端渲染；</li>
+<li>再发展就是单页面富应用阶段，最主要的特点就是在前后端分离的基础上加了一层前端路由，整个网站只有一个html页面，浏览器向静态资源网站请求时将所有资源全部请求下来，前端路由监听浏览器，当URL改变，就将请求的全部资源进行抽离但不进行页面整体刷新也就是不再进行新的请求，显示该显示的部分，也就是一个网页，这种一个URL和一个网页的映射就是前端路由；</li>
+</ul>
+<ol start="2">
+<li>如何改变URL而页面不刷新呢？有两种方法，一种为利用URL的hash，另一种为html5的history模式。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//Console</span><br><span class="line">&gt;location.hash = &apos;foo&apos;</span><br><span class="line">&gt;history.pushState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;) //这个push有点类似于入栈，history.back()或者history.go(-1)或者history.forward()或者浏览器返回类似于出栈</span><br><span class="line">&gt;history.replaceState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;)//很明显，相比于上，这个直接是代替，不会留下history记录</span><br></pre></td></tr></table></figure>
+
+<p>Vue默认使用hash，但是会发现hash的URL会有#，看起来不是很舒服，可以改为history模式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">routes: [</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;&apos;,</span><br><span class="line">    // redirect 重定向</span><br><span class="line">    redirect: &apos;/home&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;/home&apos;,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;/about&apos;,</span><br><span class="line">    component: About</span><br><span class="line">  &#125;,    </span><br><span class="line">],</span><br><span class="line">mode: &apos;history&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>&lt;router-link&gt;该标签是vue-router中已经内置的一个标签，会被渲染成&lt;a&gt;标签，&lt;router-view&gt;该标签根据当前的路径，动态渲染不同组件，当路由切换，切换的是&lt;router-view&gt;挂载的组件，其他内容不会发送改变。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//App.vue</span><br><span class="line">  &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;router-link to=&quot;/home&quot;&gt;首页&lt;/router-link&gt;</span><br><span class="line">    &lt;router-link to=&quot;/about&quot;&gt;关于&lt;/router-link&gt;</span><br><span class="line">    &lt;router-view/&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&lt;router-link&gt;除了to属性，还有其他属性，例如tag属性，可以决定它会被渲染成除a意外的其他什么组件；replace属性，不会留下history记录，后退返回键不能用，也就是将默认的pushState改为了replaceState；active-class属性，当对应路由匹配成功，某组件会处于活跃状态，会自动给该元素设置一个router-link-active的class，active-class可以改这个class名字，但一般不做修改；</p>
+<ol start="4">
+<li><p>项目打包后会在dist文件夹下看到static/index.html，其中，static文件夹下有css/js，css文件夹下是将各个vue的css代码进行整合，js文件夹下有三个js文件，分别为app.js/manifest.js/vendor.js，分别是当前应用开发的所有业务代码、为了打包代码做的底层支撑代码、第三方（供应商）代码，如vue/axios/bs等；</p>
+</li>
+<li><p>随着业务逻辑的增多，会使得打包的app.js越来越大，这样用户请求加载时间变长，所以需要用到懒加载，一般一个vue打包成一个js，用到时才加载</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//router/index.js</span><br><span class="line"></span><br><span class="line">// import Home from &apos;../components/Home.vue&apos;</span><br><span class="line">// import About from &apos;../components/About.vue&apos;</span><br><span class="line">// import User from &apos;../components/User.vue&apos;</span><br><span class="line"></span><br><span class="line">// 懒加载</span><br><span class="line">const Home = () =&gt; import(&apos;../components/Home.vue&apos;)</span><br><span class="line">const About = () =&gt; import(&apos;../components/About.vue&apos;)</span><br><span class="line">const User = () =&gt; import(&apos;../components/User.vue&apos;)</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>路由传递参数：params类型和query类型</li>
+</ol>
+<ul>
+<li>前者就是动态路由的方法 <ul>
+<li>配置路由格式：/router/:id</li>
+<li>传递的方式：在path后面跟上对应的值</li>
+<li>传递后形成的路径：/router/123，/user/gsynf</li>
+</ul>
+</li>
+<li>后者就是query<ul>
+<li>配置路由格式：/router</li>
+<li>传递的方式：对象中使用query的key作为传递方式</li>
+<li>传递后形成的路径：/router?id=123，/user?id=gsynf</li>
+</ul>
+</li>
+</ul>
+<ol start="7">
+<li>keep-alive是Vue内置的一个组件，可以使被包含的组件保留状态，或避免搭环境：它有两个非常重要的属性：<ul>
+<li>include-字符串或正则表达式，只有匹配的组件会被缓存</li>
+<li>exclude-字符串或正则表达式，任何匹配的组件都不会被缓存</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>router-view也是一个组件，如果直接被包在keep-alive里面，所有路径匹配到的视图组件都会被缓存；</li>
+</ul>
+<ol start="8">
+<li>Promise是ES6的新特性，是异步编程的一种解决方案。</li>
+<li>什么情况下会用到Promise？一般情况下是有异步操作尤其是比较复杂的数据请求时，使用Promise对这个异步操作进行封装。执行过程，在new Promise时，会执行构造函数，一方面保存了一些状态信息，另一方面会执行传入的函数，在执行传入的回调函数时，会传入两个参数，resolve和reject，这两个参数本身又是函数，一旦调用resolve，就跳到then()，一旦调用reject，就跳到catch()</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout((date) =&gt; &#123;</span><br><span class="line">        //请求中，等待状态，pending</span><br><span class="line">        </span><br><span class="line">        // 请求成功，满足状态，fulfill，调用resolve</span><br><span class="line">        resolve(data)</span><br><span class="line">        // 请求失败，拒绝状态，reject，调用reject</span><br><span class="line">        reject(&apos;error message&apos;)</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">&#125;).then((data) =&gt; &#123;</span><br><span class="line">    // 此处处理请求的data</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">    // 此处处理error</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/10/15/YVRXhBEdS3MnfHI.png" alt=""></p>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue系列笔记3</title>
+    <url>/2019/10/10/2019-10-10-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B03/</url>
+    <content><![CDATA[<blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>同一个项目中可能有多个js，这样就存在全局变量重名的问题，虽然通过函数闭包可以解决，但是又导致了不同js之间代码不可复用，所以就有了模块化的概念；</li>
+<li>常用的模块化规范：CommonJS、AMD、CMD、ES6的Modules;</li>
+<li>CommonJS导出写法：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//aaa.js</span><br><span class="line">modules.exports = &#123;</span><br><span class="line">	//要导出的部分</span><br><span class="line">	flag,</span><br><span class="line">	sum,</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CommonJS导入写法:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var/let &#123;flag,sum&#125; = require(&apos;./aaa.js&apos;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>ES6的modules：首先在html代码中要引入js文件，并且类型设置为module，然后在要导出的js文件中使用export指令导出模块对外提供的接口，在要引入的js文件中通过import命令来加载。</li>
+<li>遇到本地Ajax跨域报错Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https.原因在于使用了File协议，应该使用它提示的http, data, chrome, chrome-extension, https这些协议。使用webstorm或是visual studio这种重量级的IDE，应该不会遇到这种问题，这类IDE都内置了HTTP服务器。针对VSCode，可以安装<strong>Live Server</strong>插件，这个插件功能十分强大，不止可以解决ajax不支持file协议的问题，还可以实现在编辑器里保存修改后，页面自动刷新的功能。</li>
+<li>什么是webpack，从本质上讲，webpack是一个现代的JavaScript应用的静态模块打包工具，分两点来讲，就是模块和打包。webpack其中一个核心就是让我们可以进行模块化开发，并且帮助我们处理模块间的依赖关系；打包就是将webpack中的各种资源模块进行打包合并成一个或多个包，并且在打包过程中，还可以对资源进行处理，例如压缩图片，ES5转成ES6等；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/11/I7D6mBGlnfUhOxj.png" alt=""></p>
+<ol start="7">
+<li><p>grunt/gulp的核心是Task，更加强调的是前端流程的自动化，模块化不是它的核心；webpack更加强调模块化的开发管理，而grunt/gulp的文件压缩合并、预处理、转换等功能只是它附带的功能；</p>
+</li>
+<li><p>webpack为了正常运行，必须依赖node环境，node环境为了可以正常执行很多代码，其中必须包含各种依赖的包，为了便于安装管理这些包，需要npm（node package manager）工具。</p>
+</li>
+<li><p>全局安装webpack</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack@3.6.0 -g</span><br></pre></td></tr></table></figure>
+
+<p>但是一般情况下，每个项目都要局部安装自己所对应需要的webpack</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack@3.6.0 --save-dev</span><br><span class="line">//--save-dev安装的是开发时依赖，而不是运行时依赖，这个安装完成后在package.json可以看出来</span><br><span class="line">//–save 将依赖包名称添加到 package.json 文件的 dependencies 键下</span><br><span class="line">//–save-dev 则添加到 package.json 文件的 devDependencies 键下</span><br></pre></td></tr></table></figure>
+
+<p>然后需要在npm init创建的package.json中加入，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这样，在终端输入npm run dev即可，而且优先使用本地webpack而非全局。</p>
+</li>
+<li><p>loader是webpack中一个非常核心的概念，webpack可以处理JS代码和相互之间的依赖，但在开发中，不仅仅有基础的JS代码，还有CSS、图片加载、将高级的ES6转化为ES5等，此时就需要给webpack扩展对应的loader：</p>
+</li>
+</ol>
+<ul>
+<li>通过npm安装所需要的loader</li>
+<li>在webpack.config.js中的modules关键字中进行配置</li>
+<li>具体安装什么loader可以在webpack官方文档进行查询</li>
+</ul>
+<ol start="11">
+<li><p>plugin时webpack中另一个重要的核心，webpack中的插件，就是对webpack现有功能的各种扩展，比如打包优化，文件压缩等，loader主要用于转换某些类型的模块，它是一个转换器，plugin是插件，它是对webpack本身的扩展，是一个扩展器。</p>
+</li>
+<li><p>webpack配置文件的分离，再weback.config.js中，许多配置只是在开发中用到，在实际发布时并不需要，所以最好将这些配置抽离出来，便于后期管理：</p>
+</li>
+</ol>
+<ul>
+<li>创建base.config,js/dev.config.js/prod.config.js，将weback.config.js中内容进行分离，npm install webpack-merge –save-dev安装js合并工具，接下来</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//dev.config.js</span><br><span class="line">const WebpackMerge = require(&apos;webpack-merge&apos;)</span><br><span class="line">const baseConfig = require(&apos;./base.config&apos;)</span><br><span class="line"></span><br><span class="line">module.exports = WebpackMerge(baseConfig,&#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">      contentBase: &apos;./dist&apos;,</span><br><span class="line">      inline: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在package.json中指定一下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack --config ./build/prod.config.js&quot;,</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ol start="13">
+<li><p>使用vue开发大型项目，需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等，为了提高效率，通常会用到一些脚手架工具来帮助完成，CLI是Command-Line Interface，翻译为命令行界面，俗称脚手架。使用vue-cli可以快速搭建Vue开发环境以及对应的webpack配置。</p>
+</li>
+<li><p>e2e–&gt;e to e –&gt;end to end</p>
+</li>
+<li><p>Vue CLI2新建项目</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue init webpack my-project</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/10/12/eTxIybH9tGXiCz4.png" alt=""></p>
+<ol start="16">
+<li><p>脚手架安装了ESlint如何关闭：config==&gt;index==&gt;useEslint改为false，重新编译一下项目;</p>
+</li>
+<li><p>Vue程序运行过程</p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/12/diyYvSRof14FgCI.png" alt=""></p>
+<ol start="18">
+<li><ul>
+<li><p>runtime-compiler—&gt;代码中可以有template</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// template -&gt; ast -&gt; render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: &apos;&lt;App/&gt;&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* runtime-only---&gt;代码中不可以有任何的template，性能更好，代码量更少，少6KB。
+
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+​    </code></pre><ol start="19">
+<li>npm run build/dev具体执行示意</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/13/qBbNAZ9kwSX5oml.png" alt=""></p>
+<p><img src="C:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570934287208.png" alt="1570934287208"></p>
+<ol start="20">
+<li>Vue CLI3 创建项目</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue create my-vue-project</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/10/13/5MzCDKqNBlLSZiG.png" alt=""></p>
+<ol start="21">
+<li><p>Vue CLI3管理配置文件及其他可以通过vue ui命令启动GUI界面进行可视化管理；</p>
+<p>Vue CLI3的配置文件其实并不是没有，而是“隐藏”起来了，在node_modules-&gt;@vue-&gt;cli-service;</p>
+<p>若要修改，可在工程目录下创建vue.config.js：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会自动将手动的配置和默认的配置进行合并。</p>
+</li>
+<li><p>前端渲染和后端渲染/前端路由和后端路由：</p>
+</li>
+</ol>
+<ul>
+<li>早期，服务器收到URL通过正则进行匹配，交给Controller进行处理，利用JSP等技术，直接生产渲染好对应的HTML页面，不仅有html、css，还有获取数据的java代码，返回给客户端进行展示，这就是后端渲染，在后端处理URL和页面之间的映射关系，即后端路由；</li>
+<li>随着Ajax出现，有了前后端分离的开发模式，客户端通过URL发起请求，去静态资源服务器请求资源，请求回的资源包括html+css+js，前两者浏览器进行渲染，js浏览器执行，执行到API接口时，再去请求提供API接口的服务器，请求回之后由其他js代码进行处理，这就是前端渲染；</li>
+<li>再发展就是单页面富应用阶段，最主要的特点就是在前后端分离的基础上加了一层前端路由，整个网站只有一个html页面，浏览器向静态资源网站请求时将所有资源全部请求下来，前端路由监听浏览器，当URL改变，就将请求的全部资源进行抽离但不进行页面整体刷新也就是不再进行新的请求，显示该显示的部分，也就是一个网页，这种一个URL和一个网页的映射就是前端路由；</li>
+</ul>
+<ol start="23">
+<li>如何改变URL而页面不刷新呢？有两种方法，一种为利用URL的hash，另一种为html5的history模式。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//Console</span><br><span class="line">&gt;location.hash = &apos;foo&apos;</span><br><span class="line">&gt;history.pushState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;) //这个push有点类似于入栈，history.back()或者history.go(-1)或者history.forward()或者浏览器返回类似于出栈</span><br><span class="line">&gt;history.replaceState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;)//很明显，相比于上，这个直接是代替</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue系列笔记2</title>
+    <url>/2019/10/08/2019-10-08-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/</url>
+    <content><![CDATA[<blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>如果将一个页面中所有的处理逻辑全部放到一起，处理起来就会变得非常复杂，而且不利于后续管理和扩展；但如果将一个页面拆分成一个个小的功能块，每个功能块完成属于自己这部分独立的功能，之后整个页面的管理和维护就变得容易许多；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/08/8rs7zERUAZK4eMk.png" alt=""></p>
+<ol start="2">
+<li>组件化提供了一种抽象，可以开发出一个个独立可复用的小组件来构造应用，任何的应用都会被抽象成一颗组件树；</li>
+</ol>
+<p><img src="https://i.loli.net/2019/10/08/YZB3fdb4Mcr79Jl.png" alt=""></p>
+<ol start="3">
+<li>组件的使用可以分成三个步骤：创建组件构造器，注册组件，使用组件；</li>
+</ol>
+<p><img src="C:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570496438265.png" alt="1570496438265"></p>
+<ol start="4">
+<li><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;!-- 3.使用组件 --&gt;
+        &lt;my-cpn&gt;&lt;/my-cpn&gt;
+        &lt;my-cpn&gt;&lt;/my-cpn&gt;
+        &lt;my-cpn&gt;&lt;/my-cpn&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        //1.创建组件构造器对象
+        const cpnContructor = Vue.extend({
+           template: `
+                &lt;div&gt;
+                    &lt;h2&gt;我是标题&lt;/h2&gt;
+                    &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
+                    &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
+                &lt;/div&gt;`
+        })
+        //2.注册组件
+        Vue.component(&apos;my-cpn&apos;, cpnContructor)
+
+        const app = new Vue({
+            el: &apos;#app&apos;,
+            data: {
+                message: &apos;Hello!&apos;,
+            },
+
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">   Vue.extend()创建的是一个组件构造器，通常在创建组件构造器时，传入template代表我们自定义组件的模板。该模板就是在使用到组件的地方，要显示的HTML代码，事实上，这种写法在Vue 2.x的文档中就几乎看不到了，它会直接使用下面的语法糖，但这种方式是基础。</span><br><span class="line"></span><br><span class="line">   Vue.component()是将刚才的组件构造器注册为一个组件，并且给它起一个组件的标签名称。</span><br><span class="line"></span><br><span class="line">   组件使用时必须挂载在某个Vue实例下，否则它不会生效。</span><br><span class="line"></span><br><span class="line">5. 全局组件和局部组件:上述方法构建的为全局组件。局部组件需要挂载到Vue实例下，只有该实例对应的app才可以使用。</span><br></pre></td></tr></table></figure>
+ const app = new Vue({
+            el: &apos;#app&apos;,
+            //2.局部组件注册
+            components: {
+                cpn: cpnC
+            }
+        })
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">6. 父组件和子组件：要求子组件在父组件中进行注册：</span><br></pre></td></tr></table></figure>
+//1.创建第一个组件构造器(子组件)
+     const cpnC1 = Vue.extend({
+         template:`
+             &lt;div&gt;
+                 &lt;h2&gt;我是标题1&lt;/h2&gt;
+                 &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
+             &lt;/div&gt;`
+     })
+
+     //2.创建第二个组件构造器(父组件)
+     const cpnC2 = Vue.extend({
+         template:`
+             &lt;div&gt;
+                 &lt;h2&gt;我是标题2&lt;/h2&gt;
+                 &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
+                 &lt;cpn1&gt;&lt;/cpn1&gt;
+             &lt;/div&gt;`
+         ,
+         components: {
+             cpn1: cpnC1
+         }
+     })
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">7. 组件注册的语法糖，将上述创建组件构造器和注册组件合并：</span><br></pre></td></tr></table></figure>
+     Vue.component(&apos;cpn1&apos;, {
+         template: `
+             &lt;div&gt;
+                 &lt;h2&gt;我是标题1&lt;/h2&gt;
+                 &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
+             &lt;/div&gt;`
+     })
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">8. 组件模板的抽离写法，可以看出来，上边的js代码中嵌套HTML，看起来比较乱，所以需要抽离，有两种写法：</span><br></pre></td></tr></table></figure>
+&lt;body&gt;
+ &lt;div id=&quot;app&quot;&gt;
+     &lt;cpn1&gt;&lt;/cpn1&gt;
+     &lt;cpn2&gt;&lt;/cpn2&gt;
+ &lt;/div&gt;
+ &lt;!-- 1.通过script标签，但是注意类型必须是text/x-template --&gt;
+ &lt;script type=&quot;text/x-template&quot; id=&quot;cpn1&quot;&gt;
+ &lt;div&gt;
+     &lt;h2&gt;我是标题1&lt;/h2&gt;
+     &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
+ &lt;/div&gt;
+ &lt;/script&gt;
+
+&lt;!-- 2.template标签 --&gt;
+&lt;template id=&quot;cpn2&quot;&gt;
+     &lt;div&gt;
+         &lt;h2&gt;我是标题2&lt;/h2&gt;
+         &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
+     &lt;/div&gt;
+&lt;/template&gt;
+
+ &lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
+ &lt;script&gt;
+     Vue.component(&apos;cpn1&apos;, {
+         template: &apos;#cpn1&apos;,
+     })
+     Vue.component(&apos;cpn2&apos;, {
+         template: &apos;#cpn2&apos;,
+     })
+     const app = new Vue({
+         el: &apos;#app&apos;,
+     })
+ &lt;/script&gt;
+&lt;/body&gt;
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">9. 组件中的数据不应该也不能放在全局的data中，应该放在自己的data中，但是需要注意组件的data属性必须是一个函数，且要求返回一个实例对象，对象内部保存着数据。</span><br><span class="line"></span><br><span class="line">10. 在开发中，往往一些数据确实需要从上层传到下层，例如在一个页面中，从服务器请求了许多数据，其中一部分数据并非整个页面的大组件来展示，而是需要下面的小组件来展示，这时，并不会让小组件再发一次网络请求，而是让大组件将数据传给小组件，这是就涉及到父子组件之间的通信，有两种方式：通过props向子组件传递数据和通过事件向父组件发送消息。</span><br><span class="line"></span><br><span class="line">![](https://i.loli.net/2019/10/08/7NDfCeuZXOgqELG.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">11. 在组件中，使用选项props来声明需要从父级接受的数据。</span><br><span class="line"></span><br><span class="line">props的值有两种方式：</span><br><span class="line"></span><br><span class="line">1）字符串数组，数组中的字符串就是传递时的名称；</span><br><span class="line"></span><br><span class="line">2）对象，对象可以设置传递时的类型，也可以设置默认值等；</span><br><span class="line"></span><br><span class="line">![](https://i.loli.net/2019/10/08/kbKwUJmEgjFx9HI.png)</span><br><span class="line"></span><br><span class="line">12. 子组件向父组件发送数据：子组件内部先通过&amp;emit()定义发射事件，父组件中监听（类似于系统自带的click等监听），监听到后执行相应的响应函数即可。</span><br></pre></td></tr></table></figure>
+//子组件
+         methods: {
+             btnClick(item) {
+                 //发射事件(自定义事件)
+                 this.$emit(&apos;item-click&apos;, item)
+             }
+         }
+//监听
+ &lt;div id=&quot;app&quot;&gt;
+     &lt;!-- 监听事件 --&gt;
+     &lt;cpn @item-click=&quot;cpnClick&quot;&gt;&lt;/cpn&gt;
+ &lt;/div&gt;
+//父组件
+         methods: {
+             cpnClick(item) {
+                 console.log(item);                 
+             }
+         }
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">13. 父子组件的访问：父组件访问子组件使用$children或者$refs；子组件访问父组件使用$parent；子组件访问根组件使用$root</span><br><span class="line"></span><br><span class="line">14. 在实际开发中，refs用的比较多一些，因为使用children需要使用下标，但是组件顺序可能会有更改，不利于维护</span><br></pre></td></tr></table></figure>
+ &lt;div id=&quot;app&quot;&gt;
+     &lt;button @click=&quot;btnClick&quot;&gt;按钮&lt;/button&gt;
+     &lt;cpn&gt;&lt;/cpn&gt;
+     &lt;cpn&gt;&lt;/cpn&gt;
+     &lt;cpn ref=&quot;aaa&quot;&gt;&lt;/cpn&gt;
+ &lt;/div&gt;
+ ………………
+             methods: {
+             btnClick() {
+                 // 1.$children
+                 // console.log(this.$children);
+                 // this.$children[0].showMessage();
+                 // console.log(this.$children[1].name);
+
+                 //2.$refs
+                 this.$refs.aaa.showMessage();
+                 console.log(this.$refs.aaa.name);  
+             }
+  ………………
+           components: {
+             cpn: {
+                 template: &apos;#cpn&apos;,
+                 data() {
+                     return {
+                         name: &apos;我是子组件的name&apos;
+                     }
+                 },
+                 methods: {
+                     showMessage() {
+                         console.log(&apos;aaaaaaaa&apos;);
+
+                     }
+                 }
+             }
+         }
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">15. $parent在实际开发中应用不多，因为组件强调的是复用性，在组件中使用$parent可能会导致其和父组件的耦合度太高。</span><br><span class="line"></span><br><span class="line">16. 组件的插槽slot是为了让组件有更强的扩展性，往往需要的一些组件之间有很多区别，但也有很多共性，每个都封装成一个单独的不太合理，将所有的都封装成一个也不合理，这里就需要用到slot，slot就是占位，具体占好位置放什么可以由调用者决定；</span><br></pre></td></tr></table></figure>
+ &lt;div id=&quot;app&quot;&gt;
+     &lt;cpn&gt;&lt;button&gt;按钮&lt;/button&gt;&lt;/cpn&gt;
+     &lt;cpn&gt;&lt;span&gt;哈哈哈&lt;/span&gt;&lt;/cpn&gt;
+     &lt;cpn&gt;
+         &lt;p&gt;哦哦哦&lt;/p&gt;
+         &lt;i&gt;呵呵呵&lt;/i&gt;
+     &lt;/cpn&gt;
+ &lt;/div&gt;
+
+ &lt;template id=&quot;cpn&quot;&gt;
+     &lt;div&gt;
+         &lt;h2&gt;我是组件&lt;/h2&gt;
+         &lt;p&gt;我是组件，嘿嘿嘿&lt;/p&gt;
+         &lt;slot&gt;&lt;/slot&gt;
+     &lt;/div&gt;
+ &lt;/template&gt;
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">17. 作用域插槽：举例：子组件中包含一组数据，pLanguages: [&apos;JavaScript&apos;,&apos;Python&apos;,&apos;Java&apos;,&apos;C++&apos;]，要求进行不同的展示效果，例如以列表形式展示，以水平方向展示等等</span><br></pre></td></tr></table></figure>
+ &lt;div id=&quot;app&quot;&gt;
+     &lt;!-- 默认以列表进行展示 --&gt;
+     &lt;cpn&gt;&lt;/cpn&gt;
+     &lt;!-- 以水平方式进行展示 --&gt;
+     &lt;cpn&gt;
+         &lt;!-- 目的是获取子组件的pLanguages --&gt;
+         &lt;template slot-scope=&quot;slot&quot;&gt;
+             &lt;!-- &lt;span v-for=&quot;item in slot.data&quot;&gt;{{item}} ** &lt;/span&gt; --&gt;
+             &lt;span&gt;{{slot.data.join(' * ')}}&lt;/span&gt;
+         &lt;/template&gt;
+     &lt;/cpn&gt;
+
+ &lt;/div&gt;
+
+ &lt;template id=&quot;cpn&quot;&gt;
+     &lt;div&gt;
+         &lt;slot :data=&quot;pLanguages&quot;&gt;
+             &lt;ul&gt;
+                 &lt;li v-for=&quot;item in pLanguages&quot;&gt;{{item}}&lt;/li&gt;
+             &lt;/ul&gt;
+         &lt;/slot&gt;
+     &lt;/div&gt;
+ &lt;/template&gt;</code></pre></li>
+</ol>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue系列笔记1</title>
+    <url>/2019/09/26/2019-09-26-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/</url>
+    <content><![CDATA[<blockquote>
+<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
+</blockquote>
+<ol>
+<li>语法糖：简写</li>
+</ol>
+<p><img src="https://i.loli.net/2019/09/27/DnTr2avz4EOPiAC.png" alt=""></p>
+<ol start="2">
+<li>MVVM：model，view，viewmodel;</li>
+<li>回调函数举例：</li>
+</ol>
+<p><img src="https://i.loli.net/2019/09/27/b6P58HUcry7tIVR.png" alt=""></p>
+<ol start="4">
+<li>Vue生命周期</li>
+</ol>
+<img src="https://i.loli.net/2019/09/27/e7agZw2QWuEcdFn.png" alt="官方图" style="zoom: 50%;" />
+
+<p><img src="https://i.loli.net/2019/09/27/OZzk7YPsFjd16Tb.png" alt="coderwhy的图"></p>
+<ol start="5">
+<li><p>代码规范：在前端代码中，一般缩进2个空格而非4个；</p>
+</li>
+<li><p>将data中的数据插入到HTML中，Mustache语法，也就是双大括号；</p>
+</li>
+<li><p>computed和methods对比：往往会发现，在computed中定义的方法在methods中同样可以定义，那么computed意义何在呢?其实计算属性会进行缓存，如果多次使用，计算属性只会调用一次，而methods每次都会调用；</p>
+</li>
+<li><p>ES5中，var没有块级作用域，if和for没有作用域，只有函数有作用域；ES6中let有块级作用域，if和for也有作用域；</p>
+</li>
+<li><p>在ES6开发中，优先使用const，只有在需要改变某一标识符的时候才用let；</p>
+</li>
+<li><p>什么是冒泡事件？如在一个按钮是绑定一个”click”事件，那么”click”事件会依次在它的父级元素中被触发 。</p>
+</li>
+<li><p>v-if：当条件为false，包含v-if指令的元素，根本就不会存在于dom中，所以推荐在切换频率不高时使用；</p>
+<p>v-show：当条件为false，包含v-show指令的元素，只是增加了一个行内元素，display = none，所以推荐在切换频率较高时使用；</p>
+</li>
+<li><p>官方推荐在使用v-for时，给对应的元素或组件添加一个key属性。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;li v-for=&quot;item in letters&quot; :key=&quot;item&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="13">
+<li>过滤器filters，举例将价格由整数变为带￥的两位小数：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">filters: &#123;</span><br><span class="line">    showPrice(price) &#123;</span><br><span class="line">        return &apos;￥&apos; + price.toFixed(2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">总价格：&#123;&#123;totalPrice | showPrice&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="14">
+<li><p>编程范式：命令式编程/声明式编程</p>
+<p>编程范式：面向对象编程（第一公民：对象）/函数式编程（第一公民：函数）</p>
+</li>
+<li><p>三个高阶函数：filter、map、reduce</p>
+</li>
+</ol>
+<p>1)）filter过滤函数用于过滤数组中的某部分，传的参数需是一个回调函数，回调函数有一个要求：必须返回一个boolean值，当返回true时，函数内部会自动将这次回调的n加入到新的数组中，当返回false时，函数内部会过滤掉这次的n。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//过滤小于100的数字</span><br><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let newNums = nums.filter(function (n) &#123;</span><br><span class="line">	return n &lt; 100</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>2）map映射函数用于对数组中所有元素进行统一操作，传的参数同样是一个回调函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//将newNums中的数字全部乘以2</span><br><span class="line">let new2Nums = newNums.map(function(n) &#123;</span><br><span class="line">	return n*2</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>3）reduce函数用于对数组中所有的内容进行汇总，传的参数至少需要两个，第一个参数同样是一个回调函</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//将new2Nums中的数字全部相加</span><br><span class="line">//0就是perValue初始化的值，以后的preValue就是上一次return的值</span><br><span class="line">let total = new2Nums.reduce(function(preValue,n) &#123;</span><br><span class="line">	return preValue + n</span><br><span class="line">&#125;, 0)</span><br></pre></td></tr></table></figure>
+
+<p>以上三部分可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let total = nums.filter(function (n) &#123;</span><br><span class="line">	return n &lt; 100</span><br><span class="line">&#125;).map(function(n) &#123;</span><br><span class="line">	return n*2</span><br><span class="line">&#125;).reduce(function(preValue,n) &#123;</span><br><span class="line">	return preValue + n</span><br><span class="line">&#125;, 0)</span><br></pre></td></tr></table></figure>
+
+<p>甚至可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let total = nums.filter(n =&gt; n &lt; 100).map(n =&gt; n*2).reduce((preValue,n) =&gt; preValue + n)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="14">
+<li>vue中使用v-model指令来实现表单元素和数据的双向绑定。所谓双向绑定，就是原来利用 Mustache将内容进行响应式显示，手动更改显示数据无法改变原数据，双向绑定则可以实现。</li>
+<li>radio的name相同才会互斥，但是如果v-model绑定相同的，可以不加name。</li>
+<li>v-model三个修饰符：lazy、number、trim：</li>
+</ol>
+<p>1）lazy：默认情况下，v-model是在input事件中同步输入框的数据也就是一旦数据发生改变data中的数据就会自动发生改变，加入lazy修饰符可以让数据在失去焦点或者回车时才更新；</p>
+<p>2）number：默认情况下，在输入框无论输入字母还是数字，都会被当作字符串进行处理，number修饰符可以让输入框输入的内容自动转换为数字类型；</p>
+<p>3）trim：如果输入的内容首尾有很多空格，通常我们希望将其去除，trim修饰符可以过滤内容左右两边的空格；</p>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
 </search>
