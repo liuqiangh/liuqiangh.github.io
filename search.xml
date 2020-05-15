@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>python系列笔记1</title>
+    <url>/2020/05/11/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/</url>
+    <content><![CDATA[<h4 id="python语法笔记"><a href="#python语法笔记" class="headerlink" title="python语法笔记"></a>python语法笔记</h4><ol>
+<li><p>Argparse中<strong>action</strong>的可选参数store_true和store_false</p>
+<p>store_true 是指带触发action时为真，不触发则为假</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'-c'</span>, action=<span class="string">'store_true'</span>)</span><br><span class="line"><span class="comment"># python test.py -c         =&gt; c是true（触发）</span></span><br><span class="line"><span class="comment"># python test.py             =&gt; c是false（无触发）</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>orderedDict</p>
+<p>python中的字典是无序的，因为它是按照hash来存储的，但是python中有个模块collections(英文，收集、集合)，里面自带了一个子类OrderedDict，实现了对字典对象中元素的排序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">print</span> <span class="string">"Regular dictionary"</span></span><br><span class="line">d=&#123;&#125;</span><br><span class="line">d[<span class="string">'a'</span>]=<span class="string">'A'</span></span><br><span class="line">d[<span class="string">'b'</span>]=<span class="string">'B'</span></span><br><span class="line">d[<span class="string">'c'</span>]=<span class="string">'C'</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> d.items():</span><br><span class="line">    <span class="keyword">print</span> k,v </span><br><span class="line"><span class="keyword">print</span> <span class="string">"\nOrder dictionary"</span></span><br><span class="line">d1 = collections.OrderedDict()</span><br><span class="line">d1[<span class="string">'a'</span>] = <span class="string">'A'</span></span><br><span class="line">d1[<span class="string">'b'</span>] = <span class="string">'B'</span></span><br><span class="line">d1[<span class="string">'c'</span>] = <span class="string">'C'</span></span><br><span class="line">d1[<span class="string">'1'</span>] = <span class="string">'1'</span></span><br><span class="line">d1[<span class="string">'2'</span>] = <span class="string">'2'</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> d1.items():</span><br><span class="line">    <span class="keyword">print</span> k,v</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Regular dictionary</span><br><span class="line">a A</span><br><span class="line">c C</span><br><span class="line">b B</span><br><span class="line"></span><br><span class="line">Order dictionary</span><br><span class="line">a A</span><br><span class="line">b B</span><br><span class="line">c C</span><br><span class="line"><span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">2</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>assert</p>
+<p>Python assert（断言）用于判断一个表达式，在表达式条件为 false 的时候触发异常。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="literal">True</span>     <span class="comment"># 条件为 true 正常执行</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="literal">False</span>    <span class="comment"># 条件为 false 触发异常</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AssertionError</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="4">
+<li><p>import</p>
+<p>可以直接导入另一个模块的函数或者变量。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a.py</span><br><span class="line">name=<span class="string">"zyy"</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_value</span><span class="params">()</span>:</span></span><br><span class="line">    d=&#123;&#125;</span><br><span class="line">    d[<span class="string">"zyy"</span>]=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">b.py</span><br><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> set_value,name</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="5">
+<li><p>unicode</p>
+<p>python内部使用Unicode编码，Unicode 是为了解决传统的字符编码方案的局限而产生的，它为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。</p>
+</li>
+<li><p>re.sub</p>
+<p>替换字符串中的某些子串，可以用正则表达式来匹配被选子串。</p>
+<p>re.sub(pattern, repl, string, count=0, flags=0)</p>
+<p>pattern：表示正则表达式中的模式字符串；</p>
+<p>repl：被替换的字符串（既可以是字符串，也可以是函数）；</p>
+<p>string：要被处理的，要被替换的字符串；</p>
+<p>count：匹配的次数, 默认是全部替换<br>比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">st = <span class="string">"hello 2019"</span></span><br><span class="line">st = re.sub(<span class="string">"([0-9]+)"</span>,<span class="string">"danshengou"</span>,st)</span><br><span class="line">print(st)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字典的items方法</p>
+<p>Python 字典(Dictionary) items() 函数以<strong>列表</strong>返回可遍历的(键, 值) 元组数组。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"> </span><br><span class="line">dict = &#123;<span class="string">'Google'</span>: <span class="string">'www.google.com'</span>, <span class="string">'Runoob'</span>: <span class="string">'www.runoob.com'</span>, <span class="string">'taobao'</span>: <span class="string">'www.taobao.com'</span>&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">"字典值 : %s"</span> %  dict.items()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 遍历字典列表</span></span><br><span class="line"><span class="keyword">for</span> key,values <span class="keyword">in</span>  dict.items():</span><br><span class="line">    <span class="keyword">print</span> key,values</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出结果</span></span><br><span class="line">字典值 : [(<span class="string">'Google'</span>, <span class="string">'www.google.com'</span>), (<span class="string">'taobao'</span>, <span class="string">'www.taobao.com'</span>), (<span class="string">'Runoob'</span>, <span class="string">'www.runoob.com'</span>)]</span><br><span class="line">Google www.google.com</span><br><span class="line">taobao www.taobao.com</span><br><span class="line">Runoob www.runoob.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>itertools 迭代器模块</p>
+<ol>
+<li><p>itertools.chain.from_iterable可以把多个可迭代对象组合起来，形成一个更大的迭代器。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Importing chain class from itertools </span></span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Single iterable containing iterable </span></span><br><span class="line"><span class="comment"># elements(strings) is passed as input </span></span><br><span class="line">from_iterable = chain.from_iterable([<span class="string">'geeks'</span>, </span><br><span class="line">									<span class="string">'for'</span>, </span><br><span class="line">									<span class="string">'geeks'</span>]) </span><br><span class="line"></span><br><span class="line"><span class="comment"># printing the flattened iterable </span></span><br><span class="line">print(list(from_iterable)) </span><br><span class="line"></span><br><span class="line"><span class="comment">#输出如下</span></span><br><span class="line">[‘g’, ‘e’, ‘e’, ‘k’, ‘s’, ‘f’, ‘o’, ‘r’, ‘g’, ‘e’, ‘e’, ‘k’, ‘s’]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>cPickle.dump</p>
+<p>cPickle可以对任意一种类型的python对象进行序列化操作，比如list，dict，甚至是一个类的对象等。而所谓的序列化，可理解就是为了能够完整的保存并能够完全可逆的恢复。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cPickle</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data = range(<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>cPickle.dump(data,open(<span class="string">"test/data.pkl"</span>,<span class="string">"wb"</span>))</span><br></pre></td></tr></table></figure>
+
+<p>之后使用load函数可以恢复python对象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>data = cPickle.load(open(<span class="string">"test/data.pkl"</span>,<span class="string">"rb"</span>))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>EliIE:一个符合临床试验合格标准的开源信息提取系统</title>
     <url>/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h3 id="临床试验合格标准和规范化"><a href="#临床试验合格标准和规范化" class="headerlink" title="临床试验合格标准和规范化"></a>临床试验合格标准和规范化</h3><p>目前的一些规范化的工作需要耗费许多人力去设定句法规则以及符合要求的语法概念，而且这些工作的结果很多缺乏语义互操作性。</p>
@@ -135,6 +216,29 @@
       </tags>
   </entry>
   <entry>
+    <title>关于npm audit fix</title>
+    <url>/2019/10/16/2019-10-16-%E5%85%B3%E4%BA%8Enpm%20audit%20fix/</url>
+    <content><![CDATA[<p> 其实之前也遇到过，一直没注意，今天安装vuex，<code>npm install vuex --save</code>出现如下提醒 </p>
+<p><img src="https://i.loli.net/2019/10/16/SJFRPQtyCkHgx4D.png" alt=""></p>
+<p> 执行 <code>npm audit fix</code>  </p>
+<p><img src="https://i.loli.net/2019/10/16/YkSTBdZgepCRDIW.png" alt=""></p>
+<p>出于好奇，从npm官网上查阅了对于<strong>npm audit fix</strong>的相关介绍。 npm@6 的一大更新是新增了 <code>npm audit</code> 命令 ,  <code>npm aduit</code> 主要动作就是在 <code>npm install</code> 完成之后把需要检查的包的信息发送给一个官方接口, 再根据返回信息生成一个包含包名称、漏洞严重性、简介, 路径等的报告。 该命令会在项目中更新或者下载新的依赖包之后会自动运行，如果你在项目中使用了具有已知安全问题的依赖，就收到官方的警告通知。 </p>
+<p> ps. 一般不要直接运行 <code>--force</code> ，对于没能自动修复的问题，说明肯定出现了 <code>SEMVER WARNING</code> 之类的警告，这意味着推荐的修复版本存在让代码出问题的可能，主要发生在依赖包更改了 API 或者升级了大版本的情况下（semantic version major change）。这时候就需要格外的小心甚至需要改动一些自己的代码了。 </p>
+<p>其他一些具体命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 扫描项目漏洞把不安全的依赖项自动更新到兼容性版本</span><br><span class="line">npm audit fix</span><br><span class="line"></span><br><span class="line"># 在不修改 node_modules 的情况下执行 audit fix，仍然会更改 pkglock</span><br><span class="line">npm audit fix --package-lock-only</span><br><span class="line"></span><br><span class="line"># 跳过更新 devDependencies</span><br><span class="line">npm audit fix --only=prod</span><br><span class="line"></span><br><span class="line"># 强制执行 audit fix 安装最新的依赖项（toplevel）</span><br><span class="line">npm audit fix --force</span><br><span class="line"></span><br><span class="line"># 单纯的获取 audit fix 会做的事，并以 json 格式输出。</span><br><span class="line">npm audit fix --dry-run --json</span><br><span class="line"></span><br><span class="line"># 获取详情</span><br><span class="line">npm audit</span><br><span class="line"></span><br><span class="line"># 以 JSON 格式打印报告</span><br><span class="line">npm audit --json</span><br></pre></td></tr></table></figure>
+
+<p>至于如何关闭安全检查，可以采用以下方式：</p>
+<ul>
+<li>安装单个包关闭安全审查: <code>npm install example-package-name --no-audit</code></li>
+<li>安装所有包关闭安全审查 - 运行 <code>npm set audit false</code> - 手动将 <code>~/.npmrc</code> 配置文件中的 <code>audit</code> 修改为 <code>false</code></li>
+</ul>
+<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
+]]></content>
+      <tags>
+        <tag>npm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue系列笔记5</title>
     <url>/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/</url>
     <content><![CDATA[<blockquote>
@@ -209,29 +313,6 @@
 ]]></content>
       <tags>
         <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于npm audit fix</title>
-    <url>/2019/10/16/2019-10-16-%E5%85%B3%E4%BA%8Enpm%20audit%20fix/</url>
-    <content><![CDATA[<p> 其实之前也遇到过，一直没注意，今天安装vuex，<code>npm install vuex --save</code>出现如下提醒 </p>
-<p><img src="https://i.loli.net/2019/10/16/SJFRPQtyCkHgx4D.png" alt=""></p>
-<p> 执行 <code>npm audit fix</code>  </p>
-<p><img src="https://i.loli.net/2019/10/16/YkSTBdZgepCRDIW.png" alt=""></p>
-<p>出于好奇，从npm官网上查阅了对于<strong>npm audit fix</strong>的相关介绍。 npm@6 的一大更新是新增了 <code>npm audit</code> 命令 ,  <code>npm aduit</code> 主要动作就是在 <code>npm install</code> 完成之后把需要检查的包的信息发送给一个官方接口, 再根据返回信息生成一个包含包名称、漏洞严重性、简介, 路径等的报告。 该命令会在项目中更新或者下载新的依赖包之后会自动运行，如果你在项目中使用了具有已知安全问题的依赖，就收到官方的警告通知。 </p>
-<p> ps. 一般不要直接运行 <code>--force</code> ，对于没能自动修复的问题，说明肯定出现了 <code>SEMVER WARNING</code> 之类的警告，这意味着推荐的修复版本存在让代码出问题的可能，主要发生在依赖包更改了 API 或者升级了大版本的情况下（semantic version major change）。这时候就需要格外的小心甚至需要改动一些自己的代码了。 </p>
-<p>其他一些具体命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 扫描项目漏洞把不安全的依赖项自动更新到兼容性版本</span><br><span class="line">npm audit fix</span><br><span class="line"></span><br><span class="line"># 在不修改 node_modules 的情况下执行 audit fix，仍然会更改 pkglock</span><br><span class="line">npm audit fix --package-lock-only</span><br><span class="line"></span><br><span class="line"># 跳过更新 devDependencies</span><br><span class="line">npm audit fix --only=prod</span><br><span class="line"></span><br><span class="line"># 强制执行 audit fix 安装最新的依赖项（toplevel）</span><br><span class="line">npm audit fix --force</span><br><span class="line"></span><br><span class="line"># 单纯的获取 audit fix 会做的事，并以 json 格式输出。</span><br><span class="line">npm audit fix --dry-run --json</span><br><span class="line"></span><br><span class="line"># 获取详情</span><br><span class="line">npm audit</span><br><span class="line"></span><br><span class="line"># 以 JSON 格式打印报告</span><br><span class="line">npm audit --json</span><br></pre></td></tr></table></figure>
-
-<p>至于如何关闭安全检查，可以采用以下方式：</p>
-<ul>
-<li>安装单个包关闭安全审查: <code>npm install example-package-name --no-audit</code></li>
-<li>安装所有包关闭安全审查 - 运行 <code>npm set audit false</code> - 手动将 <code>~/.npmrc</code> 配置文件中的 <code>audit</code> 修改为 <code>false</code></li>
-</ul>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>npm</tag>
       </tags>
   </entry>
   <entry>
