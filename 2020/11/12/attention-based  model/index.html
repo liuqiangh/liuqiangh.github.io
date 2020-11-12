@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="引言RNN和LSTM中时间记忆不会很长，因为记忆越长，参数越多，训练很困难，但attention机制参数不会增加。 machine translationsequence to sequence   RNN实现    缺点是图中红框绿背景代表的vector可能已经将学习到的整个句子的信息忘记掉  attention-based  model实现      $\alpha_0^1$是$h_0^1$对">
+<meta name="description" content="引言RNN和LSTM中时间记忆不会很长，因为记忆越长，参数越多，训练很困难，但attention机制参数不会增加。 machine translationsequence to sequence   RNN实现    缺点是图中红框绿背景代表的vector可能已经将学习到的整个句子的信息忘记掉  attention-based  model实现      \alpha_0^1是h_0^1对应的权重">
 <meta name="keywords" content="nlp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="attention-based  model">
 <meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;2020&#x2F;11&#x2F;12&#x2F;attention-based%20%20model&#x2F;index.html">
 <meta property="og:site_name" content="liuqiangh | My Blog">
-<meta property="og:description" content="引言RNN和LSTM中时间记忆不会很长，因为记忆越长，参数越多，训练很困难，但attention机制参数不会增加。 machine translationsequence to sequence   RNN实现    缺点是图中红框绿背景代表的vector可能已经将学习到的整个句子的信息忘记掉  attention-based  model实现      $\alpha_0^1$是$h_0^1$对">
+<meta property="og:description" content="引言RNN和LSTM中时间记忆不会很长，因为记忆越长，参数越多，训练很困难，但attention机制参数不会增加。 machine translationsequence to sequence   RNN实现    缺点是图中红框绿背景代表的vector可能已经将学习到的整个句子的信息忘记掉  attention-based  model实现      \alpha_0^1是h_0^1对应的权重">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;AWs6VIeyHawxO5J.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;X6Y7GLlREZtc3U5.png">
@@ -112,7 +112,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;GhxyMOvlAgUpnau.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;UySNkgTIOiPoFlR.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;gBdARTcSqQFuViM.png">
-<meta property="og:updated_time" content="2020-11-12T13:50:52.052Z">
+<meta property="og:updated_time" content="2020-11-12T13:53:15.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;05&#x2F;19&#x2F;AWs6VIeyHawxO5J.png">
 
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  291
+                  290
                 </span>
               
 
@@ -457,7 +457,7 @@
 
 <div align=left>
 
-<p>$\alpha_0^1$是$h_0^1$对应的权重，算出所有权重后会进行softmax和加权，得到c<sub>0</sub></p>
+<p>\alpha_0^1是h_0^1对应的权重，算出所有权重后会进行softmax和加权，得到c<sub>0</sub></p>
 <img src="https://i.loli.net/2020/05/19/pQNW3oiIOsUH8m6.png" style="zoom:50%;" />
 
 <img src="https://i.loli.net/2020/05/19/VFjKL48hoeZuQnS.png" style="zoom:50%;" />
