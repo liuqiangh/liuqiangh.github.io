@@ -1,8 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>attention-based  model</title>
+    <url>/2020/11/12/attention-based%20%20model/</url>
+    <content><![CDATA[<h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>RNN和LSTM中时间记忆不会很长，因为记忆越长，参数越多，训练很困难，但attention机制参数不会增加。</p>
+<h4 id="machine-translation"><a href="#machine-translation" class="headerlink" title="machine translation"></a>machine translation</h4><p><strong>sequence to sequence</strong> </p>
+<ul>
+<li>RNN实现</li>
+</ul>
+<img src="https://i.loli.net/2020/05/19/AWs6VIeyHawxO5J.png" style="zoom: 50%;" />
+
+<p>缺点是图中红框绿背景代表的vector可能已经将学习到的整个句子的信息忘记掉</p>
+<ul>
+<li>attention-based  model实现</li>
+</ul>
+<img src="https://i.loli.net/2020/05/19/X6Y7GLlREZtc3U5.png" style="zoom:50%;" />
+
+<div align=left>
+
+<p>$\alpha_0^1$是$h_0^1$对应的权重，算出所有权重后会进行softmax和加权，得到$c_0$</p>
+<img src="https://i.loli.net/2020/05/19/pQNW3oiIOsUH8m6.png" style="zoom:50%;" />
+
+<img src="https://i.loli.net/2020/05/19/VFjKL48hoeZuQnS.png" style="zoom:50%;" />
+
+<p>可以看到Encoding和decoding阶段仍然是rnn，但是decoding阶段使用attention的输出结果$c_0,c_1$作为rnn的输入。</p>
+<p>权重$\alpha$的常用计算方法有三种：</p>
+<img src="https://i.loli.net/2020/05/20/MpdBLrjyah6X5IN.png"  />
+
+<p>思想就是根据当前解码“状态”判断输入序列的权重分布。</p>
+<img src="https://i.loli.net/2020/05/19/VtIsTdRQXNczwiK.png" style="zoom:50%;" />
+
+
+
+
+
+<p>attention模型每次attention的位置由机器确定。</p>
+<p>如果把attention剥离出来去看的话，其实就是如下机制：</p>
+<img src="https://i.loli.net/2020/05/20/vfoR2A8SsJVGl7a.png" style="zoom: 80%;" />
+
+<p>输入是query(Q),key(K),value(V)，输出是attention value。如果与之前的模型对应起来的话，query就是$z_0,z_1$，key就是$h_1,h_2,h_3,h_4$，value也是$h_1,h_2,h_3,h_4$。模型通过Q和K的匹配计算出权重，再结合V得到输出：<br>$$<br>Attention(Q,K,V)=softmax(sim(Q,K))V<br>$$<br><strong>neural turing machine</strong></p>
+<img src="https://i.loli.net/2020/05/19/GhxyMOvlAgUpnau.png" style="zoom:50%;" />
+
+<img src="https://i.loli.net/2020/05/19/UySNkgTIOiPoFlR.png" style="zoom:50%;" />
+
+<img src="https://i.loli.net/2020/05/19/gBdARTcSqQFuViM.png" style="zoom:50%;" />]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>nlp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bert原理解读</title>
+    <url>/2020/11/12/Bert/</url>
+    <content><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><h4 id="rnn问题"><a href="#rnn问题" class="headerlink" title="rnn问题"></a>rnn问题</h4><img src="https://i.loli.net/2020/05/20/cSCL62qKPBJx7we.png" style="zoom: 33%;" />
+
+<p>后一层的隐层数据需用到前一层的隐层参数，导致无法并行计算</p>
+<p>由此引出transformer,其中重点是注意力机制：attention-based model</p>
+<h4 id="传统word2vec问题"><a href="#传统word2vec问题" class="headerlink" title="传统word2vec问题"></a>传统word2vec问题</h4><p>预训练好的向量会永久不变，但实际上在不同语境中同一个词会有不同的意思，bert可以解决这个问题</p>
+<h3 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a>transformer</h3><h4 id="self-attention"><a href="#self-attention" class="headerlink" title="self-attention"></a>self-attention</h4><p>模型自己可以找到一句话的重点，例如下图中，第一个句子“it”代指“animal”，第二个“it”代指“street”，要达到这样的效果，模型需要注意到该词的上下文语境，给不同的上下文词汇以不同的权重。</p>
+<img src="https://i.loli.net/2020/05/20/QPULyjo9gr7dwMz.png" style="zoom:50%;" />
+
+<p>假如一个句子有n个词，第一个词定义一个查询向量$q_1$，要去查询$q_1$和$k_1,k_2,…,k_n$之间的关系，而$v_1,v_2,…,v_n$代表n个词本身的特征向量。</p>
+<p><img src="https://i.loli.net/2020/05/20/iLOKzdTwCa6UySP.png" style="zoom:50%;" /><img src="https://i.loli.net/2020/05/20/gZLXuQmCxklNTWJ.png" alt=""></p>
+<img src="https://i.loli.net/2020/05/20/gZLXuQmCxklNTWJ.png" style="zoom:50%;" />
+
+<p>$q_1$和$k_i$内积越大，表示相关性越高，表示对该词的影响越大，”注意力”在第i个词上越多，即最终权重越大。</p>
+<p>$d_k$代表维度，因为维度越大，内积越大，而实际上不代表维度越大，影响越大，因此要除去维度的影响。</p>
+<img src="https://i.loli.net/2020/05/20/wK41fLMaIelENOU.png" style="zoom:50%;" />
+
+<p>抽丝剥茧，可简化为如下流程：</p>
+<img src="https://i.loli.net/2020/05/20/VfDQZm8obBntdws.png" style="zoom:50%;" />
+
+<p>整体计算流程如下</p>
+<img src="https://i.loli.net/2020/05/20/W97Lu4UXHFiqyn3.png" style="zoom:50%;" />
+
+<h4 id="multi-headed机制"><a href="#multi-headed机制" class="headerlink" title="multi-headed机制"></a>multi-headed机制</h4><p>类似卷积神经网络里有多个卷积核，这里有多个头，提取多个特征表达。</p>
+<img src="https://i.loli.net/2020/05/20/fO7dZl1zn6PyAe5.png" style="zoom:50%;" />
+
+<ul>
+<li>通过不同的head得到多个特征表达（一般8个头）</li>
+<li>将所有特征拼接在一起</li>
+<li>可以通过再一层全连接来降维</li>
+</ul>
+<img src="https://i.loli.net/2020/05/20/Yw9VrhXWKGDOuat.png" style="zoom:50%;" />
+
+<p>整体结构如下图</p>
+<img src="https://i.loli.net/2020/05/20/mrxZ8W6ETVzDyLq.png" style="zoom:50%;" />
+
+<h4 id="堆叠多层"><a href="#堆叠多层" class="headerlink" title="堆叠多层"></a>堆叠多层</h4><p>进行多次self-attention</p>
+<img src="https://i.loli.net/2020/05/20/uy1XxN27OQiVZYe.png" style="zoom:50%;" />
+
+<h4 id="位置信息表达"><a href="#位置信息表达" class="headerlink" title="位置信息表达"></a>位置信息表达</h4><p>在self-attention中每个词都会考虑整个序列的加权，所以其出现位置并不会对结果产生什么影响，相当于放哪都无所谓，但是这跟实际就有些不符合了，我们希望模型能对位置有额外的认识。</p>
+<img src="https://i.loli.net/2020/05/20/YqAjSFfhdElcXC3.png" style="zoom:50%;" />
+
+<p>位置信息编码有很多种，论文原文采用正弦余弦周期表达（开源代码已提供）。</p>
+<h4 id="Add与Normalize"><a href="#Add与Normalize" class="headerlink" title="Add与Normalize"></a>Add与Normalize</h4><ul>
+<li>layer层做normalization使训练速度更快，更稳定，NLP一般采用layer normalization(相当于在句子之间进行了归一化)</li>
+<li>残差连接，防止一顿操作后梯度消失（多手准备，至少不比原来差）</li>
+</ul>
+<img src="https://i.loli.net/2020/05/20/loa2pTmrA8KPYkL.png" style="zoom:50%;" />
+
+<h4 id="decoder"><a href="#decoder" class="headerlink" title="decoder"></a>decoder</h4><ul>
+<li>decoder端加入了encoder-decoder attention</li>
+<li>mask机制，output里预测第n个词时，不能使用第n个词后面的词，因此要把后面的词mask掉。</li>
+</ul>
+<img src="https://i.loli.net/2020/05/20/XcOvKxqghBDuCaY.png" style="zoom:50%;" />
+
+<h4 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h4><img src="https://i.loli.net/2020/05/20/8IxegUsuyJb7CZo.png" style="zoom:50%;" />
+
+<p>类似cnn的分类任务，应该接交叉熵函数。</p>
+<img src="https://i.loli.net/2020/05/20/bptgX59xQR8Nied.png" style="zoom:50%;" />
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>nlp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NLP-word2vec</title>
+    <url>/2020/11/12/NLP-word2vec/</url>
+    <content><![CDATA[<p>输入的词的向量先进行初始化，在训练过程中输入和中间层参数也会更新，模型内部就是神经网络</p>
+<h4 id="构建数据"><a href="#构建数据" class="headerlink" title="构建数据"></a>构建数据</h4><p>窗口滑动</p>
+<div align=center>
+
+<img src="https://i.loli.net/2020/05/21/1FsqhLytp3JlCSz.png" style="zoom:50%;" />
+
+<h4 id="不同模型的对比"><a href="#不同模型的对比" class="headerlink" title="不同模型的对比"></a>不同模型的对比</h4><p><strong>CBOW</strong></p>
+<p>输入是上下文，输出是中间的词，图中例子窗口是5。</p>
+<p><strong>skipgram</strong></p>
+<p>输入是中间此，输出是上下文，图中窗口是5。</p>
+<img src="https://i.loli.net/2020/05/21/3QLMqj2Xuc4A6Ta.png" style="zoom: 80%;" />
+
+<p><img src="https://i.loli.net/2020/05/21/RZMASP8j5Ttk6Nq.png" style="zoom:50%;" /><img src="https://i.loli.net/2020/05/21/oJ6sNwkfZa7KdPI.png" alt=""></p>
+<p>如何训练</p>
+<p>如果一个语料库稍微大点儿，可能的结果很多，最后一层softmax，计算起来十分耗时，如何解决？</p>
+<p>以skipgram为例，将输出也放在输入，判断这两个词是不是上下文 ，这样的话标签都是1，不好训练，要自己构建负采样的样本，变成2分类任务 。</p>
+<img src="https://i.loli.net/2020/05/21/awIRMFipzWvd53b.png" style="zoom:80%;" />
+
+<p><img src="https://i.loli.net/2020/05/21/NwsurOMTXfW2jUi.png" alt=""></p>
+<img src="https://i.loli.net/2020/05/21/EU9dbjWVznQZiyJ.png" style="zoom:50%;" />
+
+<p><img src="https://i.loli.net/2020/05/21/1DU9jdo8gEzxc3k.png" alt=""></p>
+<p>构建模型过程中，对于一些不常出现的词（在语料库中出现频率非常低）可以用[unk]表示</p>
+<p>可视化展示可以利用tensorboard</p>
+]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>nlp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RNN</title>
+    <url>/2020/11/12/RNN/</url>
+    <content><![CDATA[<p>在使用过程中，最终结果只取隐层最后时刻的值，因为最后时刻的值包含了前面时刻隐层的特征</p>
+<p>RNN会把t时刻前的所有时刻的特征记住，而如果序列太长，最前面的时刻特征对当前时刻可能没有用，所以引入LSTM，选择性遗忘一些内容</p>
+<p>RNN的输入[batch_size,timestep,feature_size]，time_step表示时间序列长度，feature_size表示每个输入的特征向量</p>
+<p>label要用one-hot编码</p>
+<p>一般LSTM两三层</p>
+<h2 id="tf-nn-bidirectional-dynamic-rnn"><a href="#tf-nn-bidirectional-dynamic-rnn" class="headerlink" title="tf.nn.bidirectional_dynamic_rnn"></a>tf.nn.bidirectional_dynamic_rnn</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tf.nn.bidirectional_dynamic_rnn(</span><br><span class="line"> </span><br><span class="line">    cell_fw,</span><br><span class="line">    cell_bw,</span><br><span class="line">    inputs,</span><br><span class="line">    sequence_length=None,</span><br><span class="line">    initial_state_fw=None,</span><br><span class="line">    initial_state_bw=None,</span><br><span class="line">    dtype=None,</span><br><span class="line">    parallel_iterations=None,</span><br><span class="line">    swap_memory=False,</span><br><span class="line">    time_major=False,</span><br><span class="line">    scope=None</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数：</strong></p>
+<p>cell_fw:一个RNNCell实例，用于前向。</p>
+<p>cell_bw: 一个RNNCell实例，用于后向。</p>
+<ul>
+<li>Inputs:RNN的输入。如果time_major=False(默认)，张量的形状为：[batch_size,max_time,…]或这些元素的嵌套的tuple。如果time_major==True，张量的形状为：[max_time,batch_size,…]或者这些元素的嵌套的tuple。也可能是满足此属性的Tensors（可能是嵌套的）元组。每个时间步的单元输入的是张量或者是维度为[batch_size,…]的张量的tuple</li>
+<li>sequence_length:可选参数。一个大小为[batch_size]的int32/int64类型向量。表示每个输入样本长度，如时间步长。更多的考虑到性能而不是正确性。</li>
+<li>Initial_state:_fw：可选参数。一个针对前向RNN的初始状态。[batch_size, cell_fw.state_size]</li>
+<li>Initial_state_bw: 可选参数。一个针对后向RNN的初始状态。[batch_size, cell_fw.state_size]</li>
+<li>dtype:初始状态和预期输出的数据类型。</li>
+<li>parallel_iteratioins:默认为32。并行运行的迭代次数。用于那些没有任何时间依赖性并且可以并行运行的操作。该参数是使用空间换时间。值&gt;1则使用更多内存但占用更少时间。使用较小的值则使用较少内存但计算时间较长。</li>
+<li>swap_memory:透明地交换前向推理中产生的张量，但对于后向传播，需要从GPU到CPU。这允许训练通常不适合单个GPU的RNN，具有非常小的性能损失。</li>
+<li>time_major:指定输入和输出张量的形状格式。如果为True，张量必须形如[max_time,batch_size,depth].如果为False，张量必须形如：[batch_size,max_time,depth]。使用time_major=True会更有效，因为它避免了RNN计算开始和结束时的转置。但是，大多数Tensorflow数据都是batch_size为major的数据，因此，默认情况下，此函数以batch-major形式接受输入和输出。</li>
+<li>scope:用于创建子图的VariableScope，默认是”rnn”。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<p>一个(outputs,output_states)元组，其中：</p>
+<ul>
+<li>outputs:一个(output_fw,output_bw)元组，包含前向和后向rnn输出的张量。如果time_major=False(默认的),output_fw是一个形如[batch_size,max_time,cell_fw.output_size]的张量，cell_fw.output_size即为前向隐藏层深度，output_bw是一个形如[batch_size,max_time,cell_bw.output_size]的张量，cell_bw.output_size即为后向隐藏层深度。如果time_major==True，output_fw是一个形如[max_time, batch_size,cell_fw.output_size]的张量，output_bw是一个形如[max_time, batch_size,cell_bw.output_size]的张量。与bidirectioinal_rnn不同，它返回一个元组而不是单个连接的Tensor。如果首选连接的，则前向和后向输出可连接为tf.concat(outputs,2)。</li>
+<li>output_states:一个(output_state_fw,output_state_bw)的元组，包含了前向和后向最后的隐藏状态的组成的元组。<br><code>output_state_fw</code>和<code>output_state_bw</code>的类型为LSTMStateTuple。LSTMStateTuple由（c，h）组成，分别代表memory cell和hidden state。</li>
+</ul>
+<p><strong>如果cell 是 LSTM：</strong></p>
+<p>​    state在单层rnn中，输出包含了最后一层的，前向和后向C和H，两者代表的都是最后层的最后一时刻的输出，前后向的H，对应的output的最后一个时刻值；</p>
+<p>　　state在多层rnn中，输出包含了所有层的的，前向和后向C和H，两者代表的都是每一层的最后一时刻的输出，前后向的H，对应的output每一层的最后一个时刻值（output 只保存最后一层的输出，state 保存所有层的 H和C）；</p>
+<p><strong>如果cell 是 GRU：</strong></p>
+<p> 　state在单层rnn中，输出包含了最后一层的，前向和后向的H，两者代表的都是最后层的最后一时刻的输出，前后向的H，对应的output的最后一个时刻值；</p>
+<p>　　state在多层rnn中，输出包含了所有层的，前向和后向的H，H代表的是每一层的最后一时刻的输出，前后向的H，对应的output每一层的最后一个时刻值（output 只保存最后一层的输出，state 保存所有层的 H）；</p>
+]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tensorflow使用注意要点</title>
+    <url>/2020/11/12/tensorflow%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E8%A6%81%E7%82%B9/</url>
+    <content><![CDATA[<ol>
+<li><p>创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">loss, accuracy = sess.run([loss, accuracy], feed_dict=&#123;x: x_batch, y: y_batch, l: l_batch&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会导致第二次运行时，会将第一次得到的值（左侧的loss）直接赋值给右侧，会与之前定义的冲突，修改成如下即可。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_loss, train_accuracy = sess.run([loss, accuracy], feed_dict=&#123;x: x_batch, y: y_batch, l: l_batch&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码中有使用tf.get_variable和tf.variable创建变量，则在创建图后要对变量进行统一的初始化，即使用该函数tf.global_variables_initializer()。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python系列笔记2</title>
+    <url>/2020/11/12/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/</url>
+    <content><![CDATA[<ol>
+<li><p>np.random.permutation</p>
+<p>随机排列序列，比如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.random.permutation(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出结果</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.device()</p>
+<p>在tensorflow中指定模型运行的具体设备，可以指定在CPU或者哪块儿GPU上运行。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">'/gpu:1'</span>): <span class="comment">#指定在第二块gpu上运行</span></span><br><span class="line"><span class="comment"># with tf.device('/cpu:0'):  #指定在cpu上使用CPU不区分设备号，统一使用 /cpu:0</span></span><br><span class="line">    v1 = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>], shape=[<span class="number">3</span>], name=<span class="string">'v1'</span>)</span><br><span class="line">    v2 = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>], shape=[<span class="number">3</span>], name=<span class="string">'v2'</span>)</span><br><span class="line">    sumV12 = v1 + v2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">with</span> tf.Session(config=tf.ConfigProto(log_device_placement=<span class="literal">True</span>)) <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="keyword">print</span> sess.run(sumV12)</span><br></pre></td></tr></table></figure>
+
+<p>ConfigProto() 中参数 <strong><em>log_device_placement=True\</em></strong> 会打印出执行操作所用的设备，以上输出:</p>
+<img src="https://img-blog.csdn.net/20180329194542470" alt="img"  />
+</li>
+<li><p>tf.reduce_max</p>
+<p>Computes the maximum of elements across dimensions of a tensor. (deprecated arguments)，计算最大值，该函数有如下参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.reduce_max(</span><br><span class="line">    input_tensor,</span><br><span class="line">    axis=<span class="literal">None</span>,</span><br><span class="line">    keepdims=<span class="literal">None</span>,</span><br><span class="line">    name=<span class="literal">None</span>,</span><br><span class="line">    reduction_indices=<span class="literal">None</span>,</span><br><span class="line">    keep_dims=<span class="literal">None</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>使用举例如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array([[<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">5</span>, <span class="number">3</span>],</span><br><span class="line">            [<span class="number">2</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line">b = tf.Variable(a)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    print(sess.run(b))</span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    <span class="comment"># 对于二维矩阵，axis=0轴可以理解为行增长方向（向下）,axis=1轴可以理解为列增长方向(向右）</span></span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">1</span>, keepdims=<span class="literal">False</span>)))  <span class="comment"># keepdims=False,axis=1被消减</span></span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)))</span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[[<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line"> [<span class="number">5</span> <span class="number">3</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">6</span>]]</span><br><span class="line">************</span><br><span class="line">[<span class="number">2</span> <span class="number">5</span> <span class="number">6</span>]</span><br><span class="line">************</span><br><span class="line">[[<span class="number">2</span>]</span><br><span class="line"> [<span class="number">5</span>]</span><br><span class="line"> [<span class="number">6</span>]]</span><br><span class="line">************</span><br><span class="line">[[<span class="number">5</span> <span class="number">6</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.reshape()</p>
+<p>函数的作用是将tensor变换为参数shape形式，其中的shape为一个列表形式，特殊的是列表可以实现逆序的遍历，即list(-1).-1所代表的含义是我们不用亲自去指定这一维的大小，函数会自动进行计算，但是列表中只能存在一个-1。（如果存在多个-1，就是一个存在多解的方程）。该函数有如下参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.reshape(tensor,shape,name=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>官方给出的例子：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment"># tensor 't' is [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [9]</span></span><br><span class="line">reshape(t, [3, 3]) ==&gt; [[1, 2, 3],</span><br><span class="line">                        [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">                        [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [[[1, 1], [2, 2]],</span></span><br><span class="line"><span class="comment">#                [[3, 3], [4, 4]]]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [2, 2, 2]</span></span><br><span class="line">reshape(t, [2, 4]) ==&gt; [[1, 1, 2, 2],</span><br><span class="line">                        [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [[[1, 1, 1],</span></span><br><span class="line"><span class="comment">#                 [2, 2, 2]],</span></span><br><span class="line"><span class="comment">#                [[3, 3, 3],</span></span><br><span class="line"><span class="comment">#                 [4, 4, 4]],</span></span><br><span class="line"><span class="comment">#                [[5, 5, 5],</span></span><br><span class="line"><span class="comment">#                 [6, 6, 6]]]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [3, 2, 3]</span></span><br><span class="line"><span class="comment"># pass '[-1]' to flatten 't'</span></span><br><span class="line">reshape(t, [-1]) ==&gt; [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6]</span><br><span class="line"></span><br><span class="line"><span class="comment"># -1 can also be used to infer the shape</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -1 is inferred to be 9:</span></span><br><span class="line">reshape(t, [2, -1]) ==&gt; [[1, 1, 1, 2, 2, 2, 3, 3, 3],</span><br><span class="line">                         [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="comment"># -1 is inferred to be 2:</span></span><br><span class="line">reshape(t, [-1, 9]) ==&gt; [[1, 1, 1, 2, 2, 2, 3, 3, 3],</span><br><span class="line">                         [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="comment"># -1 is inferred to be 3:</span></span><br><span class="line">reshape(t, [ 2, -1, 3]) ==&gt; [[[1, 1, 1],</span><br><span class="line">                              [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">                              [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]],</span><br><span class="line">                             [[<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>],</span><br><span class="line">                              [<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>],</span><br><span class="line">                              [<span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [7]</span></span><br><span class="line"><span class="comment"># shape `[]` reshapes to a scalar</span></span><br><span class="line">reshape(t, []) ==&gt; 7</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>_getitem__方法</p>
+<p>Python的方法<code>__getitem__</code> 可以让对象实现迭代功能，这样就可以使用<code>for...in...</code> 来迭代该对象了。比如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, animal_list)</span>:</span></span><br><span class="line">        self.animals_name = animal_list</span><br><span class="line"></span><br><span class="line">animals = Animal([<span class="string">"dog"</span>,<span class="string">"cat"</span>,<span class="string">"fish"</span>])</span><br><span class="line"><span class="keyword">for</span> animal <span class="keyword">in</span> animals:</span><br><span class="line">    print(animal)</span><br></pre></td></tr></table></figure>
+
+<p>在用 <code>for..in..</code> 迭代对象时，如果对象没有实现 <code>__iter__</code> <code>__next__</code> 迭代器协议，Python的解释器就会去寻找<code>__getitem__</code> 来迭代对象，如果连<code>__getitem__</code> 都没有定义，这解释器就会报对象不是迭代器的错误。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">TypeError: <span class="string">'Animal'</span> object <span class="keyword">is</span> <span class="keyword">not</span> iterable</span><br></pre></td></tr></table></figure>
+
+<p>如果在类中定义了<strong>getitem</strong>()方法，那么他的实例对象（假设为P）就可以这样P[key]取值。当实例对象做P[key]运算时，就会调用类中的<strong>getitem</strong>()方法。</p>
+</li>
+<li><p><strong>repr</strong>和<strong>str</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value=<span class="string">'hello, world!'</span>)</span>:</span></span><br><span class="line">        self.data = value</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = Test()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line">&lt;__main__.Test at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> t</span><br><span class="line">&lt;__main__.Test object at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看到了么？上面打印类对象并不是很友好，显示的是对象的内存地址</span></span><br><span class="line"><span class="comment"># 下面我们重构下该类的__repr__以及__str__，看看它们俩有啥区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestRepr</span><span class="params">(Test)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'TestRepr(%s)'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr = TestRepr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__方法后，不管直接输出对象还是通过print打印的信息都按我们__repr__方法中定义的格式进行显示了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__str__</span></span><br><span class="line">calss TestStr(Test):</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'[Value: %s]'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts = TestStr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts</span><br><span class="line">&lt;__main__.TestStr at <span class="number">0x7fa91c314e50</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> ts</span><br><span class="line">[Value: hello, world!]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 你会发现，直接输出对象ts时并没有按我们__str__方法中定义的格式进行输出，而用print输出的信息却改变了</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tensorflow中的tensorboard</p>
+<p>深入讲解戳链接</p>
+<p><a href="https://blog.csdn.net/qq_27825451/article/details/90229983" target="_blank" rel="noopener">https://blog.csdn.net/qq_27825451/article/details/90229983</a></p>
+<p><img src="C:%5CUsers%5Cbme319%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200526201214488.png" alt="image-20200526201214488"></p>
+<p>颜色浅的才是真实曲线，但真实曲线往往不好看，所以加入了平滑产生了颜色深的线，左侧有调节平滑的参数</p>
+</li>
+<li><p>keras保存模型和加载模型</p>
+<p>需要用到save和load_model两个函数，举例如下：</p>
+<p><strong>保存模型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, LSTM, Embedding, Bidirectional</span><br><span class="line"><span class="keyword">from</span> keras_contrib.layers <span class="keyword">import</span> CRF</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">from</span> keras_contrib.layers.crf <span class="keyword">import</span> CRF, crf_loss, crf_viterbi_accuracy</span><br><span class="line"></span><br><span class="line"><span class="comment">#构造模型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_lstm_crf_model</span><span class="params">(num_cates, seq_len, vocab_size, model_opts=dict<span class="params">()</span>)</span>:</span></span><br><span class="line">    opts = &#123;</span><br><span class="line">        <span class="string">'emb_size'</span>: <span class="number">256</span>,</span><br><span class="line">        <span class="string">'emb_trainable'</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">'emb_matrix'</span>: <span class="literal">None</span>,</span><br><span class="line">        <span class="string">'lstm_units'</span>: <span class="number">256</span>,</span><br><span class="line">        <span class="string">'optimizer'</span>: keras.optimizers.Adam()</span><br><span class="line">    &#125;</span><br><span class="line">    opts.update(model_opts)</span><br><span class="line"></span><br><span class="line">    input_seq = Input(shape=(seq_len,), dtype=<span class="string">'int32'</span>)</span><br><span class="line">    <span class="keyword">if</span> opts.get(<span class="string">'emb_matrix'</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        embedding = Embedding(vocab_size, opts[<span class="string">'emb_size'</span>],</span><br><span class="line">                              weights=[opts[<span class="string">'emb_matrix'</span>]],</span><br><span class="line">                              trainable=opts[<span class="string">'emb_trainable'</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        embedding = Embedding(vocab_size, opts[<span class="string">'emb_size'</span>])</span><br><span class="line">    x = embedding(input_seq)</span><br><span class="line">    lstm = LSTM(opts[<span class="string">'lstm_units'</span>], return_sequences=<span class="literal">True</span>)</span><br><span class="line">    x = Bidirectional(lstm)(x)</span><br><span class="line">    crf = CRF(num_cates, sparse_target=<span class="literal">True</span>)</span><br><span class="line">    output = crf(x)</span><br><span class="line"></span><br><span class="line">    model = Model(input_seq, output)</span><br><span class="line">    model.compile(opts[<span class="string">'optimizer'</span>], loss=crf.loss_function,</span><br><span class="line">                  metrics=[crf.accuracy])</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"><span class="comment">#训练，前面导入数据和处理数据省略</span></span><br><span class="line">model = build_lstm_crf_model(num_cates, seq_len=seq_len, vocab_size=vocab_size,</span><br><span class="line">                             model_opts=&#123;<span class="string">'emb_matrix'</span>: w2v_embeddings, <span class="string">'emb_size'</span>: <span class="number">100</span>, <span class="string">'emb_trainable'</span>: <span class="literal">False</span>&#125;)</span><br><span class="line">model.summary()<span class="comment"># 可以输出各层的参数状况</span></span><br><span class="line">tbCallBack = TensorBoard(log_dir=<span class="string">"./log"</span>)<span class="comment">#使用tensorBoard查看loss和accuracy曲线</span></span><br><span class="line">model.fit(train_X, train_y, batch_size=<span class="number">64</span>, epochs=<span class="number">10</span>, callbacks=[tbCallBack])<span class="comment">#训练</span></span><br><span class="line">model.save(<span class="string">'model.h5'</span>)<span class="comment">#保存模型，得安装相应模块，pip install h5py</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加载模型</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> load_model</span><br><span class="line"></span><br><span class="line"><span class="comment">#CRF为自定义的层，load_model函数中需添加custom_objects参数，该参数接受一个字典，键值为自定义的层</span></span><br><span class="line">model=load_model(<span class="string">'model.h5'</span>,custom_objects=&#123;<span class="string">"CRF"</span>: CRF,<span class="string">"crf_loss"</span>: crf_loss, <span class="string">'crf_viterbi_accuracy'</span>: crf_viterbi_accuracy&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.estimator与tensorboard</p>
+<p>一般情况下，在tensorflow中想使用tensorboard可视化参数和loss、accuracy等结果，需要配合session图结构一起（具体可参照许多博客，讲解较多）。但当在tensorflow中使用estimator进行训练、预测和验证时，会有所不同。</p>
+<p>Estimator是一种可极大地简化机器学习编程的高阶 TensorFlow API，会封装很多流程，自动构建图。在使用Estimator的tf程序中，想要利用tensorboard进行可视化，只需要在model_fn中加入如下操作（以loss为例）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_fn</span><span class="params">(features, labels, mode, params)</span>:</span></span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">if</span> mode == tf.estimator.ModeKeys.TRAIN:</span><br><span class="line">            train_op = optimization.create_optimizer(</span><br><span class="line">                total_loss, learning_rate, num_train_steps, num_warmup_steps, use_tpu)</span><br><span class="line">            </span><br><span class="line">            tf.summary.scalar(<span class="string">'loss'</span>,total_loss)<span class="comment">#可视化loss</span></span><br><span class="line">                    </span><br><span class="line">            hook_dict = &#123;&#125;</span><br><span class="line">            hook_dict[<span class="string">'loss'</span>] = total_loss</span><br><span class="line">            hook_dict[<span class="string">'global_steps'</span>] = tf.train.get_or_create_global_step()</span><br><span class="line">            logging_hook = tf.train.LoggingTensorHook(</span><br><span class="line">                hook_dict, every_n_iter=FLAGS.save_summary_steps)</span><br><span class="line"></span><br><span class="line">            output_spec = tf.estimator.EstimatorSpec(</span><br><span class="line">                mode=mode,</span><br><span class="line">                loss=total_loss,</span><br><span class="line">                train_op=train_op,</span><br><span class="line">                training_hooks=[logging_hook])</span><br></pre></td></tr></table></figure>
+
+<p>保存model的文件中会有日志文件生成，在终端启用tensorboard，定位到生成log文件的上一级文件夹目录后，执行如下语句即可（log就是日志目录名）</p>
+<blockquote>
+<p>tensorboard –logdir=log</p>
+</blockquote>
+</li>
+<li><p>宏平均和微平均</p>
+<p>针对多分类问题，预测任务时将会有多个混淆矩阵，宏平均是在各个混淆矩阵中分别计算查准率和查全率以及F1值，然后再计算平均值，微平均是将各个混淆矩阵的对应元素进行平均，得到TP、FP、TN、FN的平均值，再计算查准率和查全率以及F1值。</p>
+<img src="https://i.loli.net/2020/06/09/Guq7CQB24zIfisv.png" style="zoom: 80%;" />
+
+
+
+</li>
+</ol>
+<p><img src="https://i.loli.net/2020/06/09/MWSRa5PvUYiCrfu.png" style="zoom:80%;" /><img src="https://i.loli.net/2020/06/09/k2quzAgjyfY8s9n.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/06/09/k2quzAgjyfY8s9n.png" alt=""></p>
+<p>关于两者的选择：</p>
+<ul>
+<li>若注重数据比例较大的类的影响，选择micro-average</li>
+<li>若注重数据比较较小的类的影响，选择macro-average</li>
+</ul>
+<blockquote>
+<p>如果每个class的样本数量相差不大，那么宏平均和微平均差异也不大</p>
+<p>如果微平均远低于宏平均，则应该去检查样本量多 的class</p>
+<p>如果宏平均远低于微平均，则应该去检查样本量少的class</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>windows下jupyter notebook中切换虚拟环境</title>
+    <url>/2020/11/12/jupyter%20notebook%E4%B8%AD%E5%88%87%E6%8D%A2%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>命令行输入jupyter notebook后，ipynb的默认使用环境是系统中最原始的python版本，即使是在虚拟环境下打开的jupyter，若想要使用其他虚拟环境，需要在该虚拟环境下安装ipykernel包，命令如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install ipykernel</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/11/12/96vHq73CmRnEIQt.png" alt="image-20201112201451846"></p>
+<p>然后将自己的环境添加到jupyter中，命令如下(venv是我的虚拟环境名称)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -m ipykernel install --name venv</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/11/12/8ejxrvdlRmZkuog.png" alt="image-20201112201639860"></p>
+<p>这样就可以在jupyter notebook里选择环境了！</p>
+<p><img src="https://i.loli.net/2020/11/12/4kY7Gv3sX2AVQIy.png" alt="image-20201112201733891"></p>
+<p>在jupyter里删除虚拟环境的命令</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">jupyter kernelspec remove venv</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>tip</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>综述：基于图的方法提取生物医学关系</title>
+    <url>/2020/07/08/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/</url>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
+<p>2、关系提取和事件提取所用到的方法通常是一样的；</p>
+<p>3、基于图的方法将生物医学概念转换为节点，将语法/语义链接转换为边 ；</p>
+<p>4、生物医学领域一些知识库（有专家标注）：KEGG，STRING ，InterPro， InterDom，偏向临床的有PharmGKB， VARIMED， ClinVar；</p>
+<h2 id="生物医学关系提取的应用"><a href="#生物医学关系提取的应用" class="headerlink" title="生物医学关系提取的应用"></a>生物医学关系提取的应用</h2><p>生物分子信息提取,  临床试验筛选 ,  药物基因组学 ,  诊断分类 , 药物不良反应 ， 药物之间相互作用 </p>
+<p><img src="https://i.loli.net/2019/10/31/RMQgpCir5cPlK7e.png" alt=""></p>
+<h3 id="生物分子信息提取（Biomolecular-information-extraction）"><a href="#生物分子信息提取（Biomolecular-information-extraction）" class="headerlink" title="生物分子信息提取（Biomolecular information extraction）"></a>生物分子信息提取（Biomolecular information extraction）</h3><p> 挖掘蛋白质-蛋白质相互作用(protein protein interaction, PPIs)、基因表型关联、基因本体论和通路信息 ， 涉及的方法中有许多采用NLP方法从文献中提取已知的疾病基因关系，然后用于预测新的疾病基因关系 。</p>
+<h3 id="临床试验筛选（Clinical-trial-screening）"><a href="#临床试验筛选（Clinical-trial-screening）" class="headerlink" title="临床试验筛选（Clinical trial screening）"></a>临床试验筛选（Clinical trial screening）</h3><p> 临床试验在很大程度上以合格标准为特征，其中一些可以通过相关性来获得 （如no [diagnosis] for [rheumatoid arthritis] for at least [6 months]）， NLP支持已被证明在自动检测资格标准中的命名实体方面很有用，并进一步在提取命名实体之间的关系以描述资格标准方面很有用 。</p>
+<h3 id="药物基因组学（Pharmacogenomics）"><a href="#药物基因组学（Pharmacogenomics）" class="headerlink" title="药物基因组学（Pharmacogenomics）"></a><strong>药物基因组学</strong>（Pharmacogenomics）</h3><p> 药物基因组学的目的是通过研究药物反应表型和患者遗传变异之间的关系来了解不同患者对药物的反应。  这些知识中的大部分可以从科学文献中挖掘出来，并整理到数据库中，以便发现新的关系。其中一个数据库是药物基因学研究网络和知识库 （PharmGKB ）， 最近的方法已经扩展到使用语义和句法分析以及统计机器学习工具来从科学文献和临床记录中挖掘有针对性的药物基因组学关系 。</p>
+<h3 id="诊断分类（Diagnosis-categorization"><a href="#诊断分类（Diagnosis-categorization" class="headerlink" title="诊断分类（Diagnosis categorization)"></a>诊断分类（Diagnosis categorization)</h3><p>目前存在的已所开发的系统可以从电子病历(Electronic Medical Records, EMRs)中自动对诊断进行编码和分类。最近的工作证明了语义关系提取的成功，并将这些关系作为诊断分类的附加特征。</p>
+<h3 id="药物不良反应和药物之间相互作用-（ADR-and-DDI）"><a href="#药物不良反应和药物之间相互作用-（ADR-and-DDI）" class="headerlink" title="药物不良反应和药物之间相互作用 （ADR and DDI）"></a>药物不良反应和药物之间相互作用 （ADR and DDI）</h3><p> ADR指的是服用药物造成的意外伤害。DDI是指一种药物同时影响另一种药物的活性。ADR是发病和死亡的重要原因，DDIs可能导致药物疗效降低或药物过量。检测潜在的ADR和DDIs可以指导药物的开发过程。越来越多的方法使用NLP从科学文献和临床记录中挖掘信息。这些系统经常探索药物、基因和通路之间的关系，发现文本中陈述的ADRs和DDIs。近年来的大量研究也探索了社交网络中用户生成的内容，以检测ADR。</p>
+<h2 id="生物医学关系提取的通用方法"><a href="#生物医学关系提取的通用方法" class="headerlink" title="生物医学关系提取的通用方法"></a>生物医学关系提取的通用方法</h2><p><img src="https://i.loli.net/2019/10/31/lkqw72j9xMSheKm.png" alt=""></p>
+<p>Section recognition：段落识别，区分不同段落标题下的文本，比如“主诉”，既往病史。</p>
+<p>Sentence breaking： 断句，自动决定一个段落中句子的开头和结尾。 </p>
+<p>Typographical/morphological analysis：提取大小写以及字母数字的字符的特征。</p>
+<p>Stemming：词干提取，将单词还原为词根形式，如将performed变为perform。</p>
+<p>POS tagging： 为句子中的每个单词指定词性标记 。</p>
+<p>Parsing： 为一个句子分配句法结构，通常利用Stanford Parser获取constituency or dependency structure（两种语言结构）</p>
+<p>typographical analysis，stemming，POS tagging和parsing的结果可以为共指关系和概念的识别提供特征。其中共指关系指的是 自动识别表示同一个实体的名词短语或代词，并将他们归类， 例如：新闻报道中的<strong>巴拉克－奥巴马</strong>这个实体，有的时候是<strong>美国总统</strong>，有的时候是<strong>奥巴马</strong>, 而有的时候是<strong>第44任美国总统</strong>，甚至有的时候是一个简单的代词<strong>他</strong>。当这些名词短语或代词出现在一起时，我们根据我们已有的知识或者是上下文信息都清楚地知道它们指代的是同一个实体。</p>
+<p>graph mining在整个流程中扮演着一个中心概念的角色，它可以为连接局部特征（如tokens和词类标记）的方法提供一个收敛点，同时它的每一个分叉点代表着一个整合特征（如关系特征）被建立起来，最后它也是连接句法和语法特征的桥梁。</p>
+<h2 id="生物医学关系提取的图表示和图算法"><a href="#生物医学关系提取的图表示和图算法" class="headerlink" title="生物医学关系提取的图表示和图算法"></a>生物医学关系提取的图表示和图算法</h2><p>算法主要分为几类：</p>
+<p>1、识别概念对之间的最短路径（或其变体），可以用标准算法(如Dijkstra算法)来执行；</p>
+<p>2、 创建关联图，然后尝试对其应用定制的标签 ；</p>
+<p>3、 使用子图匹配来比较基于节点距离和边缘距离的子图之间的相似性; </p>
+<p>4、 进行频繁子图或子树模式挖掘，直接提取候选关系 </p>
+<p>5、 将图结构集成到解析器的学习目标中，直接解析句子中关系的图表示 </p>
+<h2 id="生物医学关系提取的信息来源"><a href="#生物医学关系提取的信息来源" class="headerlink" title="生物医学关系提取的信息来源"></a>生物医学关系提取的信息来源</h2><h3 id="科学文献"><a href="#科学文献" class="headerlink" title="科学文献"></a>科学文献</h3><p>著名的community challenges：BioNLP shared tasks（事件的提取）、BioCreative shared tasks（蛋白质之间关系的提取）、DDIExtraction challenges 2011 and 2013（药物之间关系的提取）</p>
+<p><img src="https://i.loli.net/2019/10/31/VrTi9tMSYhKac2D.png" alt=""></p>
+<h3 id="临床叙事文本"><a href="#临床叙事文本" class="headerlink" title="临床叙事文本"></a>临床叙事文本</h3><p>挑战：</p>
+<p>i2b2/VA-2010 challenge(i2b2—Informatics for Integrating Biology to the Bedside,VA—Veterans Association)：此挑战基于EMR文本数据，包括概念提取、assertion classification和关系分类</p>
+<p>SemEval 2015 Task 14：disorder identification（无序识别） and disorder slot filling tasks（与BioNLP的事件提取很像，但是在临床的子领域）</p>
+<h3 id="关系提取的共享资源"><a href="#关系提取的共享资源" class="headerlink" title="关系提取的共享资源"></a>关系提取的共享资源</h3><p><img src="https://i.loli.net/2019/10/31/aXhb1ulQW2JUGcm.png" alt=""></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用的综述主要讨论基于图的算法，而笔者更着重于机器学习的算法，所以这篇博客对文章中的方法不做过多的描述，更多着眼于生物医学关系提取的一些自然语言处理方法和一些公开的数据集。</p>
+<p>参考文献</p>
+<p>[1] Luo Y , Özlem Uzuner, Szolovits P . Bridging semantics and syntax with graph algorithms-state-of-the-art of extracting biomedical relations[J]. Briefings in Bioinformatics, 2016, 18(1):160. </p>
+]]></content>
+      <categories>
+        <category>文献阅读</category>
+      </categories>
+      <tags>
+        <tag>Biomedical information extraction</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python系列笔记1</title>
-    <url>/2020/05/11/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/</url>
+    <url>/2020/07/08/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/</url>
     <content><![CDATA[<h4 id="python语法笔记"><a href="#python语法笔记" class="headerlink" title="python语法笔记"></a>python语法笔记</h4><ol>
 <li><p>Argparse中<strong>action</strong>的可选参数store_true和store_false</p>
 <p>store_true 是指带触发action时为真，不触发则为假</p>
@@ -82,8 +473,32 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2020/07/08/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Testing</category>
+      </categories>
+      <tags>
+        <tag>标签</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>EliIE:一个符合临床试验合格标准的开源信息提取系统</title>
-    <url>/2019/11/01/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/</url>
+    <url>/2020/07/08/EliIE%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%90%88%E4%B8%B4%E5%BA%8A%E8%AF%95%E9%AA%8C%E5%90%88%E6%A0%BC%E6%A0%87%E5%87%86%E7%9A%84%E5%BC%80%E6%BA%90%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h3 id="临床试验合格标准和规范化"><a href="#临床试验合格标准和规范化" class="headerlink" title="临床试验合格标准和规范化"></a>临床试验合格标准和规范化</h3><p>目前的一些规范化的工作需要耗费许多人力去设定句法规则以及符合要求的语法概念，而且这些工作的结果很多缺乏语义互操作性。</p>
 <p>OMOP CDM具有语义互操作性， 它通过使用通用信息模型和相关临床实体(如条件、观察和药物)的多个标准术语对数据进行标准化，从而支持不同的观察数据库之间的互操作性。但目前将EHR数据转为标准化的OMOP数据仍需手动操作，无法对大规模的数据快速操作。</p>
 <p>这篇文章构建了一个系统，该系统能够让计算机自动地庞大的EHR数据进行标准化处理，且使得各个观察性数据库彼此之间可相互操作。</p>
@@ -124,815 +539,6 @@
       </categories>
       <tags>
         <tag>Biomedical information extraction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>综述：基于图的方法提取生物医学关系</title>
-    <url>/2019/10/31/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/</url>
-    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>1、关系提取比命名实体识别要困难很多，accuracy不高；</p>
-<p>2、关系提取和事件提取所用到的方法通常是一样的；</p>
-<p>3、基于图的方法将生物医学概念转换为节点，将语法/语义链接转换为边 ；</p>
-<p>4、生物医学领域一些知识库（有专家标注）：KEGG，STRING ，InterPro， InterDom，偏向临床的有PharmGKB， VARIMED， ClinVar；</p>
-<h2 id="生物医学关系提取的应用"><a href="#生物医学关系提取的应用" class="headerlink" title="生物医学关系提取的应用"></a>生物医学关系提取的应用</h2><p>生物分子信息提取,  临床试验筛选 ,  药物基因组学 ,  诊断分类 , 药物不良反应 ， 药物之间相互作用 </p>
-<p><img src="https://i.loli.net/2019/10/31/RMQgpCir5cPlK7e.png" alt=""></p>
-<h3 id="生物分子信息提取（Biomolecular-information-extraction）"><a href="#生物分子信息提取（Biomolecular-information-extraction）" class="headerlink" title="生物分子信息提取（Biomolecular information extraction）"></a>生物分子信息提取（Biomolecular information extraction）</h3><p> 挖掘蛋白质-蛋白质相互作用(protein protein interaction, PPIs)、基因表型关联、基因本体论和通路信息 ， 涉及的方法中有许多采用NLP方法从文献中提取已知的疾病基因关系，然后用于预测新的疾病基因关系 。</p>
-<h3 id="临床试验筛选（Clinical-trial-screening）"><a href="#临床试验筛选（Clinical-trial-screening）" class="headerlink" title="临床试验筛选（Clinical trial screening）"></a>临床试验筛选（Clinical trial screening）</h3><p> 临床试验在很大程度上以合格标准为特征，其中一些可以通过相关性来获得 （如no [diagnosis] for [rheumatoid arthritis] for at least [6 months]）， NLP支持已被证明在自动检测资格标准中的命名实体方面很有用，并进一步在提取命名实体之间的关系以描述资格标准方面很有用 。</p>
-<h3 id="药物基因组学（Pharmacogenomics）"><a href="#药物基因组学（Pharmacogenomics）" class="headerlink" title="药物基因组学（Pharmacogenomics）"></a><strong>药物基因组学</strong>（Pharmacogenomics）</h3><p> 药物基因组学的目的是通过研究药物反应表型和患者遗传变异之间的关系来了解不同患者对药物的反应。  这些知识中的大部分可以从科学文献中挖掘出来，并整理到数据库中，以便发现新的关系。其中一个数据库是药物基因学研究网络和知识库 （PharmGKB ）， 最近的方法已经扩展到使用语义和句法分析以及统计机器学习工具来从科学文献和临床记录中挖掘有针对性的药物基因组学关系 。</p>
-<h3 id="诊断分类（Diagnosis-categorization"><a href="#诊断分类（Diagnosis-categorization" class="headerlink" title="诊断分类（Diagnosis categorization)"></a>诊断分类（Diagnosis categorization)</h3><p>目前存在的已所开发的系统可以从电子病历(Electronic Medical Records, EMRs)中自动对诊断进行编码和分类。最近的工作证明了语义关系提取的成功，并将这些关系作为诊断分类的附加特征。</p>
-<h3 id="药物不良反应和药物之间相互作用-（ADR-and-DDI）"><a href="#药物不良反应和药物之间相互作用-（ADR-and-DDI）" class="headerlink" title="药物不良反应和药物之间相互作用 （ADR and DDI）"></a>药物不良反应和药物之间相互作用 （ADR and DDI）</h3><p> ADR指的是服用药物造成的意外伤害。DDI是指一种药物同时影响另一种药物的活性。ADR是发病和死亡的重要原因，DDIs可能导致药物疗效降低或药物过量。检测潜在的ADR和DDIs可以指导药物的开发过程。越来越多的方法使用NLP从科学文献和临床记录中挖掘信息。这些系统经常探索药物、基因和通路之间的关系，发现文本中陈述的ADRs和DDIs。近年来的大量研究也探索了社交网络中用户生成的内容，以检测ADR。</p>
-<h2 id="生物医学关系提取的通用方法"><a href="#生物医学关系提取的通用方法" class="headerlink" title="生物医学关系提取的通用方法"></a>生物医学关系提取的通用方法</h2><p><img src="https://i.loli.net/2019/10/31/lkqw72j9xMSheKm.png" alt=""></p>
-<p>Section recognition：段落识别，区分不同段落标题下的文本，比如“主诉”，既往病史。</p>
-<p>Sentence breaking： 断句，自动决定一个段落中句子的开头和结尾。 </p>
-<p>Typographical/morphological analysis：提取大小写以及字母数字的字符的特征。</p>
-<p>Stemming：词干提取，将单词还原为词根形式，如将performed变为perform。</p>
-<p>POS tagging： 为句子中的每个单词指定词性标记 。</p>
-<p>Parsing： 为一个句子分配句法结构，通常利用Stanford Parser获取constituency or dependency structure（两种语言结构）</p>
-<p>typographical analysis，stemming，POS tagging和parsing的结果可以为共指关系和概念的识别提供特征。其中共指关系指的是 自动识别表示同一个实体的名词短语或代词，并将他们归类， 例如：新闻报道中的<strong>巴拉克－奥巴马</strong>这个实体，有的时候是<strong>美国总统</strong>，有的时候是<strong>奥巴马</strong>, 而有的时候是<strong>第44任美国总统</strong>，甚至有的时候是一个简单的代词<strong>他</strong>。当这些名词短语或代词出现在一起时，我们根据我们已有的知识或者是上下文信息都清楚地知道它们指代的是同一个实体。</p>
-<p>graph mining在整个流程中扮演着一个中心概念的角色，它可以为连接局部特征（如tokens和词类标记）的方法提供一个收敛点，同时它的每一个分叉点代表着一个整合特征（如关系特征）被建立起来，最后它也是连接句法和语法特征的桥梁。</p>
-<h2 id="生物医学关系提取的图表示和图算法"><a href="#生物医学关系提取的图表示和图算法" class="headerlink" title="生物医学关系提取的图表示和图算法"></a>生物医学关系提取的图表示和图算法</h2><p>算法主要分为几类：</p>
-<p>1、识别概念对之间的最短路径（或其变体），可以用标准算法(如Dijkstra算法)来执行；</p>
-<p>2、 创建关联图，然后尝试对其应用定制的标签 ；</p>
-<p>3、 使用子图匹配来比较基于节点距离和边缘距离的子图之间的相似性; </p>
-<p>4、 进行频繁子图或子树模式挖掘，直接提取候选关系 </p>
-<p>5、 将图结构集成到解析器的学习目标中，直接解析句子中关系的图表示 </p>
-<h2 id="生物医学关系提取的信息来源"><a href="#生物医学关系提取的信息来源" class="headerlink" title="生物医学关系提取的信息来源"></a>生物医学关系提取的信息来源</h2><h3 id="科学文献"><a href="#科学文献" class="headerlink" title="科学文献"></a>科学文献</h3><p>著名的community challenges：BioNLP shared tasks（事件的提取）、BioCreative shared tasks（蛋白质之间关系的提取）、DDIExtraction challenges 2011 and 2013（药物之间关系的提取）</p>
-<p><img src="https://i.loli.net/2019/10/31/VrTi9tMSYhKac2D.png" alt=""></p>
-<h3 id="临床叙事文本"><a href="#临床叙事文本" class="headerlink" title="临床叙事文本"></a>临床叙事文本</h3><p>挑战：</p>
-<p>i2b2/VA-2010 challenge(i2b2—Informatics for Integrating Biology to the Bedside,VA—Veterans Association)：此挑战基于EMR文本数据，包括概念提取、assertion classification和关系分类</p>
-<p>SemEval 2015 Task 14：disorder identification（无序识别） and disorder slot filling tasks（与BioNLP的事件提取很像，但是在临床的子领域）</p>
-<h3 id="关系提取的共享资源"><a href="#关系提取的共享资源" class="headerlink" title="关系提取的共享资源"></a>关系提取的共享资源</h3><p><img src="https://i.loli.net/2019/10/31/aXhb1ulQW2JUGcm.png" alt=""></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用的综述主要讨论基于图的算法，而笔者更着重于机器学习的算法，所以这篇博客对文章中的方法不做过多的描述，更多着眼于生物医学关系提取的一些自然语言处理方法和一些公开的数据集。</p>
-<p>参考文献</p>
-<p>[1] Luo Y , Özlem Uzuner, Szolovits P . Bridging semantics and syntax with graph algorithms-state-of-the-art of extracting biomedical relations[J]. Briefings in Bioinformatics, 2016, 18(1):160. </p>
-]]></content>
-      <categories>
-        <category>文献阅读</category>
-      </categories>
-      <tags>
-        <tag>Biomedical information extraction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/10/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Testing</category>
-      </categories>
-      <tags>
-        <tag>标签</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode使用editorconfig</title>
-    <url>/2019/10/18/2019-10-18-vscode%E4%BD%BF%E7%94%A8editorconfig/</url>
-    <content><![CDATA[<p> EditorConfig  是一个名称为.editorconfig的自定义文件。 文件中的设置用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE 。 该文件用来定义项目的编码规范，编辑器的行为会与.editorconfig 文件中定义的一致，并且其优先级比编辑器自身的设置要高，这在多人合作开发项目时十分有用而且必要 。 有些编辑器默认支持editorConfig，如webstorm；而有些编辑器则需要安装editorConfig插件，如ATOM、Sublime、VS Code等 。</p>
-<h1 id="配置-editorconfig"><a href="#配置-editorconfig" class="headerlink" title="配置.editorconfig"></a>配置.editorconfig</h1><p>参考，本人vuex项目的配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// .editorconfig </span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line">[*]</span><br><span class="line">charset = utf-8</span><br><span class="line">indent_style = space</span><br><span class="line">indent_size = 2</span><br><span class="line">end_of_line = lf</span><br><span class="line">insert_final_newline = true</span><br><span class="line">trim_trailing_whitespace = true</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装-EditorConfig扩展"><a href="#安装-EditorConfig扩展" class="headerlink" title="安装 EditorConfig扩展"></a>安装 EditorConfig扩展</h1><p> 在vscode里面安装EditorConfig 插件：</p>
-<p><img src="https://i.loli.net/2019/10/18/wByVis1cjQWFHxd.png" alt=""></p>
-<p> EditorConfig扩展的作用是读取第一步创建的editorconfig文件中定义的规则，并覆盖user/workspace settings中的对应配置 。</p>
-<h1 id="全局安装或局部安装"><a href="#全局安装或局部安装" class="headerlink" title="全局安装或局部安装"></a>全局安装或局部安装</h1><p>editorconfig依赖包(npm install -g editorconfig | npm install -D editorconfig)<br>安装editorconfig依赖包主要是因为EditorConfig依赖于editorconfig包，不安装的可能会导致EditorConfig无法正常解析我们在第一步定义的editorconfig文件使用</p>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>打开需要格式化的文件并手动格式化代码（shift+alt+f）</p>
-<p>（安装完毕一般自动就进行使用）</p>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>EditorConfig</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于npm audit fix</title>
-    <url>/2019/10/16/2019-10-16-%E5%85%B3%E4%BA%8Enpm%20audit%20fix/</url>
-    <content><![CDATA[<p> 其实之前也遇到过，一直没注意，今天安装vuex，<code>npm install vuex --save</code>出现如下提醒 </p>
-<p><img src="https://i.loli.net/2019/10/16/SJFRPQtyCkHgx4D.png" alt=""></p>
-<p> 执行 <code>npm audit fix</code>  </p>
-<p><img src="https://i.loli.net/2019/10/16/YkSTBdZgepCRDIW.png" alt=""></p>
-<p>出于好奇，从npm官网上查阅了对于<strong>npm audit fix</strong>的相关介绍。 npm@6 的一大更新是新增了 <code>npm audit</code> 命令 ,  <code>npm aduit</code> 主要动作就是在 <code>npm install</code> 完成之后把需要检查的包的信息发送给一个官方接口, 再根据返回信息生成一个包含包名称、漏洞严重性、简介, 路径等的报告。 该命令会在项目中更新或者下载新的依赖包之后会自动运行，如果你在项目中使用了具有已知安全问题的依赖，就收到官方的警告通知。 </p>
-<p> ps. 一般不要直接运行 <code>--force</code> ，对于没能自动修复的问题，说明肯定出现了 <code>SEMVER WARNING</code> 之类的警告，这意味着推荐的修复版本存在让代码出问题的可能，主要发生在依赖包更改了 API 或者升级了大版本的情况下（semantic version major change）。这时候就需要格外的小心甚至需要改动一些自己的代码了。 </p>
-<p>其他一些具体命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 扫描项目漏洞把不安全的依赖项自动更新到兼容性版本</span><br><span class="line">npm audit fix</span><br><span class="line"></span><br><span class="line"># 在不修改 node_modules 的情况下执行 audit fix，仍然会更改 pkglock</span><br><span class="line">npm audit fix --package-lock-only</span><br><span class="line"></span><br><span class="line"># 跳过更新 devDependencies</span><br><span class="line">npm audit fix --only=prod</span><br><span class="line"></span><br><span class="line"># 强制执行 audit fix 安装最新的依赖项（toplevel）</span><br><span class="line">npm audit fix --force</span><br><span class="line"></span><br><span class="line"># 单纯的获取 audit fix 会做的事，并以 json 格式输出。</span><br><span class="line">npm audit fix --dry-run --json</span><br><span class="line"></span><br><span class="line"># 获取详情</span><br><span class="line">npm audit</span><br><span class="line"></span><br><span class="line"># 以 JSON 格式打印报告</span><br><span class="line">npm audit --json</span><br></pre></td></tr></table></figure>
-
-<p>至于如何关闭安全检查，可以采用以下方式：</p>
-<ul>
-<li>安装单个包关闭安全审查: <code>npm install example-package-name --no-audit</code></li>
-<li>安装所有包关闭安全审查 - 运行 <code>npm set audit false</code> - 手动将 <code>~/.npmrc</code> 配置文件中的 <code>audit</code> 修改为 <code>false</code></li>
-</ul>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>npm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue系列笔记5</title>
-    <url>/2019/10/16/2019-10-16-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B05/</url>
-    <content><![CDATA[<blockquote>
-<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
-</blockquote>
-<ol>
-<li>Vuex是一个专为Vue.js专用程序开发的状态管理模式。其实，可以简单的将其看作把需要多个组件共享的变量全部存储到一个对象里面，然后，将这个对象放在顶层的Vue实例中，让其他组件可以使用。而且最重要的是，这个对象是响应式的；</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/16/s5lRSpZxtOwaGLy.png" alt=""></p>
-<ol start="2">
-<li>一般什么状态需要多个组件之间共享呢？例如用户的登录状态、用户名称、头像，例如商品的收藏、购物车中商品等；</li>
-<li>简单使用</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/store/index.js</span></span><br><span class="line"><span class="comment">// 1.安装插件</span></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.创建对象</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        counter: <span class="number">100</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        <span class="comment">// 方法</span></span><br><span class="line">        increament(state) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.counter++</span><br><span class="line">          &#125;,</span><br><span class="line">          decreament(state) &#123;</span><br><span class="line">            <span class="keyword">return</span> state.counter--</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    getters: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    modules: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.导出store对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// APP.js</span></span><br><span class="line">……</span><br><span class="line">  methods: &#123;</span><br><span class="line">    addition() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$store.commit(<span class="string">'increament'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    subtraction() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$store.commit(<span class="string">'decreament'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-
-<p>Vuex的store状态的更新唯一方式：提交mutation，mutation中回调函数的第一个参数就是state，传递的参数可以在state后边，被称作载荷(Payload)。</p>
-<ol start="4">
-<li>Vuex五大核心：state、mutations、actions、getters、modules：其中state就是存储管理变量、mutations类似methods，其中定义一些方法，对状态变量进行操作，但是只能是同步、actions针对异步操作、getters类似于computed，对状态变量进行一些计算或者筛选、modules主要是对state进行分流，随着要管理的变量增加，state会越来越臃肿，但是Vuex要求单一状态树(单一数据源)，所以就可以利用modules进行分模块，每个模块里又可以定义上述state、mutations等；</li>
-<li>ES6新语法，对象的解构：</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">	name: <span class="string">'gsynf'</span>,</span><br><span class="line">	age: <span class="number">18</span>,</span><br><span class="line">	height: <span class="number">1.88</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const name = obj.name;</span></span><br><span class="line"><span class="comment">// const age = obj.age;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;name, age&#125; = obj</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>Vue中发送网络请求有很多方式：<ul>
-<li>传统的Ajax是基于XMLHttpRequest（XHR）；</li>
-<li>比传统的Ajax更好用的jQuery-Ajax;</li>
-<li>官方在Vue1.x时期，推出了Vue-resource；</li>
-<li>在宣布Vue-resource不再维护时，推荐了axios；</li>
-</ul>
-</li>
-<li>使用JSONP最主要的原因是为了解决跨域访问的问题；</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/17/hoG4mk1qQUCLbf6.png" alt=""></p>
-<ol start="8">
-<li>axios功能特点：</li>
-</ol>
-<ul>
-<li>在浏览器中发送XMLHttpRequests请求；</li>
-<li>在node.js中发送http请求；</li>
-<li>支持Promise API；</li>
-<li>拦截请求和响应；</li>
-<li>转换请求和响应数据；</li>
-</ul>
-<ol start="9">
-<li>axios最基本的使用：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// 1.基本使用</span><br><span class="line">// axios(config)</span><br><span class="line">axios(&#123;</span><br><span class="line">  url: &apos;httpbin.org/&apos;</span><br><span class="line">  // 默认就是get</span><br><span class="line">  method: &apos;GET&apos;</span><br><span class="line">&#125;).then(res =&gt; &#123;</span><br><span class="line">  console.log(res);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// axios.get(&apos;httpbin.org/&apos;).then(res =&gt; &#123;</span><br><span class="line">//   console.log(res);</span><br><span class="line">// &#125;)</span><br></pre></td></tr></table></figure>
-
-<ol start="10">
-<li>发送并发请求可以使用axios.all([])，传入的参数和返回的结果都是一个数组。传入参数的数组内每个对象就是上述每个单一的axios请求。</li>
-<li>axios常见配置选项：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">请求地址</span><br><span class="line">url: &apos;/user&apos;,</span><br><span class="line"></span><br><span class="line">请求类型</span><br><span class="line">method: &apos;get&apos;,</span><br><span class="line"></span><br><span class="line">请根路径</span><br><span class="line">baseURL: &apos;http://www.mt.com/api&apos;,</span><br><span class="line"></span><br><span class="line">请求前的数据处理</span><br><span class="line">transformRequest:[function(data)&#123;&#125;],</span><br><span class="line"></span><br><span class="line">请求后的数据处理</span><br><span class="line">transformResponse: [function(data)&#123;&#125;],</span><br><span class="line"></span><br><span class="line">自定义的请求头</span><br><span class="line">headers:&#123;&apos;x-Requested-With&apos;:&apos;XMLHttpRequest&apos;&#125;,</span><br><span class="line"></span><br><span class="line">URL查询对象</span><br><span class="line">params:&#123; id: 12 &#125;,</span><br><span class="line"></span><br><span class="line">查询对象序列化函数</span><br><span class="line">paramsSerializer: function(params)&#123; &#125;</span><br><span class="line"></span><br><span class="line">request body</span><br><span class="line">data: &#123; key: &apos;aa&apos;&#125;,</span><br><span class="line"></span><br><span class="line">超时设置s</span><br><span class="line">timeout: 1000,</span><br><span class="line"></span><br><span class="line">跨域是否带Token</span><br><span class="line">withCredentials: false,</span><br><span class="line"></span><br><span class="line">自定义请求处理</span><br><span class="line">adapter: function(resolve, reject, config)&#123;&#125;,</span><br><span class="line"></span><br><span class="line">身份验证信息</span><br><span class="line">auth: &#123; uname: &apos;&apos;, pwd: &apos;12&apos;&#125;,</span><br><span class="line"></span><br><span class="line">响应的数据格式 json / blob /document /arraybuffer / text / stream</span><br><span class="line">responseType: &apos;json&apos;,</span><br></pre></td></tr></table></figure>
-
-<ol start="12">
-<li>意识：凡是对第三方框架，都不要在每一个组件内都加入依赖，这样一旦第三方框架停止维护，整个项目的维护将是一个巨大的工程，一般都要将对第三方框架进行一个封装。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// network/request.js</span><br><span class="line">export function request(config) &#123;</span><br><span class="line">    // 1. 创建axios实例</span><br><span class="line">    const instance = axios.create(&#123;</span><br><span class="line">        baseURL: &apos;http://123.207.32.32:8000/api/v1&apos;,</span><br><span class="line">        timeout: 5000</span><br><span class="line">    &#125;)</span><br><span class="line">    // 2.发送真正的网络请求</span><br><span class="line">    return instance(config)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">request(&#123;</span><br><span class="line">  url: &apos;/home/multidata&apos;,</span><br><span class="line">&#125;).then(res =&gt; &#123;</span><br><span class="line">  console.log(res);</span><br><span class="line">  </span><br><span class="line">&#125;).catch(err =&gt; &#123;</span><br><span class="line">  console.log(err);</span><br><span class="line">  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<ol start="13">
-<li>axios提供了拦截器，用于在发送每次请求或者得到响应后，进行对应的处理；</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//1 请求拦截</span><br><span class="line">instance.interceptors.request.use(config =&gt; &#123;</span><br><span class="line">    console.log(config);</span><br><span class="line">    // 1.比如config中的一些信息不符合服务器的要求</span><br><span class="line">    // 2.比如每次发送网络请求时，在界面显示一个请求图标</span><br><span class="line">    // 3.某些网络请求，例如登录（token），必须携带一些特殊的信息</span><br><span class="line">    return config</span><br><span class="line">&#125;, err =&gt; &#123;</span><br><span class="line">    console.log(err);   </span><br><span class="line">&#125;);</span><br><span class="line">// 2 响应拦截</span><br><span class="line">instance.interceptors.response.use(res =&gt; &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">    return res.data</span><br><span class="line">&#125;, err =&gt; &#123;</span><br><span class="line">    console.log(err);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue系列笔记4</title>
-    <url>/2019/10/14/2019-10-14-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B04/</url>
-    <content><![CDATA[<blockquote>
-<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
-</blockquote>
-<ol>
-<li>前端渲染和后端渲染/前端路由和后端路由：</li>
-</ol>
-<ul>
-<li>早期，服务器收到URL通过正则进行匹配，交给Controller进行处理，利用JSP等技术，直接生产渲染好对应的HTML页面，不仅有html、css，还有获取数据的java代码，返回给客户端进行展示，这就是后端渲染，在后端处理URL和页面之间的映射关系，即后端路由；</li>
-<li>随着Ajax出现，有了前后端分离的开发模式，客户端通过URL发起请求，去静态资源服务器请求资源，请求回的资源包括html+css+js，前两者浏览器进行渲染，js浏览器执行，执行到API接口时，再去请求提供API接口的服务器，请求回之后由其他js代码进行处理，这就是前端渲染；</li>
-<li>再发展就是单页面富应用阶段，最主要的特点就是在前后端分离的基础上加了一层前端路由，整个网站只有一个html页面，浏览器向静态资源网站请求时将所有资源全部请求下来，前端路由监听浏览器，当URL改变，就将请求的全部资源进行抽离但不进行页面整体刷新也就是不再进行新的请求，显示该显示的部分，也就是一个网页，这种一个URL和一个网页的映射就是前端路由；</li>
-</ul>
-<ol start="2">
-<li>如何改变URL而页面不刷新呢？有两种方法，一种为利用URL的hash，另一种为html5的history模式。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//Console</span><br><span class="line">&gt;location.hash = &apos;foo&apos;</span><br><span class="line">&gt;history.pushState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;) //这个push有点类似于入栈，history.back()或者history.go(-1)或者history.forward()或者浏览器返回类似于出栈</span><br><span class="line">&gt;history.replaceState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;)//很明显，相比于上，这个直接是代替，不会留下history记录</span><br></pre></td></tr></table></figure>
-
-<p>Vue默认使用hash，但是会发现hash的URL会有#，看起来不是很舒服，可以改为history模式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">routes: [</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;&apos;,</span><br><span class="line">    // redirect 重定向</span><br><span class="line">    redirect: &apos;/home&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;/home&apos;,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;/about&apos;,</span><br><span class="line">    component: About</span><br><span class="line">  &#125;,    </span><br><span class="line">],</span><br><span class="line">mode: &apos;history&apos;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="3">
-<li>&lt;router-link&gt;该标签是vue-router中已经内置的一个标签，会被渲染成&lt;a&gt;标签，&lt;router-view&gt;该标签根据当前的路径，动态渲染不同组件，当路由切换，切换的是&lt;router-view&gt;挂载的组件，其他内容不会发送改变。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//App.vue</span><br><span class="line">  &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;router-link to=&quot;/home&quot;&gt;首页&lt;/router-link&gt;</span><br><span class="line">    &lt;router-link to=&quot;/about&quot;&gt;关于&lt;/router-link&gt;</span><br><span class="line">    &lt;router-view/&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>&lt;router-link&gt;除了to属性，还有其他属性，例如tag属性，可以决定它会被渲染成除a意外的其他什么组件；replace属性，不会留下history记录，后退返回键不能用，也就是将默认的pushState改为了replaceState；active-class属性，当对应路由匹配成功，某组件会处于活跃状态，会自动给该元素设置一个router-link-active的class，active-class可以改这个class名字，但一般不做修改；</p>
-<ol start="4">
-<li><p>项目打包后会在dist文件夹下看到static/index.html，其中，static文件夹下有css/js，css文件夹下是将各个vue的css代码进行整合，js文件夹下有三个js文件，分别为app.js/manifest.js/vendor.js，分别是当前应用开发的所有业务代码、为了打包代码做的底层支撑代码、第三方（供应商）代码，如vue/axios/bs等；</p>
-</li>
-<li><p>随着业务逻辑的增多，会使得打包的app.js越来越大，这样用户请求加载时间变长，所以需要用到懒加载，一般一个vue打包成一个js，用到时才加载</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//router/index.js</span><br><span class="line"></span><br><span class="line">// import Home from &apos;../components/Home.vue&apos;</span><br><span class="line">// import About from &apos;../components/About.vue&apos;</span><br><span class="line">// import User from &apos;../components/User.vue&apos;</span><br><span class="line"></span><br><span class="line">// 懒加载</span><br><span class="line">const Home = () =&gt; import(&apos;../components/Home.vue&apos;)</span><br><span class="line">const About = () =&gt; import(&apos;../components/About.vue&apos;)</span><br><span class="line">const User = () =&gt; import(&apos;../components/User.vue&apos;)</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>路由传递参数：params类型和query类型</li>
-</ol>
-<ul>
-<li>前者就是动态路由的方法 <ul>
-<li>配置路由格式：/router/:id</li>
-<li>传递的方式：在path后面跟上对应的值</li>
-<li>传递后形成的路径：/router/123，/user/gsynf</li>
-</ul>
-</li>
-<li>后者就是query<ul>
-<li>配置路由格式：/router</li>
-<li>传递的方式：对象中使用query的key作为传递方式</li>
-<li>传递后形成的路径：/router?id=123，/user?id=gsynf</li>
-</ul>
-</li>
-</ul>
-<ol start="7">
-<li>keep-alive是Vue内置的一个组件，可以使被包含的组件保留状态，或避免搭环境：它有两个非常重要的属性：<ul>
-<li>include-字符串或正则表达式，只有匹配的组件会被缓存</li>
-<li>exclude-字符串或正则表达式，任何匹配的组件都不会被缓存</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>router-view也是一个组件，如果直接被包在keep-alive里面，所有路径匹配到的视图组件都会被缓存；</li>
-</ul>
-<ol start="8">
-<li>Promise是ES6的新特性，是异步编程的一种解决方案。</li>
-<li>什么情况下会用到Promise？一般情况下是有异步操作尤其是比较复杂的数据请求时，使用Promise对这个异步操作进行封装。执行过程，在new Promise时，会执行构造函数，一方面保存了一些状态信息，另一方面会执行传入的函数，在执行传入的回调函数时，会传入两个参数，resolve和reject，这两个参数本身又是函数，一旦调用resolve，就跳到then()，一旦调用reject，就跳到catch()</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout((date) =&gt; &#123;</span><br><span class="line">        //请求中，等待状态，pending</span><br><span class="line">        </span><br><span class="line">        // 请求成功，满足状态，fulfill，调用resolve</span><br><span class="line">        resolve(data)</span><br><span class="line">        // 请求失败，拒绝状态，reject，调用reject</span><br><span class="line">        reject(&apos;error message&apos;)</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">&#125;).then((data) =&gt; &#123;</span><br><span class="line">    // 此处处理请求的data</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">    // 此处处理error</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2019/10/15/YVRXhBEdS3MnfHI.png" alt=""></p>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue系列笔记3</title>
-    <url>/2019/10/10/2019-10-10-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B03/</url>
-    <content><![CDATA[<blockquote>
-<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
-</blockquote>
-<ol>
-<li>同一个项目中可能有多个js，这样就存在全局变量重名的问题，虽然通过函数闭包可以解决，但是又导致了不同js之间代码不可复用，所以就有了模块化的概念；</li>
-<li>常用的模块化规范：CommonJS、AMD、CMD、ES6的Modules;</li>
-<li>CommonJS导出写法：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//aaa.js</span><br><span class="line">modules.exports = &#123;</span><br><span class="line">	//要导出的部分</span><br><span class="line">	flag,</span><br><span class="line">	sum,</span><br><span class="line">	……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>CommonJS导入写法:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var/let &#123;flag,sum&#125; = require(&apos;./aaa.js&apos;)</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>ES6的modules：首先在html代码中要引入js文件，并且类型设置为module，然后在要导出的js文件中使用export指令导出模块对外提供的接口，在要引入的js文件中通过import命令来加载。</li>
-<li>遇到本地Ajax跨域报错Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https.原因在于使用了File协议，应该使用它提示的http, data, chrome, chrome-extension, https这些协议。使用webstorm或是visual studio这种重量级的IDE，应该不会遇到这种问题，这类IDE都内置了HTTP服务器。针对VSCode，可以安装<strong>Live Server</strong>插件，这个插件功能十分强大，不止可以解决ajax不支持file协议的问题，还可以实现在编辑器里保存修改后，页面自动刷新的功能。</li>
-<li>什么是webpack，从本质上讲，webpack是一个现代的JavaScript应用的静态模块打包工具，分两点来讲，就是模块和打包。webpack其中一个核心就是让我们可以进行模块化开发，并且帮助我们处理模块间的依赖关系；打包就是将webpack中的各种资源模块进行打包合并成一个或多个包，并且在打包过程中，还可以对资源进行处理，例如压缩图片，ES5转成ES6等；</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/11/I7D6mBGlnfUhOxj.png" alt=""></p>
-<ol start="7">
-<li><p>grunt/gulp的核心是Task，更加强调的是前端流程的自动化，模块化不是它的核心；webpack更加强调模块化的开发管理，而grunt/gulp的文件压缩合并、预处理、转换等功能只是它附带的功能；</p>
-</li>
-<li><p>webpack为了正常运行，必须依赖node环境，node环境为了可以正常执行很多代码，其中必须包含各种依赖的包，为了便于安装管理这些包，需要npm（node package manager）工具。</p>
-</li>
-<li><p>全局安装webpack</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack@3.6.0 -g</span><br></pre></td></tr></table></figure>
-
-<p>但是一般情况下，每个项目都要局部安装自己所对应需要的webpack</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack@3.6.0 --save-dev</span><br><span class="line">//--save-dev安装的是开发时依赖，而不是运行时依赖，这个安装完成后在package.json可以看出来</span><br><span class="line">//–save 将依赖包名称添加到 package.json 文件的 dependencies 键下</span><br><span class="line">//–save-dev 则添加到 package.json 文件的 devDependencies 键下</span><br></pre></td></tr></table></figure>
-
-<p>然后需要在npm init创建的package.json中加入，</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack&quot;</span><br></pre></td></tr></table></figure>
-
-<p>这样，在终端输入npm run dev即可，而且优先使用本地webpack而非全局。</p>
-</li>
-<li><p>loader是webpack中一个非常核心的概念，webpack可以处理JS代码和相互之间的依赖，但在开发中，不仅仅有基础的JS代码，还有CSS、图片加载、将高级的ES6转化为ES5等，此时就需要给webpack扩展对应的loader：</p>
-</li>
-</ol>
-<ul>
-<li>通过npm安装所需要的loader</li>
-<li>在webpack.config.js中的modules关键字中进行配置</li>
-<li>具体安装什么loader可以在webpack官方文档进行查询</li>
-</ul>
-<ol start="11">
-<li><p>plugin时webpack中另一个重要的核心，webpack中的插件，就是对webpack现有功能的各种扩展，比如打包优化，文件压缩等，loader主要用于转换某些类型的模块，它是一个转换器，plugin是插件，它是对webpack本身的扩展，是一个扩展器。</p>
-</li>
-<li><p>webpack配置文件的分离，再weback.config.js中，许多配置只是在开发中用到，在实际发布时并不需要，所以最好将这些配置抽离出来，便于后期管理：</p>
-</li>
-</ol>
-<ul>
-<li>创建base.config,js/dev.config.js/prod.config.js，将weback.config.js中内容进行分离，npm install webpack-merge –save-dev安装js合并工具，接下来</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//dev.config.js</span><br><span class="line">const WebpackMerge = require(&apos;webpack-merge&apos;)</span><br><span class="line">const baseConfig = require(&apos;./base.config&apos;)</span><br><span class="line"></span><br><span class="line">module.exports = WebpackMerge(baseConfig,&#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">      contentBase: &apos;./dist&apos;,</span><br><span class="line">      inline: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>在package.json中指定一下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;build&quot;: &quot;webpack --config ./build/prod.config.js&quot;,</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ol start="13">
-<li><p>使用vue开发大型项目，需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等，为了提高效率，通常会用到一些脚手架工具来帮助完成，CLI是Command-Line Interface，翻译为命令行界面，俗称脚手架。使用vue-cli可以快速搭建Vue开发环境以及对应的webpack配置。</p>
-</li>
-<li><p>e2e–&gt;e to e –&gt;end to end</p>
-</li>
-<li><p>Vue CLI2新建项目</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue init webpack my-project</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2019/10/12/eTxIybH9tGXiCz4.png" alt=""></p>
-<ol start="16">
-<li><p>脚手架安装了ESlint如何关闭：config==&gt;index==&gt;useEslint改为false，重新编译一下项目;</p>
-</li>
-<li><p>Vue程序运行过程</p>
-</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/12/diyYvSRof14FgCI.png" alt=""></p>
-<ol start="18">
-<li><ul>
-<li><p>runtime-compiler—&gt;代码中可以有template</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// template -&gt; ast -&gt; render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: &apos;&lt;App/&gt;&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-</li>
-</ol>
-<pre><code>* runtime-only---&gt;代码中不可以有任何的template，性能更好，代码量更少，少6KB。
-
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// render -&gt; vdom -&gt; UI</span><br><span class="line">//main.js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-​    </code></pre><ol start="19">
-<li>npm run build/dev具体执行示意</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/13/qBbNAZ9kwSX5oml.png" alt=""></p>
-<p><img src="C:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570934287208.png" alt="1570934287208"></p>
-<ol start="20">
-<li>Vue CLI3 创建项目</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue create my-vue-project</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2019/10/13/5MzCDKqNBlLSZiG.png" alt=""></p>
-<ol start="21">
-<li><p>Vue CLI3管理配置文件及其他可以通过vue ui命令启动GUI界面进行可视化管理；</p>
-<p>Vue CLI3的配置文件其实并不是没有，而是“隐藏”起来了，在node_modules-&gt;@vue-&gt;cli-service;</p>
-<p>若要修改，可在工程目录下创建vue.config.js：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>会自动将手动的配置和默认的配置进行合并。</p>
-</li>
-<li><p>前端渲染和后端渲染/前端路由和后端路由：</p>
-</li>
-</ol>
-<ul>
-<li>早期，服务器收到URL通过正则进行匹配，交给Controller进行处理，利用JSP等技术，直接生产渲染好对应的HTML页面，不仅有html、css，还有获取数据的java代码，返回给客户端进行展示，这就是后端渲染，在后端处理URL和页面之间的映射关系，即后端路由；</li>
-<li>随着Ajax出现，有了前后端分离的开发模式，客户端通过URL发起请求，去静态资源服务器请求资源，请求回的资源包括html+css+js，前两者浏览器进行渲染，js浏览器执行，执行到API接口时，再去请求提供API接口的服务器，请求回之后由其他js代码进行处理，这就是前端渲染；</li>
-<li>再发展就是单页面富应用阶段，最主要的特点就是在前后端分离的基础上加了一层前端路由，整个网站只有一个html页面，浏览器向静态资源网站请求时将所有资源全部请求下来，前端路由监听浏览器，当URL改变，就将请求的全部资源进行抽离但不进行页面整体刷新也就是不再进行新的请求，显示该显示的部分，也就是一个网页，这种一个URL和一个网页的映射就是前端路由；</li>
-</ul>
-<ol start="23">
-<li>如何改变URL而页面不刷新呢？有两种方法，一种为利用URL的hash，另一种为html5的history模式。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//Console</span><br><span class="line">&gt;location.hash = &apos;foo&apos;</span><br><span class="line">&gt;history.pushState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;) //这个push有点类似于入栈，history.back()或者history.go(-1)或者history.forward()或者浏览器返回类似于出栈</span><br><span class="line">&gt;history.replaceState(&#123;&#125;,&apos;&apos;,&apos;foo&apos;)//很明显，相比于上，这个直接是代替</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue系列笔记2</title>
-    <url>/2019/10/08/2019-10-08-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/</url>
-    <content><![CDATA[<blockquote>
-<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
-</blockquote>
-<ol>
-<li>如果将一个页面中所有的处理逻辑全部放到一起，处理起来就会变得非常复杂，而且不利于后续管理和扩展；但如果将一个页面拆分成一个个小的功能块，每个功能块完成属于自己这部分独立的功能，之后整个页面的管理和维护就变得容易许多；</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/08/8rs7zERUAZK4eMk.png" alt=""></p>
-<ol start="2">
-<li>组件化提供了一种抽象，可以开发出一个个独立可复用的小组件来构造应用，任何的应用都会被抽象成一颗组件树；</li>
-</ol>
-<p><img src="https://i.loli.net/2019/10/08/YZB3fdb4Mcr79Jl.png" alt=""></p>
-<ol start="3">
-<li>组件的使用可以分成三个步骤：创建组件构造器，注册组件，使用组件；</li>
-</ol>
-<p><img src="C:%5CUsers%5Cgsynf%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570496438265.png" alt="1570496438265"></p>
-<ol start="4">
-<li><pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;!-- 3.使用组件 --&gt;
-        &lt;my-cpn&gt;&lt;/my-cpn&gt;
-        &lt;my-cpn&gt;&lt;/my-cpn&gt;
-        &lt;my-cpn&gt;&lt;/my-cpn&gt;
-    &lt;/div&gt;
-    &lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
-    &lt;script&gt;
-        //1.创建组件构造器对象
-        const cpnContructor = Vue.extend({
-           template: `
-                &lt;div&gt;
-                    &lt;h2&gt;我是标题&lt;/h2&gt;
-                    &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
-                    &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
-                &lt;/div&gt;`
-        })
-        //2.注册组件
-        Vue.component(&apos;my-cpn&apos;, cpnContructor)
-
-        const app = new Vue({
-            el: &apos;#app&apos;,
-            data: {
-                message: &apos;Hello!&apos;,
-            },
-
-        })
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">   Vue.extend()创建的是一个组件构造器，通常在创建组件构造器时，传入template代表我们自定义组件的模板。该模板就是在使用到组件的地方，要显示的HTML代码，事实上，这种写法在Vue 2.x的文档中就几乎看不到了，它会直接使用下面的语法糖，但这种方式是基础。</span><br><span class="line"></span><br><span class="line">   Vue.component()是将刚才的组件构造器注册为一个组件，并且给它起一个组件的标签名称。</span><br><span class="line"></span><br><span class="line">   组件使用时必须挂载在某个Vue实例下，否则它不会生效。</span><br><span class="line"></span><br><span class="line">5. 全局组件和局部组件:上述方法构建的为全局组件。局部组件需要挂载到Vue实例下，只有该实例对应的app才可以使用。</span><br></pre></td></tr></table></figure>
- const app = new Vue({
-            el: &apos;#app&apos;,
-            //2.局部组件注册
-            components: {
-                cpn: cpnC
-            }
-        })
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">6. 父组件和子组件：要求子组件在父组件中进行注册：</span><br></pre></td></tr></table></figure>
-//1.创建第一个组件构造器(子组件)
-     const cpnC1 = Vue.extend({
-         template:`
-             &lt;div&gt;
-                 &lt;h2&gt;我是标题1&lt;/h2&gt;
-                 &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
-             &lt;/div&gt;`
-     })
-
-     //2.创建第二个组件构造器(父组件)
-     const cpnC2 = Vue.extend({
-         template:`
-             &lt;div&gt;
-                 &lt;h2&gt;我是标题2&lt;/h2&gt;
-                 &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
-                 &lt;cpn1&gt;&lt;/cpn1&gt;
-             &lt;/div&gt;`
-         ,
-         components: {
-             cpn1: cpnC1
-         }
-     })
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">7. 组件注册的语法糖，将上述创建组件构造器和注册组件合并：</span><br></pre></td></tr></table></figure>
-     Vue.component(&apos;cpn1&apos;, {
-         template: `
-             &lt;div&gt;
-                 &lt;h2&gt;我是标题1&lt;/h2&gt;
-                 &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
-             &lt;/div&gt;`
-     })
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">8. 组件模板的抽离写法，可以看出来，上边的js代码中嵌套HTML，看起来比较乱，所以需要抽离，有两种写法：</span><br></pre></td></tr></table></figure>
-&lt;body&gt;
- &lt;div id=&quot;app&quot;&gt;
-     &lt;cpn1&gt;&lt;/cpn1&gt;
-     &lt;cpn2&gt;&lt;/cpn2&gt;
- &lt;/div&gt;
- &lt;!-- 1.通过script标签，但是注意类型必须是text/x-template --&gt;
- &lt;script type=&quot;text/x-template&quot; id=&quot;cpn1&quot;&gt;
- &lt;div&gt;
-     &lt;h2&gt;我是标题1&lt;/h2&gt;
-     &lt;p&gt;我是内容，哈哈哈哈&lt;/p&gt;
- &lt;/div&gt;
- &lt;/script&gt;
-
-&lt;!-- 2.template标签 --&gt;
-&lt;template id=&quot;cpn2&quot;&gt;
-     &lt;div&gt;
-         &lt;h2&gt;我是标题2&lt;/h2&gt;
-         &lt;p&gt;我是内容，呵呵呵呵&lt;/p&gt;
-     &lt;/div&gt;
-&lt;/template&gt;
-
- &lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
- &lt;script&gt;
-     Vue.component(&apos;cpn1&apos;, {
-         template: &apos;#cpn1&apos;,
-     })
-     Vue.component(&apos;cpn2&apos;, {
-         template: &apos;#cpn2&apos;,
-     })
-     const app = new Vue({
-         el: &apos;#app&apos;,
-     })
- &lt;/script&gt;
-&lt;/body&gt;
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">9. 组件中的数据不应该也不能放在全局的data中，应该放在自己的data中，但是需要注意组件的data属性必须是一个函数，且要求返回一个实例对象，对象内部保存着数据。</span><br><span class="line"></span><br><span class="line">10. 在开发中，往往一些数据确实需要从上层传到下层，例如在一个页面中，从服务器请求了许多数据，其中一部分数据并非整个页面的大组件来展示，而是需要下面的小组件来展示，这时，并不会让小组件再发一次网络请求，而是让大组件将数据传给小组件，这是就涉及到父子组件之间的通信，有两种方式：通过props向子组件传递数据和通过事件向父组件发送消息。</span><br><span class="line"></span><br><span class="line">![](https://i.loli.net/2019/10/08/7NDfCeuZXOgqELG.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">11. 在组件中，使用选项props来声明需要从父级接受的数据。</span><br><span class="line"></span><br><span class="line">props的值有两种方式：</span><br><span class="line"></span><br><span class="line">1）字符串数组，数组中的字符串就是传递时的名称；</span><br><span class="line"></span><br><span class="line">2）对象，对象可以设置传递时的类型，也可以设置默认值等；</span><br><span class="line"></span><br><span class="line">![](https://i.loli.net/2019/10/08/kbKwUJmEgjFx9HI.png)</span><br><span class="line"></span><br><span class="line">12. 子组件向父组件发送数据：子组件内部先通过&amp;emit()定义发射事件，父组件中监听（类似于系统自带的click等监听），监听到后执行相应的响应函数即可。</span><br></pre></td></tr></table></figure>
-//子组件
-         methods: {
-             btnClick(item) {
-                 //发射事件(自定义事件)
-                 this.$emit(&apos;item-click&apos;, item)
-             }
-         }
-//监听
- &lt;div id=&quot;app&quot;&gt;
-     &lt;!-- 监听事件 --&gt;
-     &lt;cpn @item-click=&quot;cpnClick&quot;&gt;&lt;/cpn&gt;
- &lt;/div&gt;
-//父组件
-         methods: {
-             cpnClick(item) {
-                 console.log(item);                 
-             }
-         }
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">13. 父子组件的访问：父组件访问子组件使用$children或者$refs；子组件访问父组件使用$parent；子组件访问根组件使用$root</span><br><span class="line"></span><br><span class="line">14. 在实际开发中，refs用的比较多一些，因为使用children需要使用下标，但是组件顺序可能会有更改，不利于维护</span><br></pre></td></tr></table></figure>
- &lt;div id=&quot;app&quot;&gt;
-     &lt;button @click=&quot;btnClick&quot;&gt;按钮&lt;/button&gt;
-     &lt;cpn&gt;&lt;/cpn&gt;
-     &lt;cpn&gt;&lt;/cpn&gt;
-     &lt;cpn ref=&quot;aaa&quot;&gt;&lt;/cpn&gt;
- &lt;/div&gt;
- ………………
-             methods: {
-             btnClick() {
-                 // 1.$children
-                 // console.log(this.$children);
-                 // this.$children[0].showMessage();
-                 // console.log(this.$children[1].name);
-
-                 //2.$refs
-                 this.$refs.aaa.showMessage();
-                 console.log(this.$refs.aaa.name);  
-             }
-  ………………
-           components: {
-             cpn: {
-                 template: &apos;#cpn&apos;,
-                 data() {
-                     return {
-                         name: &apos;我是子组件的name&apos;
-                     }
-                 },
-                 methods: {
-                     showMessage() {
-                         console.log(&apos;aaaaaaaa&apos;);
-
-                     }
-                 }
-             }
-         }
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">15. $parent在实际开发中应用不多，因为组件强调的是复用性，在组件中使用$parent可能会导致其和父组件的耦合度太高。</span><br><span class="line"></span><br><span class="line">16. 组件的插槽slot是为了让组件有更强的扩展性，往往需要的一些组件之间有很多区别，但也有很多共性，每个都封装成一个单独的不太合理，将所有的都封装成一个也不合理，这里就需要用到slot，slot就是占位，具体占好位置放什么可以由调用者决定；</span><br></pre></td></tr></table></figure>
- &lt;div id=&quot;app&quot;&gt;
-     &lt;cpn&gt;&lt;button&gt;按钮&lt;/button&gt;&lt;/cpn&gt;
-     &lt;cpn&gt;&lt;span&gt;哈哈哈&lt;/span&gt;&lt;/cpn&gt;
-     &lt;cpn&gt;
-         &lt;p&gt;哦哦哦&lt;/p&gt;
-         &lt;i&gt;呵呵呵&lt;/i&gt;
-     &lt;/cpn&gt;
- &lt;/div&gt;
-
- &lt;template id=&quot;cpn&quot;&gt;
-     &lt;div&gt;
-         &lt;h2&gt;我是组件&lt;/h2&gt;
-         &lt;p&gt;我是组件，嘿嘿嘿&lt;/p&gt;
-         &lt;slot&gt;&lt;/slot&gt;
-     &lt;/div&gt;
- &lt;/template&gt;
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">17. 作用域插槽：举例：子组件中包含一组数据，pLanguages: [&apos;JavaScript&apos;,&apos;Python&apos;,&apos;Java&apos;,&apos;C++&apos;]，要求进行不同的展示效果，例如以列表形式展示，以水平方向展示等等</span><br></pre></td></tr></table></figure>
- &lt;div id=&quot;app&quot;&gt;
-     &lt;!-- 默认以列表进行展示 --&gt;
-     &lt;cpn&gt;&lt;/cpn&gt;
-     &lt;!-- 以水平方式进行展示 --&gt;
-     &lt;cpn&gt;
-         &lt;!-- 目的是获取子组件的pLanguages --&gt;
-         &lt;template slot-scope=&quot;slot&quot;&gt;
-             &lt;!-- &lt;span v-for=&quot;item in slot.data&quot;&gt;{{item}} ** &lt;/span&gt; --&gt;
-             &lt;span&gt;{{slot.data.join(' * ')}}&lt;/span&gt;
-         &lt;/template&gt;
-     &lt;/cpn&gt;
-
- &lt;/div&gt;
-
- &lt;template id=&quot;cpn&quot;&gt;
-     &lt;div&gt;
-         &lt;slot :data=&quot;pLanguages&quot;&gt;
-             &lt;ul&gt;
-                 &lt;li v-for=&quot;item in pLanguages&quot;&gt;{{item}}&lt;/li&gt;
-             &lt;/ul&gt;
-         &lt;/slot&gt;
-     &lt;/div&gt;
- &lt;/template&gt;</code></pre></li>
-</ol>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue系列笔记1</title>
-    <url>/2019/09/26/2019-09-26-Vue%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/</url>
-    <content><![CDATA[<blockquote>
-<p>学习参考：coderwhy教学视频，整个系列可能会比较混乱，学到哪里觉得有需要的记录一下，可能和之前的java笔记类似。</p>
-</blockquote>
-<ol>
-<li>语法糖：简写</li>
-</ol>
-<p><img src="https://i.loli.net/2019/09/27/DnTr2avz4EOPiAC.png" alt=""></p>
-<ol start="2">
-<li>MVVM：model，view，viewmodel;</li>
-<li>回调函数举例：</li>
-</ol>
-<p><img src="https://i.loli.net/2019/09/27/b6P58HUcry7tIVR.png" alt=""></p>
-<ol start="4">
-<li>Vue生命周期</li>
-</ol>
-<img src="https://i.loli.net/2019/09/27/e7agZw2QWuEcdFn.png" alt="官方图" style="zoom: 50%;" />
-
-<p><img src="https://i.loli.net/2019/09/27/OZzk7YPsFjd16Tb.png" alt="coderwhy的图"></p>
-<ol start="5">
-<li><p>代码规范：在前端代码中，一般缩进2个空格而非4个；</p>
-</li>
-<li><p>将data中的数据插入到HTML中，Mustache语法，也就是双大括号；</p>
-</li>
-<li><p>computed和methods对比：往往会发现，在computed中定义的方法在methods中同样可以定义，那么computed意义何在呢?其实计算属性会进行缓存，如果多次使用，计算属性只会调用一次，而methods每次都会调用；</p>
-</li>
-<li><p>ES5中，var没有块级作用域，if和for没有作用域，只有函数有作用域；ES6中let有块级作用域，if和for也有作用域；</p>
-</li>
-<li><p>在ES6开发中，优先使用const，只有在需要改变某一标识符的时候才用let；</p>
-</li>
-<li><p>什么是冒泡事件？如在一个按钮是绑定一个”click”事件，那么”click”事件会依次在它的父级元素中被触发 。</p>
-</li>
-<li><p>v-if：当条件为false，包含v-if指令的元素，根本就不会存在于dom中，所以推荐在切换频率不高时使用；</p>
-<p>v-show：当条件为false，包含v-show指令的元素，只是增加了一个行内元素，display = none，所以推荐在切换频率较高时使用；</p>
-</li>
-<li><p>官方推荐在使用v-for时，给对应的元素或组件添加一个key属性。</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;li v-for=&quot;item in letters&quot; :key=&quot;item&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
-
-<ol start="13">
-<li>过滤器filters，举例将价格由整数变为带￥的两位小数：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">filters: &#123;</span><br><span class="line">    showPrice(price) &#123;</span><br><span class="line">        return &apos;￥&apos; + price.toFixed(2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">总价格：&#123;&#123;totalPrice | showPrice&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="14">
-<li><p>编程范式：命令式编程/声明式编程</p>
-<p>编程范式：面向对象编程（第一公民：对象）/函数式编程（第一公民：函数）</p>
-</li>
-<li><p>三个高阶函数：filter、map、reduce</p>
-</li>
-</ol>
-<p>1)）filter过滤函数用于过滤数组中的某部分，传的参数需是一个回调函数，回调函数有一个要求：必须返回一个boolean值，当返回true时，函数内部会自动将这次回调的n加入到新的数组中，当返回false时，函数内部会过滤掉这次的n。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//过滤小于100的数字</span><br><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let newNums = nums.filter(function (n) &#123;</span><br><span class="line">	return n &lt; 100</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>2）map映射函数用于对数组中所有元素进行统一操作，传的参数同样是一个回调函数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//将newNums中的数字全部乘以2</span><br><span class="line">let new2Nums = newNums.map(function(n) &#123;</span><br><span class="line">	return n*2</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>3）reduce函数用于对数组中所有的内容进行汇总，传的参数至少需要两个，第一个参数同样是一个回调函</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//将new2Nums中的数字全部相加</span><br><span class="line">//0就是perValue初始化的值，以后的preValue就是上一次return的值</span><br><span class="line">let total = new2Nums.reduce(function(preValue,n) &#123;</span><br><span class="line">	return preValue + n</span><br><span class="line">&#125;, 0)</span><br></pre></td></tr></table></figure>
-
-<p>以上三部分可以这样写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let total = nums.filter(function (n) &#123;</span><br><span class="line">	return n &lt; 100</span><br><span class="line">&#125;).map(function(n) &#123;</span><br><span class="line">	return n*2</span><br><span class="line">&#125;).reduce(function(preValue,n) &#123;</span><br><span class="line">	return preValue + n</span><br><span class="line">&#125;, 0)</span><br></pre></td></tr></table></figure>
-
-<p>甚至可以这样写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const nums = [10,234,50,678,90]</span><br><span class="line">let total = nums.filter(n =&gt; n &lt; 100).map(n =&gt; n*2).reduce((preValue,n) =&gt; preValue + n)</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="14">
-<li>vue中使用v-model指令来实现表单元素和数据的双向绑定。所谓双向绑定，就是原来利用 Mustache将内容进行响应式显示，手动更改显示数据无法改变原数据，双向绑定则可以实现。</li>
-<li>radio的name相同才会互斥，但是如果v-model绑定相同的，可以不加name。</li>
-<li>v-model三个修饰符：lazy、number、trim：</li>
-</ol>
-<p>1）lazy：默认情况下，v-model是在input事件中同步输入框的数据也就是一旦数据发生改变data中的数据就会自动发生改变，加入lazy修饰符可以让数据在失去焦点或者回车时才更新；</p>
-<p>2）number：默认情况下，在输入框无论输入字母还是数字，都会被当作字符串进行处理，number修饰符可以让输入框输入的内容自动转换为数字类型；</p>
-<p>3）trim：如果输入的内容首尾有很多空格，通常我们希望将其去除，trim修饰符可以过滤内容左右两边的空格；</p>
-<p><strong>注</strong>：转载文章请注明出处，谢谢~</p>
-]]></content>
-      <tags>
-        <tag>vue</tag>
       </tags>
   </entry>
 </search>

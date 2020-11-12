@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, liuqiangh" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -94,14 +94,20 @@
 
 
 
-<meta name="description" content="顺风不浪，逆风不怂！形而上学，不行退学！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="liuqiangh | My Blog">
-<meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;categories&#x2F;%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta name="description" content="命令行输入jupyter notebook后，ipynb的默认使用环境是系统中最原始的python版本，即使是在虚拟环境下打开的jupyter，若想要使用其他虚拟环境，需要在该虚拟环境下安装ipykernel包，命令如下 1pip install ipykernel   然后将自己的环境添加到jupyter中，命令如下(venv是我的虚拟环境名称) 1python -m ipykernel ins">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下jupyter notebook中切换虚拟环境">
+<meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;2020&#x2F;11&#x2F;12&#x2F;jupyter%20notebook%E4%B8%AD%E5%88%87%E6%8D%A2%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83&#x2F;index.html">
 <meta property="og:site_name" content="liuqiangh | My Blog">
-<meta property="og:description" content="顺风不浪，逆风不怂！形而上学，不行退学！">
+<meta property="og:description" content="命令行输入jupyter notebook后，ipynb的默认使用环境是系统中最原始的python版本，即使是在虚拟环境下打开的jupyter，若想要使用其他虚拟环境，需要在该虚拟环境下安装ipykernel包，命令如下 1pip install ipykernel   然后将自己的环境添加到jupyter中，命令如下(venv是我的虚拟环境名称) 1python -m ipykernel ins">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;11&#x2F;12&#x2F;96vHq73CmRnEIQt.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;11&#x2F;12&#x2F;8ejxrvdlRmZkuog.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;11&#x2F;12&#x2F;4kY7Gv3sX2AVQIy.png">
+<meta property="og:updated_time" content="2020-11-12T12:26:26.728Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;11&#x2F;12&#x2F;96vHq73CmRnEIQt.png">
 
 
 
@@ -130,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="https://liuqiangh.github.io/categories/笔记/"/>
+  <link rel="canonical" href="https://liuqiangh.github.io/2020/11/12/jupyter notebook中切换虚拟环境/"/>
 
 
 
 
 
-  <title>分类: 笔记 | liuqiangh | My Blog</title>
+  <title>windows下jupyter notebook中切换虚拟环境 | liuqiangh | My Blog</title>
   
 
 
@@ -161,7 +167,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
     <a href="https://github.com/liuqiangh" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -290,83 +296,223 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>笔记<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2020/11/12/jupyter%20notebook%E4%B8%AD%E5%88%87%E6%8D%A2%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuqiangh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuqiangh | My Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/11/12/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/" itemprop="url">
-              
-                <span itemprop="name">python系列笔记2</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">windows下jupyter notebook中切换虚拟环境</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-11-12T20:19:39+08:00"
-              content="2020-11-12" >
-          11-12
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-12T20:19:08+08:00">
+                2020-11-12
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tip/" itemprop="url" rel="index">
+                    <span itemprop="name">tip</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  133
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>命令行输入jupyter notebook后，ipynb的默认使用环境是系统中最原始的python版本，即使是在虚拟环境下打开的jupyter，若想要使用其他虚拟环境，需要在该虚拟环境下安装ipykernel包，命令如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ipykernel</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/08/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B01/" itemprop="url">
-              
-                <span itemprop="name">python系列笔记1</span>
-              
-            </a>
-        
-      </h2>
+<p><img src="https://i.loli.net/2020/11/12/96vHq73CmRnEIQt.png" alt="image-20201112201451846"></p>
+<p>然后将自己的环境添加到jupyter中，命令如下(venv是我的虚拟环境名称)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --name venv</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-08T21:53:56+08:00"
-              content="2020-07-08" >
-          07-08
-        </time>
-      </div>
+<p><img src="https://i.loli.net/2020/11/12/8ejxrvdlRmZkuog.png" alt="image-20201112201639860"></p>
+<p>这样就可以在jupyter notebook里选择环境了！</p>
+<p><img src="https://i.loli.net/2020/11/12/4kY7Gv3sX2AVQIy.png" alt="image-20201112201733891"></p>
+<p>在jupyter里删除虚拟环境的命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter kernelspec remove venv</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+
 
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/08/%E7%BB%BC%E8%BF%B0%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%85%B3%E7%B3%BB/" rel="next" title="综述：基于图的方法提取生物医学关系">
+                <i class="fa fa-chevron-left"></i> 综述：基于图的方法提取生物医学关系
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/12/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/" rel="prev" title="python系列笔记2">
+                python系列笔记2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -374,6 +520,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -616,10 +766,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="np.random.permutation 随机排列序列，比如 12345import numpy as npa=np.random.permutation(5)#输出结果[1,3,2,0,4]  tf.device() 在tensorflow中指定模型运行的具体设备，可以指定在CPU或者哪块儿GPU上运行。比如： 12345678910import tensorflow as tfwith t">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python系列笔记2">
+<meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;2020&#x2F;11&#x2F;12&#x2F;python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02&#x2F;index.html">
+<meta property="og:site_name" content="liuqiangh | My Blog">
+<meta property="og:description" content="np.random.permutation 随机排列序列，比如 12345import numpy as npa=np.random.permutation(5)#输出结果[1,3,2,0,4]  tf.device() 在tensorflow中指定模型运行的具体设备，可以指定在CPU或者哪块儿GPU上运行。比如： 12345678910import tensorflow as tfwith t">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180329194542470">
+<meta property="og:image" content="c:%5CUsers%5Cbme319%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200526201214488.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;09&#x2F;Guq7CQB24zIfisv.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;09&#x2F;MWSRa5PvUYiCrfu.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;09&#x2F;k2quzAgjyfY8s9n.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;09&#x2F;k2quzAgjyfY8s9n.png">
+<meta property="og:updated_time" content="2020-11-12T12:27:29.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180329194542470">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuqiangh.github.io/2020/11/12/python系列笔记2/"/>
+
+
+
+
+
+  <title>python系列笔记2 | liuqiangh | My Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/liuqiangh" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuqiangh | My Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">曾梦想仗剑天涯，后来学习忙没去</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuqiangh.github.io/2020/11/12/python%E7%B3%BB%E5%88%97%E7%AC%94%E8%AE%B02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuqiangh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuqiangh | My Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python系列笔记2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-12T20:19:39+08:00">
+                2020-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li><p>np.random.permutation</p>
+<p>随机排列序列，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.random.permutation(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出结果</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.device()</p>
+<p>在tensorflow中指定模型运行的具体设备，可以指定在CPU或者哪块儿GPU上运行。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">'/gpu:1'</span>): <span class="comment">#指定在第二块gpu上运行</span></span><br><span class="line"><span class="comment"># with tf.device('/cpu:0'):  #指定在cpu上使用CPU不区分设备号，统一使用 /cpu:0</span></span><br><span class="line">    v1 = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>], shape=[<span class="number">3</span>], name=<span class="string">'v1'</span>)</span><br><span class="line">    v2 = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>], shape=[<span class="number">3</span>], name=<span class="string">'v2'</span>)</span><br><span class="line">    sumV12 = v1 + v2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">with</span> tf.Session(config=tf.ConfigProto(log_device_placement=<span class="literal">True</span>)) <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="keyword">print</span> sess.run(sumV12)</span><br></pre></td></tr></table></figure>
+
+<p>ConfigProto() 中参数 <strong><em>log_device_placement=True\</em></strong> 会打印出执行操作所用的设备，以上输出:</p>
+<img src="https://img-blog.csdn.net/20180329194542470" alt="img"  />
+</li>
+<li><p>tf.reduce_max</p>
+<p>Computes the maximum of elements across dimensions of a tensor. (deprecated arguments)，计算最大值，该函数有如下参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tf.reduce_max(</span><br><span class="line">    input_tensor,</span><br><span class="line">    axis=<span class="literal">None</span>,</span><br><span class="line">    keepdims=<span class="literal">None</span>,</span><br><span class="line">    name=<span class="literal">None</span>,</span><br><span class="line">    reduction_indices=<span class="literal">None</span>,</span><br><span class="line">    keep_dims=<span class="literal">None</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>使用举例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array([[<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">5</span>, <span class="number">3</span>],</span><br><span class="line">            [<span class="number">2</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line">b = tf.Variable(a)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    print(sess.run(b))</span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    <span class="comment"># 对于二维矩阵，axis=0轴可以理解为行增长方向（向下）,axis=1轴可以理解为列增长方向(向右）</span></span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">1</span>, keepdims=<span class="literal">False</span>)))  <span class="comment"># keepdims=False,axis=1被消减</span></span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)))</span><br><span class="line">    print(<span class="string">'************'</span>)</span><br><span class="line">    print(sess.run(tf.reduce_max(b, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line"> [<span class="number">5</span> <span class="number">3</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">6</span>]]</span><br><span class="line">************</span><br><span class="line">[<span class="number">2</span> <span class="number">5</span> <span class="number">6</span>]</span><br><span class="line">************</span><br><span class="line">[[<span class="number">2</span>]</span><br><span class="line"> [<span class="number">5</span>]</span><br><span class="line"> [<span class="number">6</span>]]</span><br><span class="line">************</span><br><span class="line">[[<span class="number">5</span> <span class="number">6</span>]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.reshape()</p>
+<p>函数的作用是将tensor变换为参数shape形式，其中的shape为一个列表形式，特殊的是列表可以实现逆序的遍历，即list(-1).-1所代表的含义是我们不用亲自去指定这一维的大小，函数会自动进行计算，但是列表中只能存在一个-1。（如果存在多个-1，就是一个存在多解的方程）。该函数有如下参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reshape(tensor,shape,name=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>官方给出的例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tensor 't' is [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [9]</span></span><br><span class="line">reshape(t, [3, 3]) ==&gt; [[1, 2, 3],</span><br><span class="line">                        [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">                        [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [[[1, 1], [2, 2]],</span></span><br><span class="line"><span class="comment">#                [[3, 3], [4, 4]]]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [2, 2, 2]</span></span><br><span class="line">reshape(t, [2, 4]) ==&gt; [[1, 1, 2, 2],</span><br><span class="line">                        [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [[[1, 1, 1],</span></span><br><span class="line"><span class="comment">#                 [2, 2, 2]],</span></span><br><span class="line"><span class="comment">#                [[3, 3, 3],</span></span><br><span class="line"><span class="comment">#                 [4, 4, 4]],</span></span><br><span class="line"><span class="comment">#                [[5, 5, 5],</span></span><br><span class="line"><span class="comment">#                 [6, 6, 6]]]</span></span><br><span class="line"><span class="comment"># tensor 't' has shape [3, 2, 3]</span></span><br><span class="line"><span class="comment"># pass '[-1]' to flatten 't'</span></span><br><span class="line">reshape(t, [-1]) ==&gt; [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6]</span><br><span class="line"></span><br><span class="line"><span class="comment"># -1 can also be used to infer the shape</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -1 is inferred to be 9:</span></span><br><span class="line">reshape(t, [2, -1]) ==&gt; [[1, 1, 1, 2, 2, 2, 3, 3, 3],</span><br><span class="line">                         [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="comment"># -1 is inferred to be 2:</span></span><br><span class="line">reshape(t, [-1, 9]) ==&gt; [[1, 1, 1, 2, 2, 2, 3, 3, 3],</span><br><span class="line">                         [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="comment"># -1 is inferred to be 3:</span></span><br><span class="line">reshape(t, [ 2, -1, 3]) ==&gt; [[[1, 1, 1],</span><br><span class="line">                              [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">                              [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]],</span><br><span class="line">                             [[<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>],</span><br><span class="line">                              [<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>],</span><br><span class="line">                              [<span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor 't' is [7]</span></span><br><span class="line"><span class="comment"># shape `[]` reshapes to a scalar</span></span><br><span class="line">reshape(t, []) ==&gt; 7</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>_getitem__方法</p>
+<p>Python的方法<code>__getitem__</code> 可以让对象实现迭代功能，这样就可以使用<code>for...in...</code> 来迭代该对象了。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, animal_list)</span>:</span></span><br><span class="line">        self.animals_name = animal_list</span><br><span class="line"></span><br><span class="line">animals = Animal([<span class="string">"dog"</span>,<span class="string">"cat"</span>,<span class="string">"fish"</span>])</span><br><span class="line"><span class="keyword">for</span> animal <span class="keyword">in</span> animals:</span><br><span class="line">    print(animal)</span><br></pre></td></tr></table></figure>
+
+<p>在用 <code>for..in..</code> 迭代对象时，如果对象没有实现 <code>__iter__</code> <code>__next__</code> 迭代器协议，Python的解释器就会去寻找<code>__getitem__</code> 来迭代对象，如果连<code>__getitem__</code> 都没有定义，这解释器就会报对象不是迭代器的错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: <span class="string">'Animal'</span> object <span class="keyword">is</span> <span class="keyword">not</span> iterable</span><br></pre></td></tr></table></figure>
+
+<p>如果在类中定义了<strong>getitem</strong>()方法，那么他的实例对象（假设为P）就可以这样P[key]取值。当实例对象做P[key]运算时，就会调用类中的<strong>getitem</strong>()方法。</p>
+</li>
+<li><p><strong>repr</strong>和<strong>str</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value=<span class="string">'hello, world!'</span>)</span>:</span></span><br><span class="line">        self.data = value</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = Test()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line">&lt;__main__.Test at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> t</span><br><span class="line">&lt;__main__.Test object at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看到了么？上面打印类对象并不是很友好，显示的是对象的内存地址</span></span><br><span class="line"><span class="comment"># 下面我们重构下该类的__repr__以及__str__，看看它们俩有啥区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestRepr</span><span class="params">(Test)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'TestRepr(%s)'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr = TestRepr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__方法后，不管直接输出对象还是通过print打印的信息都按我们__repr__方法中定义的格式进行显示了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__str__</span></span><br><span class="line">calss TestStr(Test):</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'[Value: %s]'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts = TestStr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts</span><br><span class="line">&lt;__main__.TestStr at <span class="number">0x7fa91c314e50</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> ts</span><br><span class="line">[Value: hello, world!]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 你会发现，直接输出对象ts时并没有按我们__str__方法中定义的格式进行输出，而用print输出的信息却改变了</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tensorflow中的tensorboard</p>
+<p>深入讲解戳链接</p>
+<p><a href="https://blog.csdn.net/qq_27825451/article/details/90229983" target="_blank" rel="noopener">https://blog.csdn.net/qq_27825451/article/details/90229983</a></p>
+<p><img src="C:%5CUsers%5Cbme319%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200526201214488.png" alt="image-20200526201214488"></p>
+<p>颜色浅的才是真实曲线，但真实曲线往往不好看，所以加入了平滑产生了颜色深的线，左侧有调节平滑的参数</p>
+</li>
+<li><p>keras保存模型和加载模型</p>
+<p>需要用到save和load_model两个函数，举例如下：</p>
+<p><strong>保存模型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, LSTM, Embedding, Bidirectional</span><br><span class="line"><span class="keyword">from</span> keras_contrib.layers <span class="keyword">import</span> CRF</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">from</span> keras_contrib.layers.crf <span class="keyword">import</span> CRF, crf_loss, crf_viterbi_accuracy</span><br><span class="line"></span><br><span class="line"><span class="comment">#构造模型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_lstm_crf_model</span><span class="params">(num_cates, seq_len, vocab_size, model_opts=dict<span class="params">()</span>)</span>:</span></span><br><span class="line">    opts = &#123;</span><br><span class="line">        <span class="string">'emb_size'</span>: <span class="number">256</span>,</span><br><span class="line">        <span class="string">'emb_trainable'</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">'emb_matrix'</span>: <span class="literal">None</span>,</span><br><span class="line">        <span class="string">'lstm_units'</span>: <span class="number">256</span>,</span><br><span class="line">        <span class="string">'optimizer'</span>: keras.optimizers.Adam()</span><br><span class="line">    &#125;</span><br><span class="line">    opts.update(model_opts)</span><br><span class="line"></span><br><span class="line">    input_seq = Input(shape=(seq_len,), dtype=<span class="string">'int32'</span>)</span><br><span class="line">    <span class="keyword">if</span> opts.get(<span class="string">'emb_matrix'</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        embedding = Embedding(vocab_size, opts[<span class="string">'emb_size'</span>],</span><br><span class="line">                              weights=[opts[<span class="string">'emb_matrix'</span>]],</span><br><span class="line">                              trainable=opts[<span class="string">'emb_trainable'</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        embedding = Embedding(vocab_size, opts[<span class="string">'emb_size'</span>])</span><br><span class="line">    x = embedding(input_seq)</span><br><span class="line">    lstm = LSTM(opts[<span class="string">'lstm_units'</span>], return_sequences=<span class="literal">True</span>)</span><br><span class="line">    x = Bidirectional(lstm)(x)</span><br><span class="line">    crf = CRF(num_cates, sparse_target=<span class="literal">True</span>)</span><br><span class="line">    output = crf(x)</span><br><span class="line"></span><br><span class="line">    model = Model(input_seq, output)</span><br><span class="line">    model.compile(opts[<span class="string">'optimizer'</span>], loss=crf.loss_function,</span><br><span class="line">                  metrics=[crf.accuracy])</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"><span class="comment">#训练，前面导入数据和处理数据省略</span></span><br><span class="line">model = build_lstm_crf_model(num_cates, seq_len=seq_len, vocab_size=vocab_size,</span><br><span class="line">                             model_opts=&#123;<span class="string">'emb_matrix'</span>: w2v_embeddings, <span class="string">'emb_size'</span>: <span class="number">100</span>, <span class="string">'emb_trainable'</span>: <span class="literal">False</span>&#125;)</span><br><span class="line">model.summary()<span class="comment"># 可以输出各层的参数状况</span></span><br><span class="line">tbCallBack = TensorBoard(log_dir=<span class="string">"./log"</span>)<span class="comment">#使用tensorBoard查看loss和accuracy曲线</span></span><br><span class="line">model.fit(train_X, train_y, batch_size=<span class="number">64</span>, epochs=<span class="number">10</span>, callbacks=[tbCallBack])<span class="comment">#训练</span></span><br><span class="line">model.save(<span class="string">'model.h5'</span>)<span class="comment">#保存模型，得安装相应模块，pip install h5py</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加载模型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> load_model</span><br><span class="line"></span><br><span class="line"><span class="comment">#CRF为自定义的层，load_model函数中需添加custom_objects参数，该参数接受一个字典，键值为自定义的层</span></span><br><span class="line">model=load_model(<span class="string">'model.h5'</span>,custom_objects=&#123;<span class="string">"CRF"</span>: CRF,<span class="string">"crf_loss"</span>: crf_loss, <span class="string">'crf_viterbi_accuracy'</span>: crf_viterbi_accuracy&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tf.estimator与tensorboard</p>
+<p>一般情况下，在tensorflow中想使用tensorboard可视化参数和loss、accuracy等结果，需要配合session图结构一起（具体可参照许多博客，讲解较多）。但当在tensorflow中使用estimator进行训练、预测和验证时，会有所不同。</p>
+<p>Estimator是一种可极大地简化机器学习编程的高阶 TensorFlow API，会封装很多流程，自动构建图。在使用Estimator的tf程序中，想要利用tensorboard进行可视化，只需要在model_fn中加入如下操作（以loss为例）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_fn</span><span class="params">(features, labels, mode, params)</span>:</span></span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">if</span> mode == tf.estimator.ModeKeys.TRAIN:</span><br><span class="line">            train_op = optimization.create_optimizer(</span><br><span class="line">                total_loss, learning_rate, num_train_steps, num_warmup_steps, use_tpu)</span><br><span class="line">            </span><br><span class="line">            tf.summary.scalar(<span class="string">'loss'</span>,total_loss)<span class="comment">#可视化loss</span></span><br><span class="line">                    </span><br><span class="line">            hook_dict = &#123;&#125;</span><br><span class="line">            hook_dict[<span class="string">'loss'</span>] = total_loss</span><br><span class="line">            hook_dict[<span class="string">'global_steps'</span>] = tf.train.get_or_create_global_step()</span><br><span class="line">            logging_hook = tf.train.LoggingTensorHook(</span><br><span class="line">                hook_dict, every_n_iter=FLAGS.save_summary_steps)</span><br><span class="line"></span><br><span class="line">            output_spec = tf.estimator.EstimatorSpec(</span><br><span class="line">                mode=mode,</span><br><span class="line">                loss=total_loss,</span><br><span class="line">                train_op=train_op,</span><br><span class="line">                training_hooks=[logging_hook])</span><br></pre></td></tr></table></figure>
+
+<p>保存model的文件中会有日志文件生成，在终端启用tensorboard，定位到生成log文件的上一级文件夹目录后，执行如下语句即可（log就是日志目录名）</p>
+<blockquote>
+<p>tensorboard –logdir=log</p>
+</blockquote>
+</li>
+<li><p>宏平均和微平均</p>
+<p>针对多分类问题，预测任务时将会有多个混淆矩阵，宏平均是在各个混淆矩阵中分别计算查准率和查全率以及F1值，然后再计算平均值，微平均是将各个混淆矩阵的对应元素进行平均，得到TP、FP、TN、FN的平均值，再计算查准率和查全率以及F1值。</p>
+<img src="https://i.loli.net/2020/06/09/Guq7CQB24zIfisv.png" style="zoom: 80%;" />
+
+
+
+</li>
+</ol>
+<p><img src="https://i.loli.net/2020/06/09/MWSRa5PvUYiCrfu.png" style="zoom:80%;" /><img src="https://i.loli.net/2020/06/09/k2quzAgjyfY8s9n.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/06/09/k2quzAgjyfY8s9n.png" alt=""></p>
+<p>关于两者的选择：</p>
+<ul>
+<li>若注重数据比例较大的类的影响，选择micro-average</li>
+<li>若注重数据比较较小的类的影响，选择macro-average</li>
+</ul>
+<blockquote>
+<p>如果每个class的样本数量相差不大，那么宏平均和微平均差异也不大</p>
+<p>如果微平均远低于宏平均，则应该去检查样本量多 的class</p>
+<p>如果宏平均远低于微平均，则应该去检查样本量少的class</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/12/jupyter%20notebook%E4%B8%AD%E5%88%87%E6%8D%A2%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/" rel="next" title="windows下jupyter notebook中切换虚拟环境">
+                <i class="fa fa-chevron-left"></i> windows下jupyter notebook中切换虚拟环境
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/12/tensorflow%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E8%A6%81%E7%82%B9/" rel="prev" title="tensorflow使用注意要点">
+                tensorflow使用注意要点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="liuqiangh" />
+          <p class="site-author-name" itemprop="name">liuqiangh</p>
+           
+              <p class="site-description motion-element" itemprop="description">顺风不浪，逆风不怂！形而上学，不行退学！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuqiangh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:l1815005@zju.edu.cn" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2019 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuqiangh</span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
