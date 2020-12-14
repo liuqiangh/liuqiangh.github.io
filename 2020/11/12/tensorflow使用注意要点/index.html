@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="Hexo, liuqiangh" />
 
 
 
@@ -94,16 +94,19 @@
 
 
 
-<meta name="description" content="创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。 1loss, accuracy = sess.run([loss, accuracy], feed_dict=&amp;#123;x: x_batch, y: y_batch, l: l_batch&amp;#125;)  上述代码会导致第二次运行时，会将第一次得到的值（左侧的loss）直接赋值给右侧，会与之前定义的冲突，修改">
-<meta name="keywords" content="python">
+<meta name="description" content="tensorflow使用注意要点 创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。 1loss, accuracy = sess.run([loss, accuracy], feed_dict=&amp;#123;x: x_batch, y: y_batch, l: l_batch&amp;#125;)  上述代码会导致第二次运行时，会将第一次得到的值（左侧的loss）直接赋值">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tensorflow使用注意要点">
 <meta property="og:url" content="https:&#x2F;&#x2F;liuqiangh.github.io&#x2F;2020&#x2F;11&#x2F;12&#x2F;tensorflow%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E8%A6%81%E7%82%B9&#x2F;index.html">
 <meta property="og:site_name" content="liuqiangh | My Blog">
-<meta property="og:description" content="创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。 1loss, accuracy = sess.run([loss, accuracy], feed_dict=&amp;#123;x: x_batch, y: y_batch, l: l_batch&amp;#125;)  上述代码会导致第二次运行时，会将第一次得到的值（左侧的loss）直接赋值给右侧，会与之前定义的冲突，修改">
+<meta property="og:description" content="tensorflow使用注意要点 创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。 1loss, accuracy = sess.run([loss, accuracy], feed_dict=&amp;#123;x: x_batch, y: y_batch, l: l_batch&amp;#125;)  上述代码会导致第二次运行时，会将第一次得到的值（左侧的loss）直接赋值">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-11-12T12:28:24.494Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;12&#x2F;14&#x2F;E3WqHLscC6Fo8Ul.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;12&#x2F;14&#x2F;2c7KUlnCgY3s6xG.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;12&#x2F;14&#x2F;pGf5iXnChjNJSav.png">
+<meta property="og:updated_time" content="2020-12-14T12:46:35.619Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;12&#x2F;14&#x2F;E3WqHLscC6Fo8Ul.png">
 
 
 
@@ -346,28 +349,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">自学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -394,7 +375,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  162
+                  373
                 </span>
               
 
@@ -431,7 +412,7 @@
       
 
       
-        <ol>
+        <h1 id="tensorflow使用注意要点"><a href="#tensorflow使用注意要点" class="headerlink" title="tensorflow使用注意要点"></a>tensorflow使用注意要点</h1><ol>
 <li><p>创建图后返回的变量名和定义模型时的变量名不能一样，否则会报错，即如下代码是会报错的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss, accuracy = sess.run([loss, accuracy], feed_dict=&#123;x: x_batch, y: y_batch, l: l_batch&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -440,9 +421,20 @@
 </li>
 <li><p>代码中有使用tf.get_variable和tf.variable创建变量，则在创建图后要对变量进行统一的初始化，即使用该函数tf.global_variables_initializer()。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
-
+</li>
+<li><p>tensorflow数据集dataset的shuffle方法</p>
+<p>tf.data.Dataset.shuffle(buffer_size)中buffer_size原理，估计tf.data.TFRecordDataset().shuffle是相同意思</p>
+<p>首先，<code>Dataset</code>会取所有数据的前<code>buffer_size</code>数据项，填充 <code>buffer</code>，如下图</p>
+<p><img src="https://i.loli.net/2020/12/14/E3WqHLscC6Fo8Ul.png" alt="image-20201214204213393"></p>
+<p>然后，从<code>buffer</code>中随机选择一条数据输出，比如这里随机选中了<code>item 7</code>，那么<code>buffer</code>中<code>item 7</code>对应的位置就空出来了</p>
+<p><img src="https://i.loli.net/2020/12/14/2c7KUlnCgY3s6xG.png" alt="image-20201214204251551"></p>
 </li>
 </ol>
+<p>然后，从<code>Dataset</code>中顺序选择最新的一条数据填充到<code>buffer</code>中，这里是<code>item 10</code></p>
+<p><img src="https://i.loli.net/2020/12/14/pGf5iXnChjNJSav.png" alt="image-20201214204331429"></p>
+<p>然后在从Buffer中随机选择下一条数据输出。</p>
+<p>需要说明的是，这里的数据项item，并不只是单单一条真实数据，如果有<code>batch size</code>，则一条数据项item包含了<code>batch size</code>条真实数据。</p>
+<p>shuffle是防止数据过拟合的重要手段，然而不当的buffer size，会导致shuffle无意义。</p>
 
       
     </div>
@@ -457,12 +449,6 @@
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/python/" rel="tag"># python</a>
-          
-        </div>
       
 
       
@@ -537,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/me.jpg"
@@ -624,6 +619,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow使用注意要点"><span class="nav-number">1.</span> <span class="nav-text">tensorflow使用注意要点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
